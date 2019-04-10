@@ -28,7 +28,7 @@ AWS.config.setPromisesDependency(bluebird);
 
 // create S3 instance
 const s3 = new AWS.S3();
-console.log(process.env.AWS_ACCESS_KEY_ID)
+
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
   const params = {
@@ -48,13 +48,9 @@ app.use(bodyParser.json());
 app.use('/users', userRouter)
 app.use('/tracks', trackRouter)
 
-
-app.get('/test-upload', async (req, res) => {
-  res.json({ msg: 'test upload is running!' })
-})
 // Define POST route
-app.post('/test-upload', (req, res) => {
-  console.log('TEST UPLOAD HIT')
+app.post('/upload', (req, res) => {
+
   const form = new multiparty.Form();
 
   form.parse(req, async (error, fields, files) => {

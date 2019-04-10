@@ -27,9 +27,9 @@ trackRouter.get('/:id', async (req, res) => {
 
 trackRouter.post('/', async (req, res) => {
   try {
-    const { title, url } = req.body
+    const { filename, url } = req.body
     const track = await Track.create({
-      title,
+      title: filename,
       url,
     })
     res.json({ track })

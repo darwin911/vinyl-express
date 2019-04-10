@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+}
+
+header {
+  background: #444;
+  color: white;
+  margin-bottom: 2rem;
 }
 
 form {
@@ -8,4 +15,8 @@ form {
   margin: 0 auto;
   width: 400px;
   max-width: 90%;
+  border: 1px solid black;
+  padding: 1rem;
+  border-radius: 3px;
+  margin-bottom: 2rem;
 }
