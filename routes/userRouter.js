@@ -18,7 +18,7 @@ userRouter.get('/', async (req, res) => {
 //Get a specific user
 userRouter.get('/:id', async (req, res) => {
   try {
-    const user = await User.findOne({ where: { id: req.params.id }});
+    const user = await User.findOne({ where: { id: req.params.id } });
     res.json({ user });
   } catch (e) {
     console.log(e);
@@ -29,19 +29,18 @@ userRouter.get('/:id', async (req, res) => {
 // Register route
 userRouter.post('/', async (req, res) => {
   try {
-    const { email, password, name, picture } = req.body;
+    const { email, name, password } = req.body;
     if (password) {
       const passwordDigest = await hash(password);
       const user = await User.create({
+        name,
         email,
         password_digest: passwordDigest,
-        name,
       });
       const userData = {
-        // id: user.id,
-        // name: user.name,
-        // email: user.email,
-        // picture: user.picture,
+        id: user.id,
+        name: user.name,
+        email: user.email,
       };
 
       const token = encode(userData);
@@ -53,15 +52,13 @@ userRouter.post('/', async (req, res) => {
     }
     else {
       const user = await User.create({
-        email,
         name,
-        picture
+        email,
       });
 
       const userData = {
-        email: user.email,
         name: user.name,
-        picture: user.picture,
+        email: user.email,
         created_at: user.created_at,
         updated_at: user.updated_at,
       };
@@ -73,7 +70,7 @@ userRouter.post('/', async (req, res) => {
         userData,
       });
     }
-  } catch(e) {
+  } catch (e) {
     console.error(e);
   }
 });
@@ -82,32 +79,24 @@ userRouter.post('/', async (req, res) => {
 userRouter.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({
-      where: {
-        email,
-      },
-    });
+    const user = await User.findOne({ where: { email } });
     if (user !== null) {
-      const authenticated = await compare(password, user.password_digest);
-      if (authenticated === true) {
+      const isAuthenticated = await compare(password, user.password_digest);
+      if (isAuthenticated === true) {
         const userData = {
           id: user.id,
           name: user.name,
           email: user.email,
-          picture: user.picture,
         };
 
         const token = encode(userData);
 
-        res.json({
-          token,
-          userData,
-        });
+        res.json({ token, userData });
       }
       return res.status(401).send('Invalid Credentials');
     }
     return res.status(401).send('Invalid Credentials');
-  } catch(e) {
+  } catch (e) {
     console.error(e);
   }
 });

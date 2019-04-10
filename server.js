@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const logger = require('morgan')
 const cors = require('cors');
 const userRouter = require('./routes/userRouter')
+const trackRouter = require('./routes/trackRouter')
 
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +15,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 
 app.use('/users', userRouter)
+app.use('/tracks', trackRouter)
 
 app.get('/', async (req, res) => {
   res.json({ msg: 'Express is running!'})
