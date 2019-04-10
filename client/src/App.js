@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
-import { allUsers, registerUser, addTrack } from './services/helper';
+import { registerUser, addTrack } from './services/helper';
 import { Link, Route } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -83,7 +82,7 @@ class App extends Component {
 
         <FileUpload />
 
-        {/* <form onSubmit={this.handleSubmitTrack}>
+        <form onSubmit={this.handleSubmitTrack}>
           <input
             onChange={this.handleChange}
             type="text"
@@ -116,7 +115,7 @@ class App extends Component {
             email={this.state.email}
             password={this.state.password}
             handleChange={this.handleChange}
-            handleLogin={this.handleLogin} />)} /> */}
+            handleLogin={this.handleLogin} />)} />
 
       </div>
     );

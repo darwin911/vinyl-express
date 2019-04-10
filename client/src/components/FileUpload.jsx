@@ -18,8 +18,11 @@ class FileUpload extends Component {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then(response => {
-      console.log(response);
+    }).then(resp => {
+      console.log(resp.data.Location);
+      this.setState({
+        url: resp.data.Location
+      })
     }).catch(error => {
       console.log(error);
     });

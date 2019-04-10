@@ -27,7 +27,7 @@ AWS.config.setPromisesDependency(bluebird);
 
 // create S3 instance
 const s3 = new AWS.S3();
-
+console.log(process.env)
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
   const params = {
@@ -63,7 +63,7 @@ app.post('/test-upload', (req, res) => {
       const buffer = fs.readFileSync(path);
       const type = fileType(buffer);
       const timestamp = Date.now().toString();
-      const fileName = `bucketFolder/${timestamp}-lg`;
+      const fileName = `trackFolder/${timestamp}-lg`;
       const data = await uploadFile(buffer, fileName, type);
       return res.status(200).send(data);
     } catch (error) {
