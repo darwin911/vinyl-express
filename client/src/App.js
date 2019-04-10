@@ -83,17 +83,10 @@ class App extends Component {
   }
 
   async handleSubmitTrack() {
-    // e.preventDefault();
-    // console.log('handleSubmitTrack Called')
     const { filename, url } = this.state;
     const data = { filename, url }
-    // console.log(data)
     const track = await addTrack(data);
-    // console.log(track)
-    this.setState({
-      title: '',
-      url: '',
-    })
+    console.log(track)
   }
 
   togglePlay() {

@@ -42,7 +42,7 @@ class FileUpload extends Component {
           name="filename"
           placeholder="Track Name"
           onChange={this.props.handleChange}
-          value={this.props.trackname}
+          value={this.state.filename}
           />
         <input label='upload file' type='file' onChange={this.handleFileUpload} />
         <button type='submit'>Select Track</button>
