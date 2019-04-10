@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
@@ -27,7 +28,7 @@ AWS.config.setPromisesDependency(bluebird);
 
 // create S3 instance
 const s3 = new AWS.S3();
-console.log(process.env)
+console.log(process.env.AWS_ACCESS_KEY_ID)
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
   const params = {
