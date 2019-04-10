@@ -44,18 +44,10 @@ userRouter.post('/', async (req, res) => {
       };
 
       const token = encode(userData);
-
-      res.json({
-        token,
-        userData,
-      });
+      res.json({ token, userData });
     }
     else {
-      const user = await User.create({
-        name,
-        email,
-      });
-
+      const user = await User.create({ name, email });
       const userData = {
         name: user.name,
         email: user.email,
@@ -65,10 +57,7 @@ userRouter.post('/', async (req, res) => {
 
       const token = encode(userData);
 
-      res.json({
-        token,
-        userData,
-      });
+      res.json({ token, userData });
     }
   } catch (e) {
     console.error(e);

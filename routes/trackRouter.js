@@ -25,4 +25,18 @@ trackRouter.get('/:id', async (req, res) => {
   }
 });
 
+trackRouter.post('/', async (req, res) => {
+  try {
+    const { title, url } = req.body
+    const track = await Track.create({
+      title,
+      url,
+    })
+    res.json({ track })
+  } catch (e) {
+    console.error(e)
+    res.stats(500).send(e.message)
+  }
+})
+
 module.exports = trackRouter;
