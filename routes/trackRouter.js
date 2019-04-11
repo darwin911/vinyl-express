@@ -27,11 +27,12 @@ trackRouter.get('/:id', async (req, res) => {
 
 trackRouter.post('/', async (req, res) => {
   try {
-    const { filename, url } = req.body
+    const { filename, url, userId } = req.body
     const track = await Track.create({
       title: filename,
       url,
     })
+    track.setUser(userId);
     res.json({ track })
   } catch (e) {
     console.error(e)
