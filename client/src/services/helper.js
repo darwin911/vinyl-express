@@ -20,13 +20,20 @@ const registerUser = async (userData) => {
 }
 
 const loginUser = async (data) => {
-  const resp = await api.post(`/users/login`, data);
+  const resp = await axios.post(`http://localhost:3001/users/login`, data);
   return resp.data;
 };
 
 const allTracks = async () => {
   const resp = await api.get(`tracks/`)
+  console.log(resp.data)
   return resp.data;
+}
+
+const getTrack = async (trackId) => {
+  const resp = await api.get(`tracks/${trackId}`);
+  console.log('get a track called')
+  return resp.data
 }
 
 const addTrack = async (trackData) => {
@@ -41,5 +48,6 @@ export {
   registerUser,
   loginUser,
   allTracks,
+  getTrack,
   addTrack,
 }
