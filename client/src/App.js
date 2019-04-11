@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import { registerUser, loginUser, allTracks, addTrack, getTrack, getUserTracks } from './services/helper';
+import { registerUser, loginUser, addTrack, getTrack, getUserTracks } from './services/helper';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import Player from './components/Player';
 import Sound from 'react-sound';
-import { Button, Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
+import decode from 'jwt-decode'
 
 class App extends Component {
   constructor(props) {
@@ -43,8 +44,19 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const track = await getTrack(10);
-    console.log(track)
+    const token = localStorage.getItem('token')
+    if (token) {
+      const data = decode(token);
+      console.log(data);
+      this.setState({
+        isLoggedIn: true,
+        currentUser: {
+          name: data.name,
+          email: data.email,
+        }
+      })
+      this.props.history.push('/')
+    }
   }
 
   handleChange(e) {
@@ -68,22 +80,26 @@ class App extends Component {
     try {
       const user = await loginUser(loginData)
       console.log(user)
-      localStorage.setItem('token', user.token)
-      const tracks = await getUserTracks(user.userData.id);
-      console.log(tracks)
-      this.setState({
-        currentUser: user.userData,
-        name: '',
-        email: '',
-        password: '',
-        isLoggedIn: true,
-        tracks
-      })
-
+      if (user) {
+        localStorage.setItem('token', user.token)
+        const tracks = await getUserTracks(user.userData.id);
+        console.log(tracks)
+        this.setState({
+          currentUser: user.userData,
+          name: '',
+          email: '',
+          password: '',
+          isLoggedIn: true,
+          tracks
+        })
+      }
+      this.props.history.push('/player')
     } catch (error) {
       console.error("INVALID_CREDENTIALS", error)
+      this.setState({
+        errorMessage: error
+      })
     }
-    this.props.history.push('/player')
   }
 
   handleLogout(e) {
@@ -146,6 +162,16 @@ class App extends Component {
   }
 
   render() {
+    const {
+      isLoggedIn,
+      currentUser,
+      name,
+      email,
+      password,
+      playStatus,
+      tracks,
+      url,
+      filename } = this.state
     return (
       <div className="App">
         <header>
@@ -153,7 +179,7 @@ class App extends Component {
             <Link to="/"><h2 className="nav-brand">Vinyl</h2></Link>
             <Nav className="ml-auto">
               {
-                (this.state.isLoggedIn) ?
+                (isLoggedIn) ?
                   <Link to="/" onClick={this.handleLogout}>Logout</Link>
                   :
                   <>
@@ -167,55 +193,66 @@ class App extends Component {
           </Navbar>
         </header>
 
-        {this.state.currentUser.name && <p>{this.state.currentUser.name} is logged in</p>}
+        <main className="container">
 
-        <Route exact path="/register" render={(props) => (
-              <Register
-                name={this.state.name}
-                email={this.state.email}
-                password={this.state.password}
-                handleChange={this.handleChange}
-                handleRegister={this.handleRegister} />)} />
+          <Route exact path="/" render={() => (
+            <h5>A harder, but cooler way to listen to your music.</h5>
+          )} />
 
-            <Route exact path="/login" render={(props) => (
-              <Login
-                name={this.state.name}
-                email={this.state.email}
-                password={this.state.password}
-                handleChange={this.handleChange}
-                handleLogin={this.handleLogin} />)} />
+          <Route exact path="/register" render={(props) => (
+            <Register
+              name={name}
+              email={email}
+              password={password}
+              handleChange={this.handleChange}
+              handleRegister={this.handleRegister} />)} />
 
-        {
-          this.state.isLoggedIn &&
-          <>
-            <Route exact path="/upload" render={(props) => (
-              <FileUpload
-                setTrackUrl={this.setTrackUrl} />)} />
+          <Route exact path="/login" render={(props) => (
+            <Login
+              name={name}
+              email={email}
+              password={password}
+              handleChange={this.handleChange}
+              handleLogin={this.handleLogin} />)} />
 
-            <Route exact path="/player" render={(props) => (
-              <Player
-                playStatus={this.state.playStatus}
-                togglePlay={this.togglePlay}
-                filename={this.state.filename} />
-            )} />
+          {
+            this.state.isLoggedIn &&
+            <>
+              <Route exact path="/upload" render={(props) => (
+                <FileUpload
+                  setTrackUrl={this.setTrackUrl} />)} />
 
-            <section>
-              <p>User has {this.state.tracks.length} tracks</p>
+              <Route exact path="/player" render={(props) => (
+                <Player
+                  playStatus={playStatus}
+                  togglePlay={this.togglePlay}
+                  filename={filename} />
+              )} />
+
               {
-                this.state.tracks
-                  .map(track =>
-                    <p key={track.id}>{track.title}</p>)
+                currentUser.name &&
+                <section className="section-tracks">
+                  <h3>{currentUser.name} has {tracks.length} tracks</h3>
+                  {tracks.map(track => <>
+                    <p key={track.id}>{track.title}</p>
+                    <p key={track.id}
+                      onClick={() =>
+                        this.setState({ url: track.url, filename: track.filename })
+                      } >{track.url}</p>
+                    <p key={track.id}>Track Id: {track.id}</p>
+                  </>)
+                  }
+                </section>
               }
-            </section>
 
-            <Sound
-              url={this.state.url && this.state.url}
-              playStatus={this.state.playStatus}
-            >audio</Sound>
-          </>
-        }
-
-
+              <Sound
+                autoLoad={true}
+                url={url && url}
+                playStatus={playStatus}
+              >audio</Sound>
+            </>
+          }
+        </main>
 
         <footer>
           <p>&copy; Darwin Smith 2019</p>
