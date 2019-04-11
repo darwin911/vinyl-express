@@ -1,11 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:700');
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two:400,700');
 @import url('https://fonts.googleapis.com/css?family=Poppins');
+
 *, *::before, *::after {
   box-sizing: border-box;
   list-style-type: none;
   text-decoration: none !important;
 }
 
+html {
+  height: 100%;
+  max-height: 100%;
+}
 .App {
   text-align: center;
   min-height: 100vh;
@@ -13,6 +18,9 @@
   background: radial-gradient(ellipse at bottom right, hsl(0, 0%, 0%), hsl(0, 0%, 13%));
   font-weight: bold;
   color: white;
+  position: relative;
+  padding-bottom: 5rem;
+  /* overflow-x: hidden; */
 }
 
 a {
@@ -23,11 +31,13 @@ header {
   background: #444;
   color: white;
   margin-bottom: 2rem;
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,.325);
 }
 
 .nav-brand {
-  font-family: 'Rubik';
-  color: dodgerblue;
+  font-family: 'Lobster Two';
+  font-weight: 700;
+  color: white;
 }
 
 .navbar a {
@@ -40,34 +50,74 @@ form {
   margin: 0 auto;
 }
 
+input {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: none !important;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,.225);
+}
+
 .turntable {
-  padding: 1rem;
-  width: 90%;
+  width: 100%;
   max-width: 350px;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
   position: relative;
   background: rgb(170, 170, 170);
-  border-radius: 10px;
+  background: url("https://media.freestocktextures.com/cache/a4/2f/a42f1d91f2657c6aea52471e293e2858.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  border-radius: 5px;
   color: #333;
+}
+
+.tt-arm {
+  display: inline-block;
+  width: 30%;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("http://www.schillmania.com/projects/soundmanager2/demo/turntable/image/tt_arm.png");
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  transition: 250ms ease;
+}
+
+.tt-arm:hover {
+  transform: rotate(13deg);
+  transform-origin: 54% 27%;
 }
 
 .vinyl {
   max-width: 100%;
   animation-name: spin;
-  animation-duration: 2000ms;
+  animation-duration: 3000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear; 
   animation-delay: 700ms;
   /* animation-play-state: paused; */
 }
 
-/* .volume-slider {
-  height: 100px;
-  width: 20px;
-  background: grey;
-  position: absolute;
-} */
+.start-stop-btn {
+  background: #ccc;
+  color: #000;
+  border-radius: 1px;
+  display: absolute;
+}
 
+.section-tracks {
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: left;
+  font-weight: 100;
+}
+
+.section-tracks p {
+  font-size: 0.75rem;
+  margin-bottom: 0.45rem;
+}
 
 footer {
   width: 100%;
