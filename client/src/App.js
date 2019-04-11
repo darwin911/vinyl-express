@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { registerUser, loginUser, addTrack } from './services/helper';
+import { registerUser, loginUser, allTracks, addTrack, getTrack } from './services/helper';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -15,13 +15,17 @@ class App extends Component {
     super(props)
     this.state = {
       playStatus: "STOPPED",
-      currentUser: '',
+      currentUser: {
+        id: '',
+        name: '',
+        email: '',
+      },
       name: '',
       email: 'test@test.com',
       password: 'test',
       title: '',
       track: '',
-      url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554941062265-lg.mp3',
+      url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
       isLoggedIn: false,
     }
     this.handleLogin = this.handleLogin.bind(this);
@@ -34,7 +38,8 @@ class App extends Component {
   }
 
   async componentDidMount() {
-
+    const track = await getTrack(10);
+    console.log(track)
   }
 
   handleChange(e) {
@@ -58,8 +63,10 @@ class App extends Component {
 
     try {
       const user = await loginUser(loginData)
+      console.log(user)
+      localStorage.setItem('token', user.token)
       this.setState({
-        token: user,
+        currentUser: user.userData,
         email: '',
         password: '',
         isLoggedIn: true,
@@ -89,8 +96,8 @@ class App extends Component {
   }
 
   async handleSubmitTrack() {
-    const { filename, url } = this.state;
-    const data = { filename, url }
+    const { filename, url, currentUser} = this.state;
+    const data = { filename, url, userId: currentUser.id }
     const track = await addTrack(data);
     console.log(track)
   }

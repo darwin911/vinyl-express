@@ -12,8 +12,13 @@ class Player extends Component {
   render() {
     console.log("Play status: ", this.props.playStatus)
     console.log("spin state: ", this.state.spin)
-    const playPause = this.state.spin === true ? {animationPlayState: "running"} : {animationPlayState: "paused"}
-    console.log(playPause)
+    let vinylSpinAnimation;
+    if (this.state.spin === true) {
+      vinylSpinAnimation = { animationPlayState: "running" }
+    } else {
+      vinylSpinAnimation = { animationPlayState: "paused" }
+    }
+    console.log(vinylSpinAnimation)
     return (
       <div className="turntable">
       <span className="volume-slider"></span>
