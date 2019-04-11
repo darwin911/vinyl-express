@@ -24,6 +24,12 @@ const loginUser = async (data) => {
   return resp.data;
 };
 
+const getUserTracks = async (userId) => {
+  const resp = await api.get(`users/${userId}/tracks`);
+  console.log('get a user tracks called')
+  return resp.data.tracks
+}
+
 const allTracks = async () => {
   const resp = await api.get(`tracks/`)
   console.log(resp.data)
@@ -39,8 +45,9 @@ const getTrack = async (trackId) => {
 const addTrack = async (trackData) => {
   console.log(trackData)
   const resp = await api.post(`tracks/`, trackData)
-  return resp.data;
+  return resp.data
 }
+
 
 
 export {
@@ -50,4 +57,5 @@ export {
   allTracks,
   getTrack,
   addTrack,
+  getUserTracks,
 }
