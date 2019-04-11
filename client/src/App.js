@@ -6,8 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import Player from './components/Player';
-import Sound from 'react-sound';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button, ButtonGroup } from 'react-bootstrap';
 import decode from 'jwt-decode'
 
 class App extends Component {
@@ -40,6 +39,7 @@ class App extends Component {
     this.handleRegister = this.handleRegister.bind(this);
     this.handleSubmitTrack = this.handleSubmitTrack.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
+    this.handleEditTrack = this.handleEditTrack.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.setTrackUrl = this.setTrackUrl.bind(this);
   }
@@ -48,13 +48,15 @@ class App extends Component {
     const token = localStorage.getItem('token')
     if (token) {
       const data = decode(token);
+      const tracks = await getUserTracks(data.id);
       console.log(data);
       this.setState({
         isLoggedIn: true,
         currentUser: {
           name: data.name,
           email: data.email,
-        }
+        },
+        tracks,
       })
       this.props.history.push('/')
     }
@@ -91,7 +93,7 @@ class App extends Component {
           email: '',
           password: '',
           isLoggedIn: true,
-          tracks
+          tracks,
         })
       }
       this.props.history.push('/player')
@@ -141,7 +143,14 @@ class App extends Component {
     const { filename, url, currentUser } = this.state;
     const data = { filename, url, userId: currentUser.id }
     const track = await addTrack(data);
+    this.setState(prevState => ({
+      tracks: [...prevState.tracks, track.track]
+    }))
     console.log(track)
+  }
+
+  async handleEditTrack() {
+    console.log('Edit called')
   }
 
   async handleDeleteTrack(trackId) {
@@ -149,7 +158,7 @@ class App extends Component {
     const resp = await removeTrack(trackId);
     console.log(resp)
     this.setState(prevState => ({
-      tracks: [...prevState.tracks.filter(track => track.id !== trackId) ]
+      tracks: [...prevState.tracks.filter(track => track.id !== trackId)]
     }));
   }
 
@@ -234,6 +243,7 @@ class App extends Component {
 
               <Route exact path="/player" render={(props) => (
                 <Player
+                  url={url}
                   playStatus={playStatus}
                   togglePlay={this.togglePlay}
                   filename={filename} />
@@ -243,24 +253,25 @@ class App extends Component {
                 currentUser.name &&
                 <section className="section-tracks">
                   <h3>{currentUser.name} has {tracks.length} tracks</h3>
-                  {tracks.map(track => <>
-                    <p key={track.id}>{track.title}</p>
-                    <p key={track.id}
-                      onClick={() =>
+                  {tracks.map(track =>
+                    <div key={track.id}>
+                      <p>{track.title}</p>
+                      <p onClick={() =>
                         this.setState({ url: track.url, filename: track.filename })
                       } >{track.url}</p>
-                    <p key={track.id}>Track Id: {track.id}</p>
-                    <button onClick={() => this.handleDeleteTrack(track.id)}>X</button>
-                  </>)
+                      <p>Track Id: {track.id}</p>
+                      <ButtonGroup>
+                        <Button
+                          variant="info"
+                          onClick={() => this.handleEditTrack(track.id)}>Edit</Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => this.handleDeleteTrack(track.id)}>Delete</Button>
+                      </ButtonGroup>
+                    </div>)
                   }
                 </section>
               }
-
-              <Sound
-                autoLoad={true}
-                url={url && url}
-                playStatus={playStatus}
-              >audio</Sound>
             </>
           }
         </main>

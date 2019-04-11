@@ -25,6 +25,11 @@ html {
 
 a {
   color: #bbb;
+  transition: 150ms ease;
+}
+
+a:hover {
+  color: white;
 }
 
 header {
@@ -92,6 +97,7 @@ input {
 }
 
 .vinyl {
+  cursor: pointer;
   max-width: 100%;
   animation-name: spin;
   animation-duration: 3000ms;
