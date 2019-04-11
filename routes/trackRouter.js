@@ -40,4 +40,13 @@ trackRouter.post('/', async (req, res) => {
   }
 })
 
+trackRouter.delete('/:id', async (req, res) => {
+  try {
+    const track = await Track.destroy({ where: { id: req.params.id }})
+    res.json({ track })
+  } catch (e) {
+    res.stats(500).send(e.message);
+  }
+})
+
 module.exports = trackRouter;

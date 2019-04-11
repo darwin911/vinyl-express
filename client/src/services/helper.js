@@ -48,6 +48,11 @@ const addTrack = async (trackData) => {
   return resp.data
 }
 
+const removeTrack = async (trackId) => {
+  const resp = await api.delete(`tracks/${trackId}`)
+  return resp.data
+}
+
 
 
 export {
@@ -57,5 +62,6 @@ export {
   allTracks,
   getTrack,
   addTrack,
+  removeTrack,
   getUserTracks,
 }

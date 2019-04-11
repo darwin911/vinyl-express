@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { registerUser, loginUser, addTrack, getTrack, getUserTracks } from './services/helper';
+import { registerUser, loginUser, addTrack, removeTrack, getUserTracks } from './services/helper';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -39,6 +39,7 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleSubmitTrack = this.handleSubmitTrack.bind(this);
+    this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.setTrackUrl = this.setTrackUrl.bind(this);
   }
@@ -143,6 +144,13 @@ class App extends Component {
     console.log(track)
   }
 
+  async handleDeleteTrack(trackId) {
+    console.log('delete called', trackId)
+    const resp = await removeTrack(trackId);
+    console.log(resp)
+    
+  }
+
   togglePlay() {
     (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
       ? this.setState({ playStatus: 'PLAYING' })
@@ -240,6 +248,7 @@ class App extends Component {
                         this.setState({ url: track.url, filename: track.filename })
                       } >{track.url}</p>
                     <p key={track.id}>Track Id: {track.id}</p>
+                    <button onClick={() => this.handleDeleteTrack(track.id)}>X</button>
                   </>)
                   }
                 </section>
