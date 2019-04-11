@@ -12,6 +12,7 @@
   font-family: 'Poppins';
   background: radial-gradient(ellipse at bottom right, hsl(0, 0%, 0%), hsl(0, 0%, 13%));
   font-weight: bold;
+  color: white;
 }
 
 a {
@@ -53,7 +54,7 @@ form {
 .vinyl {
   max-width: 100%;
   animation-name: spin;
-  animation-duration: 5000ms;
+  animation-duration: 2000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear; 
   animation-delay: 700ms;
@@ -67,6 +68,21 @@ form {
   position: absolute;
 } */
 
+
+footer {
+  width: 100%;
+  background: #bbb;
+  background: linear-gradient(to bottom right, #ddd, #555);
+  color: #000;
+  position: absolute;
+  bottom: 0;
+}
+
+footer p {
+  padding: 0.5rem 0;
+  font-weight: 100;
+  margin: 0;
+}
 
 @keyframes spin {
   from {

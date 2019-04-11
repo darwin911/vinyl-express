@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { registerUser, loginUser, allTracks, addTrack, getTrack } from './services/helper';
+import { registerUser, loginUser, allTracks, addTrack, getTrack, getUserTracks } from './services/helper';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -8,7 +8,6 @@ import FileUpload from './components/FileUpload';
 import Player from './components/Player';
 import Sound from 'react-sound';
 import { Button, Navbar, Nav } from 'react-bootstrap';
-import NavLink from 'react-bootstrap/NavLink';
 
 class App extends Component {
   constructor(props) {
@@ -20,15 +19,21 @@ class App extends Component {
         name: '',
         email: '',
       },
-      name: '',
+      currentTrack: {
+        title: '',
+        id: '',
+      },
+      name: 'HAL 9000',
       email: 'test@test.com',
       password: 'test',
       title: '',
       track: '',
+      tracks: [],
       url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
       isLoggedIn: false,
     }
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
@@ -52,7 +57,6 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
   }
 
   async handleLogin(e) {
@@ -65,16 +69,35 @@ class App extends Component {
       const user = await loginUser(loginData)
       console.log(user)
       localStorage.setItem('token', user.token)
+      const tracks = await getUserTracks(user.userData.id);
+      console.log(tracks)
       this.setState({
         currentUser: user.userData,
+        name: '',
         email: '',
         password: '',
         isLoggedIn: true,
+        tracks
       })
+
     } catch (error) {
       console.error("INVALID_CREDENTIALS", error)
     }
     this.props.history.push('/player')
+  }
+
+  handleLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    this.props.history.push('/')
+    this.setState({
+      isLoggedIn: false,
+      currentUser: {
+        id: '',
+        name: '',
+        email: '',
+      }
+    })
   }
 
   async handleRegister(e) {
@@ -82,21 +105,23 @@ class App extends Component {
     console.log('handleRegister Called')
     const { name, email, password } = this.state;
     const data = { name, email, password }
-    console.log(data)
-    const user = await registerUser(data);
 
+    const user = await registerUser(data);
+    console.log(user)
+    localStorage.setItem('token', user.token)
     this.setState({
       name: '',
       email: '',
       password: '',
-      token: user
+      isLoggedIn: true,
+      currentUser: user.userData,
     })
 
     this.props.history.push('/player')
   }
 
   async handleSubmitTrack() {
-    const { filename, url, currentUser} = this.state;
+    const { filename, url, currentUser } = this.state;
     const data = { filename, url, userId: currentUser.id }
     const track = await addTrack(data);
     console.log(track)
@@ -128,11 +153,13 @@ class App extends Component {
             <Link to="/"><h2 className="nav-brand">Vinyl</h2></Link>
             <Nav className="ml-auto">
               {
-                !this.state.isLoggedIn &&
-                <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/register" >Register</Link>
-                </>
+                (this.state.isLoggedIn) ?
+                  <Link to="/" onClick={this.handleLogout}>Logout</Link>
+                  :
+                  <>
+                    <Link to="/login">Login</Link>
+                    <Link to="/register" >Register</Link>
+                  </>
               }
               <Link to="/player">Player</Link>
               <Link to="/upload">Upload</Link>
@@ -140,39 +167,59 @@ class App extends Component {
           </Navbar>
         </header>
 
-
-        <Route exact path="/upload" render={(props) => (
-          <FileUpload
-            setTrackUrl={this.setTrackUrl} />)} />
+        {this.state.currentUser.name && <p>{this.state.currentUser.name} is logged in</p>}
 
         <Route exact path="/register" render={(props) => (
-          <Register
-            name={this.state.name}
-            email={this.state.email}
-            password={this.state.password}
-            handleChange={this.handleChange}
-            handleRegister={this.handleRegister} />)} />
+              <Register
+                name={this.state.name}
+                email={this.state.email}
+                password={this.state.password}
+                handleChange={this.handleChange}
+                handleRegister={this.handleRegister} />)} />
 
-        <Route exact path="/login" render={(props) => (
-          <Login
-            name={this.state.name}
-            email={this.state.email}
-            password={this.state.password}
-            handleChange={this.handleChange}
-            handleLogin={this.handleLogin} />)} />
+            <Route exact path="/login" render={(props) => (
+              <Login
+                name={this.state.name}
+                email={this.state.email}
+                password={this.state.password}
+                handleChange={this.handleChange}
+                handleLogin={this.handleLogin} />)} />
 
-        <Route exact path="/player" render={(props) => (
-          <Player
-            playStatus={this.state.playStatus}
-            togglePlay={this.togglePlay}
-            filename={this.state.filename} />
-        )} />
+        {
+          this.state.isLoggedIn &&
+          <>
+            <Route exact path="/upload" render={(props) => (
+              <FileUpload
+                setTrackUrl={this.setTrackUrl} />)} />
+
+            <Route exact path="/player" render={(props) => (
+              <Player
+                playStatus={this.state.playStatus}
+                togglePlay={this.togglePlay}
+                filename={this.state.filename} />
+            )} />
+
+            <section>
+              <p>User has {this.state.tracks.length} tracks</p>
+              {
+                this.state.tracks
+                  .map(track =>
+                    <p key={track.id}>{track.title}</p>)
+              }
+            </section>
+
+            <Sound
+              url={this.state.url && this.state.url}
+              playStatus={this.state.playStatus}
+            >audio</Sound>
+          </>
+        }
 
 
-        {/* <Button variant="outline-primary" onClick={this.togglePlay}>Play/Pause</Button> */}
-        <Sound url={this.state.url && this.state.url}
-          playStatus={this.state.playStatus}>audio</Sound>
 
+        <footer>
+          <p>&copy; Darwin Smith 2019</p>
+        </footer>
       </div>
     );
   }
