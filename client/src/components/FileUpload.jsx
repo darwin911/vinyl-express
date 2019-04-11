@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Form, FormControl, Button } from 'react-bootstrap'
 
 class FileUpload extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       file: null
@@ -34,19 +35,21 @@ class FileUpload extends Component {
     });
   }
 
-  render () {
+  render() {
     return (
-      <form onSubmit={this.submitFile}>
-        <input
+      <Form onSubmit={this.submitFile}>
+        <FormControl
           type="text"
           name="filename"
           placeholder="Track Name"
           onChange={this.props.handleChange}
-          value={this.state.filename}
-          />
-        <input label='upload file' type='file' onChange={this.handleFileUpload} />
-        <button type='submit'>Select Track</button>
-      </form>
+          value={this.state.filename} required />
+        <FormControl
+          label="upload file"
+          type="file"
+          onChange={this.handleFileUpload} required />
+        <Button type="submit">Select Track</Button>
+      </Form>
     );
   }
 }
