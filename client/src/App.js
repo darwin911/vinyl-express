@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import { registerUser, loginUser, addTrack } from './services/helper';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
+import Player from './components/Player';
 import Sound from 'react-sound';
-import { Button } from 'react-bootstrap';
+import { Button, Navbar, Nav } from 'react-bootstrap';
+import NavLink from 'react-bootstrap/NavLink';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class App extends Component {
       email: 'test@test.com',
       password: 'test',
       title: '',
-      url: '',
+      track: '',
+      url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554941062265-lg.mp3',
       isLoggedIn: false,
     }
     this.handleLogin = this.handleLogin.bind(this);
@@ -64,6 +67,7 @@ class App extends Component {
     } catch (error) {
       console.error("INVALID_CREDENTIALS", error)
     }
+    this.props.history.push('/player')
   }
 
   async handleRegister(e) {
@@ -80,6 +84,8 @@ class App extends Component {
       password: '',
       token: user
     })
+
+    this.props.history.push('/player')
   }
 
   async handleSubmitTrack() {
@@ -103,23 +109,34 @@ class App extends Component {
     })
     const temp = await this.handleSubmitTrack()
     console.log(temp)
-
+    this.props.history.push('/player')
+    this.togglePlay();
   }
 
   render() {
     return (
       <div className="App">
         <header>
-          <h1>Vinyl</h1>
-          <Link to="/register" >Register</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/upload">Upload</Link>
+          <Navbar bg="dark" variant="dark">
+            <Link to="/"><h2 className="nav-brand">Vinyl</h2></Link>
+            <Nav className="ml-auto">
+              {
+                !this.state.isLoggedIn &&
+                <>
+                  <Link to="/login">Login</Link>
+                  <Link to="/register" >Register</Link>
+                </>
+              }
+              <Link to="/player">Player</Link>
+              <Link to="/upload">Upload</Link>
+            </Nav>
+          </Navbar>
         </header>
 
 
         <Route exact path="/upload" render={(props) => (
-          <FileUpload 
-            setTrackUrl={this.setTrackUrl}/>)} />
+          <FileUpload
+            setTrackUrl={this.setTrackUrl} />)} />
 
         <Route exact path="/register" render={(props) => (
           <Register
@@ -137,10 +154,16 @@ class App extends Component {
             handleChange={this.handleChange}
             handleLogin={this.handleLogin} />)} />
 
-            {/* <audio src={this.state.track && this.state.track} controls></audio> */}
+        <Route exact path="/player" render={(props) => (
+          <Player
+            playStatus={this.state.playStatus}
+            togglePlay={this.togglePlay}
+            filename={this.state.filename} />
+        )} />
 
-        <Button variant="outline-primary" onClick={this.togglePlay}>Play/Pause</Button>
-        <Sound url={this.state.track && this.state.track} 
+
+        {/* <Button variant="outline-primary" onClick={this.togglePlay}>Play/Pause</Button> */}
+        <Sound url={this.state.url && this.state.url}
           playStatus={this.state.playStatus}>audio</Sound>
 
       </div>
@@ -148,4 +171,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
