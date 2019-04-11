@@ -96,4 +96,16 @@ userRouter.post('/login', async (req, res) => {
   }
 });
 
+//Get a user's tracks
+userRouter.get('/:id/tracks', async (req, res) => {
+  try {
+    const user = await User.findOne({ where: { id: req.params.id } });
+    const tracks = await user.getTracks();
+    res.json({ tracks });
+  } catch (e) {
+    console.log(e);
+    res.stats(500).send(e.message);
+  }
+});
+
 module.exports = userRouter;
