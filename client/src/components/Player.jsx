@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Sound from 'react-sound';
 
 class Player extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class Player extends Component {
   }
 
   render() {
-
+    const { url, playStatus } = this.props
+    console.log(url)
     return (
       <section className="player">
         <div className="turntable">
@@ -23,7 +25,10 @@ class Player extends Component {
           <div className="tt-arm"></div>
           <button className="start-stop-btn">Start/Stop</button>
         </div>
-          <p>Now Playing: {this.props.filename}</p>
+        <p>Now Playing: {this.props.filename}</p>
+        <Sound
+          url={url && url}
+          playStatus={playStatus} />
       </section>
     )
   }
