@@ -23,6 +23,7 @@ const Register = (props) => {
         onChange={props.handleChange}
         type="password"
         name="password"
+        placeholder="Password"
         value={props.password}
         required />
       <Button onClick={props.handleRegister} variant="dark">Create User</Button>

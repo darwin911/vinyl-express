@@ -4,7 +4,8 @@ class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      spin: true,
+      spin: false,
+      play: false,
     }
 
   }
@@ -12,19 +13,22 @@ class Player extends Component {
   render() {
 
     return (
-      <div className="turntable">
-      <span className="volume-slider"></span>
-      <img className="vinyl"
-        onClick={() => {
-          this.props.togglePlay()
-        }}
-        src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
-      <p>Now Playing: {this.props.filename}</p>
-    </div>
+      <section className="player">
+        <div className="turntable">
+          <img className="vinyl"
+            onClick={() => {
+              this.props.togglePlay()
+            }}
+            src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
+          <div className="tt-arm"></div>
+          <button className="start-stop-btn">Start/Stop</button>
+        </div>
+          <p>Now Playing: {this.props.filename}</p>
+      </section>
     )
   }
-} 
- 
+}
+
 
 
 export default Player;

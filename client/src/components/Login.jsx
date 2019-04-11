@@ -15,6 +15,7 @@ const Login = (props) => {
         onChange={props.handleChange}
         type="password"
         name="password"
+        placeholder="Password"
         value={props.password}
         required />
       <Button onClick={props.handleLogin} variant="dark">Login</Button>
