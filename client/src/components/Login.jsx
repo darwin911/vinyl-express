@@ -1,23 +1,24 @@
 import React from 'react'
+import { FormControl, Form, Button } from 'react-bootstrap';
 
 const Login = (props) => {
   return (
-    <form onSubmit={props.handleLogin}>
-      <input
+    <Form onSubmit={props.handleLogin}>
+      <FormControl
         onChange={props.handleChange}
         type="email"
         name="email"
         placeholder="Email"
         value={props.email}
         required />
-      <input
+      <FormControl
         onChange={props.handleChange}
         type="password"
         name="password"
         value={props.password}
         required />
-      <button>Login</button>
-    </form>
+      <Button onClick={props.handleLogin} variant="dark">Login</Button>
+    </Form>
   )
 }
 

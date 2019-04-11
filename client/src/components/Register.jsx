@@ -1,9 +1,10 @@
 import React from 'react'
+import { FormControl, Form, Button } from 'react-bootstrap';
 
 const Register = (props) => {
   return (
-    <form onSubmit={props.handleRegister}>
-      <input
+    <Form onSubmit={props.handleRegister}>
+      <FormControl
         onChange={props.handleChange}
         type="text"
         name="name"
@@ -11,21 +12,21 @@ const Register = (props) => {
         required
         value={props.name}
       />
-      <input
+      <FormControl
         onChange={props.handleChange}
         type="email"
         name="email"
         placeholder="Email"
         value={props.email}
         required />
-      <input
+      <FormControl
         onChange={props.handleChange}
         type="password"
         name="password"
         value={props.password}
         required />
-      <button>Create User</button>
-    </form>
+      <Button onClick={props.handleRegister} variant="dark">Create User</Button>
+    </Form>
   )
 }
 
