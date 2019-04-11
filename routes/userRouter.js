@@ -69,21 +69,24 @@ userRouter.post('/login', async (req, res) => {
   console.log('LOGIN ROUTE TOUCHED')
   try {
     const { email, password } = req.body;
+    console.log("email: ", email, "pass: ", password)
     const user = await User.findOne({ where: { email } });
     if (user !== null) {
       const isAuthenticated = await compare(password, user.password_digest);
-      console.log(isAuthenticated)
+      console.log("Authenticated: ", isAuthenticated)
+
       if (isAuthenticated === true) {
         const userData = {
           id: user.id,
           name: user.name,
           email: user.email,
         };
+
         console.log(userData)
 
         const token = encode(userData);
 
-        res.json({ token, userData });
+        return res.json({ token, userData });
       }
       return res.status(401).send('Invalid Credentials');
     }
