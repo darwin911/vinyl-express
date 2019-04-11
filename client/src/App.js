@@ -148,7 +148,9 @@ class App extends Component {
     console.log('delete called', trackId)
     const resp = await removeTrack(trackId);
     console.log(resp)
-    
+    this.setState(prevState => ({
+      tracks: [...prevState.tracks.filter(track => track.id !== trackId) ]
+    }));
   }
 
   togglePlay() {

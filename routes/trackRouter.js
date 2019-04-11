@@ -38,7 +38,7 @@ trackRouter.post('/', async (req, res) => {
     console.error(e)
     res.stats(500).send(e.message)
   }
-})
+});
 
 trackRouter.delete('/:id', async (req, res) => {
   try {
@@ -47,6 +47,6 @@ trackRouter.delete('/:id', async (req, res) => {
   } catch (e) {
     res.stats(500).send(e.message);
   }
-})
+});
 
 module.exports = trackRouter;
