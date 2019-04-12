@@ -88,7 +88,7 @@ input {
   position: absolute;
   top: 5%;
   right: 0%;
-  transition: 250ms ease;
+  transition: 350ms ease;
 }
 
 .tt-arm:hover {

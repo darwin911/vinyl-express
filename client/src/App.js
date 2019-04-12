@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import { registerUser, loginUser, addTrack, removeTrack, getUserTracks } from './services/helper';
+import { registerUser, loginUser, addTrack, removeTrack, getUserTracks, updateTrack } from './services/helper';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import Player from './components/Player';
-import { Navbar, Nav, Button, ButtonGroup } from 'react-bootstrap';
+import { Navbar, Nav, Button, ButtonGroup, FormControl} from 'react-bootstrap';
 import decode from 'jwt-decode'
 
 class App extends Component {
@@ -31,6 +31,7 @@ class App extends Component {
       tracks: [],
       url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
       isLoggedIn: false,
+      isEdit: false,
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -40,6 +41,8 @@ class App extends Component {
     this.handleSubmitTrack = this.handleSubmitTrack.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
     this.handleEditTrack = this.handleEditTrack.bind(this);
+    this.handleUpdateTrack = this.handleUpdateTrack.bind(this);
+    this.handleUpdateChange = this.handleUpdateChange.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.setTrackUrl = this.setTrackUrl.bind(this);
   }
@@ -76,13 +79,13 @@ class App extends Component {
 
   async handleLogin(e) {
     e.preventDefault();
-    console.log('handleLogin called')
+    // console.log('handleLogin called')
     const { email, password } = this.state
     const loginData = { email, password, }
 
     try {
       const user = await loginUser(loginData)
-      console.log(user)
+      // console.log(user)
       if (user) {
         localStorage.setItem('token', user.token)
         const tracks = await getUserTracks(user.userData.id);
@@ -146,17 +149,41 @@ class App extends Component {
     this.setState(prevState => ({
       tracks: [...prevState.tracks, track.track]
     }))
+    // console.log(track)
+  }
+
+  handleEditTrack(track) {
+    if (this.state.isEdit === false) {
+      this.setState({
+        isEdit: track.id,
+        updateForm: {
+          ...track
+        },
+      })
+    }
+  }
+
+  handleUpdateChange(e) {
+    const {name, value} = e.target
+    this.setState(prevState => ({
+      updateForm: {
+        ...prevState.updateForm,
+        [name]: value,
+      }
+    }))
+  } 
+/////////////////////////////////////
+  async handleUpdateTrack(trackData) {
+    const track = await updateTrack(trackData.id, trackData);
     console.log(track)
+    this.setState(prevState => ({
+      isEdit: false,
+      tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData],
+     }))
   }
-
-  async handleEditTrack() {
-    console.log('Edit called')
-  }
-
+////////////////////////////////////////
   async handleDeleteTrack(trackId) {
-    console.log('delete called', trackId)
     const resp = await removeTrack(trackId);
-    console.log(resp)
     this.setState(prevState => ({
       tracks: [...prevState.tracks.filter(track => track.id !== trackId)]
     }));
@@ -215,7 +242,7 @@ class App extends Component {
         <main className="container">
 
           <Route exact path="/" render={() => (
-            <h5>A harder, but cooler way to listen to your music.</h5>
+            <h2>A harder, but cooler way to listen to your music.</h2>
           )} />
 
           <Route exact path="/register" render={(props) => (
@@ -255,15 +282,31 @@ class App extends Component {
                   <h3>{currentUser.name} has {tracks.length} tracks</h3>
                   {tracks.map(track =>
                     <div key={track.id}>
-                      <p>{track.title}</p>
-                      <p onClick={() =>
-                        this.setState({ url: track.url, filename: track.filename })
-                      } >{track.url}</p>
-                      <p>Track Id: {track.id}</p>
+                      {
+                        this.state.isEdit === track.id
+                          ?
+                          <>
+                            <FormControl
+                              type="text"
+                              name="title"
+                              value={this.state.updateForm.title}
+                              onChange={this.handleUpdateChange}/>
+                            <Button variant="warning"
+                            onClick={() => this.handleUpdateTrack(this.state.updateForm)}>Update!</Button>
+                          </>
+                          :
+                          <>
+                            <p onClick={() => this.setState({
+                              url: track.url,
+                              filename: track.filename
+                            })} >{track.title}</p>
+                            <p>Track Id: {track.id}</p>
+                          </>
+                      }
                       <ButtonGroup>
                         <Button
                           variant="info"
-                          onClick={() => this.handleEditTrack(track.id)}>Edit</Button>
+                          onClick={() => this.handleEditTrack(track)}>Edit</Button>
                         <Button
                           variant="danger"
                           onClick={() => this.handleDeleteTrack(track.id)}>Delete</Button>

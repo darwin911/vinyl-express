@@ -53,7 +53,10 @@ const removeTrack = async (trackId) => {
   return resp.data
 }
 
-
+const updateTrack = async (trackId, trackData) => {
+  const resp = await api.put(`tracks/${trackId}`, trackData);
+  return resp.data
+}
 
 export {
   allUsers,
@@ -63,5 +66,6 @@ export {
   getTrack,
   addTrack,
   removeTrack,
+  updateTrack,
   getUserTracks,
 }

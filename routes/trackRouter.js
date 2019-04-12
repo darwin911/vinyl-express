@@ -49,4 +49,14 @@ trackRouter.delete('/:id', async (req, res) => {
   }
 });
 
+trackRouter.put('/:id', async (req, res) => {
+  try {
+    const track = await Track.findOne({ where: { id: req.params.id }})
+    track.update({title: req.body.title})
+    res.json({ track })
+  } catch (e) {
+    res.stats(500).send(e.message);
+  }
+});
+
 module.exports = trackRouter;

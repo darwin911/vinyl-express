@@ -13,7 +13,6 @@ class Player extends Component {
 
   render() {
     const { url, playStatus } = this.props
-    console.log(url)
     return (
       <section className="player">
         <div className="turntable">
