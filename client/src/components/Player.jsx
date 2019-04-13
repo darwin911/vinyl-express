@@ -14,9 +14,10 @@ class Player extends Component {
 
   handleControlChange(e) {
     const { name, value } = e.target
-    this.setState({
+    this.setState(prevState => ({
+      ...prevState,
       [name]: value
-    })
+    }))
   }
 
 
@@ -48,6 +49,16 @@ class Player extends Component {
             max={2}
             onChange={this.handleControlChange}
             value={playbackRate} />
+          <label htmlFor="volume">Volume</label>
+          <input
+            className="volume-input"
+            name="volume"
+            type="number"
+            step={1}
+            min={0}
+            max={150}
+            onChange={this.handleControlChange}
+            value={volume} />
           <Sound
             url={url && url}
             volume={volume}

@@ -37,7 +37,9 @@ class FileUpload extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.submitFile}>
+      <Form
+        className="fileupload-form"
+        onSubmit={this.submitFile}>
         <FormControl
           type="text"
           name="filename"
@@ -45,10 +47,11 @@ class FileUpload extends Component {
           onChange={this.props.handleChange}
           value={this.state.filename} required />
         <FormControl
+          className="fileupload-input"
           label="upload file"
           type="file"
           onChange={this.handleFileUpload} required />
-        <Button type="submit">Select Track</Button>
+        <Button variant="outline-info" type="submit">Select Track</Button>
       </Form>
     );
   }

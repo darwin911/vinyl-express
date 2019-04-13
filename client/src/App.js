@@ -302,7 +302,7 @@ class App extends Component {
                             <p>Track Id: {track.id}</p>
                             <Button 
                               className="track-name"
-                              variant="outline-secondary"
+                              variant="outline-light"
                               onClick={() => this.setState({
                               url: track.url,
                               filename: track.filename})} >{track.title}</Button>
@@ -310,9 +310,11 @@ class App extends Component {
                       }
                       <ButtonGroup>
                         <Button
+                          size="sm"
                           variant="outline-info"
                           onClick={() => this.handleEditTrack(track)}>Rename Track</Button>
                         <Button
+                          size="sm"
                           variant="outline-danger"
                           onClick={() => this.handleDeleteTrack(track.id)}>Delete</Button>
                       </ButtonGroup>
