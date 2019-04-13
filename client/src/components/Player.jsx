@@ -5,14 +5,27 @@ class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      spin: false,
-      play: false,
+      playbackRate: 1,
+      volume: 100,
     }
-
+    this.handleControlChange = this.handleControlChange.bind(this);
   }
 
+
+  handleControlChange(e) {
+    const { name, value } = e.target
+    this.setState({
+      [name]: value
+    })
+  }
+
+
   render() {
-    const { url, playStatus } = this.props
+
+    const { url, playStatus } = this.props;
+
+    const { playbackRate, volume} = this.state;
+
     return (
       <section className="player">
         <div className="turntable">
@@ -24,10 +37,25 @@ class Player extends Component {
           <div className="tt-arm"></div>
           <button className="start-stop-btn">Start/Stop</button>
         </div>
-        <p>Now Playing: {this.props.filename}</p>
-        <Sound
-          url={url && url}
-          playStatus={playStatus} />
+        <div>
+          <label htmlFor="playbackRate">Playback Rate</label>
+          <input
+            className="playback-input"
+            name="playbackRate"
+            type="number"
+            step={0.02}
+            min={0}
+            max={2}
+            onChange={this.handleControlChange}
+            value={playbackRate} />
+          <Sound
+            url={url && url}
+            volume={volume}
+            playbackRate={playbackRate}
+            onLoad={console.log('onLoad called')}
+            whilePlaying={console.log('while Playing Called')}
+            playStatus={playStatus} />
+        </div>
       </section>
     )
   }
