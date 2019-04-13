@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
-import { registerUser, loginUser, addTrack, removeTrack, getUserTracks, updateTrack } from './services/helper';
+import {
+  registerUser,
+  loginUser,
+  addTrack,
+  removeTrack,
+  getUserTracks,
+  updateTrack
+} from './services/helper';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import Player from './components/Player';
-import { Navbar, Nav, Button, ButtonGroup, FormControl} from 'react-bootstrap';
+import {
+  Navbar,
+  Nav,
+  Button,
+  ButtonGroup,
+  FormControl
+} from 'react-bootstrap';
 import decode from 'jwt-decode'
 
 class App extends Component {
@@ -36,7 +49,6 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleSubmitTrack = this.handleSubmitTrack.bind(this);
     this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
@@ -61,7 +73,7 @@ class App extends Component {
         },
         tracks,
       })
-      this.props.history.push('/')
+      // this.props.history.push('/')
     }
   }
 
@@ -73,23 +85,16 @@ class App extends Component {
     }))
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-  }
-
   async handleLogin(e) {
     e.preventDefault();
-    // console.log('handleLogin called')
     const { email, password } = this.state
     const loginData = { email, password, }
 
     try {
       const user = await loginUser(loginData)
-      // console.log(user)
       if (user) {
         localStorage.setItem('token', user.token)
         const tracks = await getUserTracks(user.userData.id);
-        console.log(tracks)
         this.setState({
           currentUser: user.userData,
           name: '',
@@ -129,7 +134,6 @@ class App extends Component {
     const data = { name, email, password }
 
     const user = await registerUser(data);
-    console.log(user)
     localStorage.setItem('token', user.token)
     this.setState({
       name: '',
@@ -149,7 +153,6 @@ class App extends Component {
     this.setState(prevState => ({
       tracks: [...prevState.tracks, track.track]
     }))
-    // console.log(track)
   }
 
   handleEditTrack(track) {
@@ -164,24 +167,24 @@ class App extends Component {
   }
 
   handleUpdateChange(e) {
-    const {name, value} = e.target
+    const { name, value } = e.target
     this.setState(prevState => ({
       updateForm: {
         ...prevState.updateForm,
         [name]: value,
       }
     }))
-  } 
-/////////////////////////////////////
+  }
+  /////////////////////////////////////
   async handleUpdateTrack(trackData) {
     const track = await updateTrack(trackData.id, trackData);
     console.log(track)
     this.setState(prevState => ({
       isEdit: false,
       tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData],
-     }))
+    }))
   }
-////////////////////////////////////////
+  ////////////////////////////////////////
   async handleDeleteTrack(trackId) {
     const resp = await removeTrack(trackId);
     this.setState(prevState => ({
@@ -242,7 +245,7 @@ class App extends Component {
         <main className="container">
 
           <Route exact path="/" render={() => (
-            <h2>A harder, but cooler way to listen to your music.</h2>
+            <h2>Music, but on a record player – but not really</h2>
           )} />
 
           <Route exact path="/register" render={(props) => (
@@ -281,7 +284,7 @@ class App extends Component {
                 <section className="section-tracks">
                   <h3>{currentUser.name} has {tracks.length} tracks</h3>
                   {tracks.map(track =>
-                    <div key={track.id}>
+                    <div key={track.id} className="track">
                       {
                         this.state.isEdit === track.id
                           ?
@@ -290,25 +293,27 @@ class App extends Component {
                               type="text"
                               name="title"
                               value={this.state.updateForm.title}
-                              onChange={this.handleUpdateChange}/>
+                              onChange={this.handleUpdateChange} />
                             <Button variant="warning"
-                            onClick={() => this.handleUpdateTrack(this.state.updateForm)}>Update!</Button>
+                              onClick={() => this.handleUpdateTrack(this.state.updateForm)}>Update!</Button>
                           </>
                           :
                           <>
-                            <p onClick={() => this.setState({
-                              url: track.url,
-                              filename: track.filename
-                            })} >{track.title}</p>
                             <p>Track Id: {track.id}</p>
+                            <Button 
+                              className="track-name"
+                              variant="outline-secondary"
+                              onClick={() => this.setState({
+                              url: track.url,
+                              filename: track.filename})} >{track.title}</Button>
                           </>
                       }
                       <ButtonGroup>
                         <Button
-                          variant="info"
-                          onClick={() => this.handleEditTrack(track)}>Edit</Button>
+                          variant="outline-info"
+                          onClick={() => this.handleEditTrack(track)}>Rename Track</Button>
                         <Button
-                          variant="danger"
+                          variant="outline-danger"
                           onClick={() => this.handleDeleteTrack(track.id)}>Delete</Button>
                       </ButtonGroup>
                     </div>)
@@ -320,7 +325,7 @@ class App extends Component {
         </main>
 
         <footer>
-          <p>&copy; Darwin Smith 2019</p>
+          <p>&copy; Darwin Smith 2019 – General Assembly</p>
         </footer>
       </div>
     );
