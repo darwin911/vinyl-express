@@ -61,12 +61,27 @@ form {
   margin: 0 auto;
 }
 
-.section-tracks input {
+.section-tracks input, .fileupload-form input {
   color: #fff !important;
   background-color: rgba(255, 255, 255, 0.05) !important;
   border: none !important;
   margin-bottom: 1rem;
   box-shadow: 0 8px 6px -6px rgba(0,0,0,.225);
+}
+
+.fileupload-form input::placeholder {
+  color: #bbb;
+}
+
+.fileupload-form {
+  background: #444;
+  padding: 2rem;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
+
+.fileupload-input {
+
 }
 
 .turntable {
@@ -153,6 +168,7 @@ form {
 
 .track p {
   color: #333;
+  color: #999;
 }
 
 .track-name {
