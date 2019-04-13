@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 app.use('/users', userRouter)
 app.use('/tracks', trackRouter)
 
-// Define POST route
+// POST for uploads
 app.post('/upload', (req, res) => {
 
   const form = new multiparty.Form();
