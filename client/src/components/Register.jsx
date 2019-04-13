@@ -10,6 +10,7 @@ const Register = (props) => {
         name="name"
         placeholder="Name"
         required
+        autoComplete="off"
         value={props.name}
       />
       <FormControl
@@ -17,6 +18,7 @@ const Register = (props) => {
         type="email"
         name="email"
         placeholder="Email"
+        autoComplete="off"
         value={props.email}
         required />
       <FormControl
@@ -24,6 +26,7 @@ const Register = (props) => {
         type="password"
         name="password"
         placeholder="Password"
+        autoComplete="off"
         value={props.password}
         required />
       <Button onClick={props.handleRegister} variant="dark">Create User</Button>

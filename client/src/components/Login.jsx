@@ -10,6 +10,7 @@ const Login = (props) => {
         name="email"
         placeholder="Email"
         value={props.email}
+        autoComplete="off"
         required />
       <FormControl
         onChange={props.handleChange}
@@ -17,6 +18,7 @@ const Login = (props) => {
         name="password"
         placeholder="Password"
         value={props.password}
+        autoComplete="off"
         required />
       <Button onClick={props.handleLogin} variant="dark">Login</Button>
     </Form>
