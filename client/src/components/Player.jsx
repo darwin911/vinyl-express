@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Sound from 'react-sound';
+import { ProgressBar } from 'react-bootstrap';
 
 class Player extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Player extends Component {
     const { name, value } = e.target
     this.setState(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: parseInt(value)
     }))
   }
 
@@ -25,7 +26,7 @@ class Player extends Component {
 
     const { url, playStatus } = this.props;
 
-    const { playbackRate, volume} = this.state;
+    const { playbackRate, volume } = this.state;
 
     return (
       <section className="player">
@@ -38,6 +39,8 @@ class Player extends Component {
           <div className="tt-arm"></div>
           <button className="start-stop-btn">Start/Stop</button>
         </div>
+        {/* <audio src={url} controls /> */}
+
         <div>
           <label htmlFor="playbackRate">Playback Rate</label>
           <input
@@ -56,15 +59,16 @@ class Player extends Component {
             type="number"
             step={1}
             min={0}
-            max={150}
+            max={120}
             onChange={this.handleControlChange}
             value={volume} />
+          <ProgressBar variant="success" animated now={volume} />
           <Sound
             url={url && url}
             volume={volume}
             playbackRate={playbackRate}
-            onLoad={console.log('onLoad called')}
-            whilePlaying={console.log('while Playing Called')}
+            // onLoad={console.log('onLoad called')}
+            // whilePlaying={console.log('while Playing Called')}
             playStatus={playStatus} />
         </div>
       </section>
