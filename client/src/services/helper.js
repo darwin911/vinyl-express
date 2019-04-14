@@ -26,8 +26,7 @@ const loginUser = async (data) => {
 
 const getUserTracks = async (userId) => {
   const resp = await api.get(`users/${userId}/tracks`);
-  console.log('get a user tracks called')
-  return resp.data.tracks
+  return resp.data.tracks;
 }
 
 const allTracks = async () => {
@@ -38,24 +37,23 @@ const allTracks = async () => {
 
 const getTrack = async (trackId) => {
   const resp = await api.get(`tracks/${trackId}`);
-  console.log('get a track called')
-  return resp.data
+  return resp.data;
 }
 
 const addTrack = async (trackData) => {
   console.log(trackData)
   const resp = await api.post(`tracks/`, trackData)
-  return resp.data
+  return resp.data;
 }
 
 const removeTrack = async (trackId) => {
   const resp = await api.delete(`tracks/${trackId}`)
-  return resp.data
+  return resp.data;
 }
 
 const updateTrack = async (trackId, trackData) => {
   const resp = await api.put(`tracks/${trackId}`, trackData);
-  return resp.data
+  return resp.data.track;
 }
 
 export {

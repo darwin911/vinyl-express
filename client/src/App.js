@@ -35,7 +35,7 @@ class App extends Component {
       currentTrack: {
         title: '',
         id: '',
-        url: '',
+        url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
       },
       name: 'HAL 9000',
       email: 'test@test.com',
@@ -43,7 +43,7 @@ class App extends Component {
       title: '',
       track: '',
       tracks: [],
-      url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
+      url: '',
       isLoggedIn: false,
       isEdit: false,
     }
@@ -172,7 +172,6 @@ class App extends Component {
 
   handleUpdateChange(e) {
     const { name, value } = e.target
-    console.log(name, value)
     this.setState(prevState => ({
       updateForm: {
         ...prevState.updateForm,
@@ -183,7 +182,7 @@ class App extends Component {
   /////////////////////////////////////
   async handleUpdateTrack(trackData) {
     const track = await updateTrack(trackData.id, trackData);
-    console.log(track)
+    console.log(track.title)
     this.setState(prevState => ({
       isEdit: false,
       tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData],
@@ -204,11 +203,12 @@ class App extends Component {
       : this.setState({ playStatus: 'PAUSED' })
   }
 
-  async setTrackUrl(url, filename) {
-    console.log(url, filename)
+  async setTrackUrl(url) {
+    console.log(url)
     this.setState({
-      url,
-      filename
+      currentTrack: {
+        url
+      }
     })
     const temp = await this.handleSubmitTrack()
     console.log(temp)
@@ -225,7 +225,7 @@ class App extends Component {
       password,
       playStatus,
       tracks,
-      url,
+      currentTrack,
       filename } = this.state
     return (
       <div className="App">
@@ -282,7 +282,7 @@ class App extends Component {
 
               <Route exact path="/player" render={(props) => (
                 <Player
-                  url={url}
+                  currentTrack={currentTrack}
                   playStatus={playStatus}
                   togglePlay={this.togglePlay}
                   filename={filename} />
@@ -314,10 +314,14 @@ class App extends Component {
                               draggable={true}
                               className="track-name"
                               variant="outline-light"
-                              onClick={() => this.setState({
-                                url: track.url,
+                              onClick={() => this.setState(prevState => ({
+                                currentTrack: {
+                                  url: track.url,
+                                  title: track.title,
+                                  id: track.id,
+                                },
                                 filename: track.filename
-                              })} >{track.title}</Button>
+                              }))} >{track.title}</Button>
                           </>
                       }
                       <ButtonGroup>

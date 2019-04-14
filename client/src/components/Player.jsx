@@ -24,7 +24,7 @@ class Player extends Component {
 
   render() {
 
-    const { url, playStatus } = this.props;
+    const { currentTrack, playStatus } = this.props;
 
     const { playbackRate, volume } = this.state;
 
@@ -64,7 +64,7 @@ class Player extends Component {
             onChange={this.handleControlChange}
             value={volume} />
           <Sound
-            url={url && url}
+            url={currentTrack.url && currentTrack.url}
             volume={volume}
             playbackRate={playbackRate}
             // onLoad={console.log('onLoad called')}

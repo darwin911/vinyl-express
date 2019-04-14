@@ -23,7 +23,7 @@ class FileUpload extends Component {
       }
     }).then(resp => {
       console.log(resp.data);
-      this.props.setTrackUrl(resp.data.Location, this.state.filename)
+      this.props.setTrackUrl(resp.data.Location)
     }).catch(error => {
       console.log(error);
     });
