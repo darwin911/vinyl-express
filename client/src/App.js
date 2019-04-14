@@ -70,6 +70,7 @@ class App extends Component {
         currentUser: {
           name: data.name,
           email: data.email,
+          id: data.id,
         },
         tracks,
       })
@@ -148,6 +149,7 @@ class App extends Component {
 
   async handleSubmitTrack() {
     const { filename, url, currentUser } = this.state;
+    console.log(filename, url, currentUser)
     const data = { filename, url, userId: currentUser.id }
     const track = await addTrack(data);
     this.setState(prevState => ({
@@ -168,6 +170,7 @@ class App extends Component {
 
   handleUpdateChange(e) {
     const { name, value } = e.target
+    console.log(name, value)
     this.setState(prevState => ({
       updateForm: {
         ...prevState.updateForm,
@@ -186,6 +189,7 @@ class App extends Component {
   }
   ////////////////////////////////////////
   async handleDeleteTrack(trackId) {
+    // eslint-disable-next-line
     const resp = await removeTrack(trackId);
     this.setState(prevState => ({
       tracks: [...prevState.tracks.filter(track => track.id !== trackId)]
@@ -225,7 +229,7 @@ class App extends Component {
       <div className="App">
         <header>
           <Navbar bg="dark" variant="dark">
-            <Link to="/"><h2 className="nav-brand">Vinyl</h2></Link>
+            <Link to="/"><h2 className="nav-brand">V<span>i</span>nyl</h2></Link>
             <Nav className="ml-auto">
               {
                 (isLoggedIn) ?
@@ -289,7 +293,7 @@ class App extends Component {
                         this.state.isEdit === track.id
                           ?
                           <>
-                            <FormControl
+                            <input
                               type="text"
                               name="title"
                               value={this.state.updateForm.title}
@@ -301,6 +305,7 @@ class App extends Component {
                           <>
                             <p>Track Id: {track.id}</p>
                             <Button 
+                              draggable={true}
                               className="track-name"
                               variant="outline-light"
                               onClick={() => this.setState({

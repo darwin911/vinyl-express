@@ -44,6 +44,7 @@ header {
   font-family: 'Allerta Stencil';
   font-weight: 700;
   color: white;
+  letter-spacing: -1px;
 }
 
 .navbar a {
@@ -53,6 +54,10 @@ header {
 .container h2 {
   font-family: 'Allerta Stencil';
   font-size: 3rem;
+}
+
+.nav-brand span {
+  color: orangered;
 }
 
 form {
@@ -80,8 +85,12 @@ form {
   margin-bottom: 2rem;
 }
 
-.fileupload-input {
+/* .fileupload-input {
 
+} */
+
+.player {
+  margin-bottom: 3rem;
 }
 
 .turntable {
@@ -141,7 +150,7 @@ form {
   bottom: 1rem;
 }
 
-.playback-input {
+.playback-input, .volume-input {
   background: rgba(255, 255, 255, 0.035);
   margin: 0;
   padding: 0 0 0 0.5rem;
