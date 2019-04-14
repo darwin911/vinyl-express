@@ -3,7 +3,9 @@ import { FormControl, Form, Button } from 'react-bootstrap';
 
 const Register = (props) => {
   return (
-    <Form onSubmit={props.handleRegister}>
+    <Form 
+      className="register-form"
+      onSubmit={props.handleRegister}>
       <FormControl
         onChange={props.handleChange}
         type="text"

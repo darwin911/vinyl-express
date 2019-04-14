@@ -3,7 +3,9 @@ import { FormControl, Form, Button } from 'react-bootstrap';
 
 const Login = (props) => {
   return (
-    <Form onSubmit={props.handleLogin}>
+    <Form 
+      className="login-form"
+      onSubmit={props.handleLogin}>
       <FormControl
         onChange={props.handleChange}
         type="email"

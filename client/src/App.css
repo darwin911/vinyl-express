@@ -17,7 +17,7 @@ html {
   min-height: 100vh;
   font-family: 'Lato';
   background: radial-gradient(ellipse at bottom right, hsl(0, 0%, 0%), hsl(0, 0%, 13%));
-  font-weight: bold;
+  font-weight: normal;
   color: white;
   position: relative;
   padding-bottom: 5rem;
@@ -41,7 +41,10 @@ header {
 }
 
 .nav-brand {
-  font-family: 'Allerta Stencil';
+  font-family: 'Cute Font';
+  line-height: 1;
+  font-size: 3.5rem;
+  margin-bottom: 0;
   font-weight: 700;
   color: white;
   letter-spacing: -1px;
@@ -52,7 +55,7 @@ header {
 }
 
 .container h2 {
-  font-family: 'Allerta Stencil';
+  font-family: 'Cute Font';
   font-size: 3rem;
 }
 
@@ -66,7 +69,7 @@ form {
   margin: 0 auto;
 }
 
-.section-tracks input, .fileupload-form input {
+.login-form input, .register-form input, .section-tracks input, .fileupload-form input {
   color: #fff !important;
   background-color: rgba(255, 255, 255, 0.05) !important;
   border: none !important;

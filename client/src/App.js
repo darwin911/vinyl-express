@@ -75,7 +75,7 @@ class App extends Component {
         },
         tracks,
       })
-      // this.props.history.push('/')
+
     }
   }
 
@@ -234,15 +234,18 @@ class App extends Component {
             <Nav className="ml-auto">
               {
                 (isLoggedIn) ?
-                  <Link to="/" onClick={this.handleLogout}>Logout</Link>
+                  <>
+                    <Link to="/player">Player</Link>
+                    <Link to="/upload">Upload</Link>
+                    <Link to="/" onClick={this.handleLogout}>Logout</Link>
+                  </>
                   :
                   <>
                     <Link to="/login">Login</Link>
                     <Link to="/register" >Register</Link>
                   </>
               }
-              <Link to="/player">Player</Link>
-              <Link to="/upload">Upload</Link>
+
             </Nav>
           </Navbar>
         </header>
@@ -306,13 +309,14 @@ class App extends Component {
                           :
                           <>
                             <p>Track Id: {track.id}</p>
-                            <Button 
+                            <Button
                               draggable={true}
                               className="track-name"
                               variant="outline-light"
                               onClick={() => this.setState({
-                              url: track.url,
-                              filename: track.filename})} >{track.title}</Button>
+                                url: track.url,
+                                filename: track.filename
+                              })} >{track.title}</Button>
                           </>
                       }
                       <ButtonGroup>
