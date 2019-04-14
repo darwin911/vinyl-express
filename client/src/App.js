@@ -18,7 +18,6 @@ import {
   Nav,
   Button,
   ButtonGroup,
-  FormControl
 } from 'react-bootstrap';
 import decode from 'jwt-decode'
 
@@ -35,14 +34,20 @@ class App extends Component {
       currentTrack: {
         title: '',
         id: '',
+        url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
+      },
+      updateForm: {
+        title: '',
+        id: '',
+        url: '',
+        userId: '',
       },
       name: 'HAL 9000',
       email: 'test@test.com',
       password: 'test',
-      title: '',
+      errorMessage: '',
       track: '',
       tracks: [],
-      url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
       isLoggedIn: false,
       isEdit: false,
     }
@@ -64,7 +69,7 @@ class App extends Component {
     if (token) {
       const data = decode(token);
       const tracks = await getUserTracks(data.id);
-      console.log(data);
+      // console.log(data);
       this.setState({
         isLoggedIn: true,
         currentUser: {
@@ -74,7 +79,7 @@ class App extends Component {
         },
         tracks,
       })
-      // this.props.history.push('/')
+
     }
   }
 
@@ -109,7 +114,7 @@ class App extends Component {
     } catch (error) {
       console.error("INVALID_CREDENTIALS", error)
       this.setState({
-        errorMessage: error
+        errorMessage: "Invalid Credentials"
       })
     }
   }
@@ -130,31 +135,26 @@ class App extends Component {
 
   async handleRegister(e) {
     e.preventDefault();
-    console.log('handleRegister Called')
     const { name, email, password } = this.state;
     const data = { name, email, password }
-
-    const user = await registerUser(data);
-    localStorage.setItem('token', user.token)
-    this.setState({
-      name: '',
-      email: '',
-      password: '',
-      isLoggedIn: true,
-      currentUser: user.userData,
-    })
-
-    this.props.history.push('/player')
-  }
-
-  async handleSubmitTrack() {
-    const { filename, url, currentUser } = this.state;
-    console.log(filename, url, currentUser)
-    const data = { filename, url, userId: currentUser.id }
-    const track = await addTrack(data);
-    this.setState(prevState => ({
-      tracks: [...prevState.tracks, track.track]
-    }))
+    try {
+      const user = await registerUser(data);
+      localStorage.setItem('token', user.token)
+      this.setState({
+        name: '',
+        email: '',
+        password: '',
+        isLoggedIn: true,
+        currentUser: user.userData,
+        tracks: [],
+      })
+      this.props.history.push('/player')
+    } catch (error) {
+      console.log(error)
+      this.setState({
+        errorMessage: "This email is already in use."
+      })
+    }
   }
 
   handleEditTrack(track) {
@@ -170,7 +170,6 @@ class App extends Component {
 
   handleUpdateChange(e) {
     const { name, value } = e.target
-    console.log(name, value)
     this.setState(prevState => ({
       updateForm: {
         ...prevState.updateForm,
@@ -178,16 +177,16 @@ class App extends Component {
       }
     }))
   }
-  /////////////////////////////////////
+
   async handleUpdateTrack(trackData) {
+        // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
-    console.log(track)
     this.setState(prevState => ({
       isEdit: false,
-      tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData],
+      tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData].sort((a, b) => a.id - b.id),
     }))
   }
-  ////////////////////////////////////////
+
   async handleDeleteTrack(trackId) {
     // eslint-disable-next-line
     const resp = await removeTrack(trackId);
@@ -197,21 +196,40 @@ class App extends Component {
   }
 
   togglePlay() {
-    (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
+    setTimeout(() => {
+      (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
       ? this.setState({ playStatus: 'PLAYING' })
       : this.setState({ playStatus: 'PAUSED' })
+    }, 300)
+    
   }
 
-  async setTrackUrl(url, filename) {
-    console.log(url, filename)
+  async setTrackUrl(url, title) {
+    console.log(url)
     this.setState({
-      url,
-      filename
+      currentTrack: {
+        url,
+        title, 
+      }
     })
     const temp = await this.handleSubmitTrack()
     console.log(temp)
     this.props.history.push('/player')
     this.togglePlay();
+  }
+
+  async handleSubmitTrack() {
+    const { currentTrack, currentUser } = this.state;
+    console.log(currentTrack, currentUser)
+    const data = {
+      title: currentTrack.title,
+      url: currentTrack.url,
+      userId: currentUser.id
+    }
+    const track = await addTrack(data);
+    this.setState(prevState => ({
+      tracks: [...prevState.tracks, track.track]
+    }))
   }
 
   render() {
@@ -223,8 +241,9 @@ class App extends Component {
       password,
       playStatus,
       tracks,
-      url,
-      filename } = this.state
+      currentTrack,
+      filename,
+      errorMessage } = this.state
     return (
       <div className="App">
         <header>
@@ -233,15 +252,18 @@ class App extends Component {
             <Nav className="ml-auto">
               {
                 (isLoggedIn) ?
-                  <Link to="/" onClick={this.handleLogout}>Logout</Link>
+                  <>
+                    <Link to="/player">Player</Link>
+                    <Link to="/upload">Upload</Link>
+                    <Link to="/" onClick={this.handleLogout}>Logout</Link>
+                  </>
                   :
                   <>
                     <Link to="/login">Login</Link>
                     <Link to="/register" >Register</Link>
                   </>
               }
-              <Link to="/player">Player</Link>
-              <Link to="/upload">Upload</Link>
+
             </Nav>
           </Navbar>
         </header>
@@ -257,6 +279,7 @@ class App extends Component {
               name={name}
               email={email}
               password={password}
+              errorMessage={errorMessage}
               handleChange={this.handleChange}
               handleRegister={this.handleRegister} />)} />
 
@@ -265,6 +288,7 @@ class App extends Component {
               name={name}
               email={email}
               password={password}
+              errorMessage={errorMessage}
               handleChange={this.handleChange}
               handleLogin={this.handleLogin} />)} />
 
@@ -277,7 +301,7 @@ class App extends Component {
 
               <Route exact path="/player" render={(props) => (
                 <Player
-                  url={url}
+                  currentTrack={currentTrack}
                   playStatus={playStatus}
                   togglePlay={this.togglePlay}
                   filename={filename} />
@@ -294,6 +318,7 @@ class App extends Component {
                           ?
                           <>
                             <input
+                              className="update-input"
                               type="text"
                               name="title"
                               value={this.state.updateForm.title}
@@ -304,13 +329,18 @@ class App extends Component {
                           :
                           <>
                             <p>Track Id: {track.id}</p>
-                            <Button 
+                            <Button
                               draggable={true}
                               className="track-name"
                               variant="outline-light"
-                              onClick={() => this.setState({
-                              url: track.url,
-                              filename: track.filename})} >{track.title}</Button>
+                              onClick={() => this.setState(prevState => ({
+                                currentTrack: {
+                                  url: track.url,
+                                  title: track.title,
+                                  id: track.id,
+                                },
+                                filename: track.filename
+                              }))} >{track.title}</Button>
                           </>
                       }
                       <ButtonGroup>

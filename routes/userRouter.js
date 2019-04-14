@@ -30,6 +30,14 @@ userRouter.get('/:id', async (req, res) => {
 userRouter.post('/', async (req, res) => {
   try {
     const { email, name, password } = req.body;
+    const emailExists = await User.findOne({
+      where: { email: email }
+    })
+
+    if (emailExists) {
+      return res.status(409).send('This email is already in use.');
+    }
+
     if (password) {
       const passwordDigest = await hash(password);
       const user = await User.create({
@@ -66,10 +74,8 @@ userRouter.post('/', async (req, res) => {
 
 //Login route
 userRouter.post('/login', async (req, res) => {
-  console.log('LOGIN ROUTE TOUCHED')
   try {
     const { email, password } = req.body;
-    console.log("email: ", email, "pass: ", password)
     const user = await User.findOne({ where: { email } });
     if (user !== null) {
       const isAuthenticated = await compare(password, user.password_digest);

@@ -1,9 +1,16 @@
 import React from 'react'
-import { FormControl, Form, Button } from 'react-bootstrap';
+import { FormControl, Form, Button, Alert } from 'react-bootstrap';
 
 const Login = (props) => {
+  console.log(props.errorMessage)
   return (
-    <Form onSubmit={props.handleLogin}>
+    <Form
+      className="login-form"
+      onSubmit={props.handleLogin}>
+      {
+        props.errorMessage &&
+        <Alert variant="danger">{props.errorMessage}</Alert>
+      }
       <FormControl
         onChange={props.handleChange}
         type="email"
