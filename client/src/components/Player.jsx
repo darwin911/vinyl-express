@@ -31,15 +31,18 @@ class Player extends Component {
     return (
       <section className="player">
         <div className="turntable">
-          <img className="vinyl"
-            onClick={() => {
-              this.props.togglePlay()
-            }}
+          {/* <div className={"my-class " + (isRed ? "red" : null)} /> */}
+          <img className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
+            onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
-          <div className="tt-arm"></div>
-          <button className="start-stop-btn">Start/Stop</button>
+          <div className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
+          <button className="start-stop-btn">&#8227;</button>
+          <ProgressBar
+            className="volume-bar"
+            variant="danger"
+            now={volume} />
         </div>
-        {/* <audio src={url} controls /> */}
+        {/* <audio src={url} controls /> */}Î
 
         <div>
           <label htmlFor="playbackRate">Playback Rate</label>
@@ -58,11 +61,10 @@ class Player extends Component {
             name="volume"
             type="number"
             step={1}
-            min={0}
+            min={1}
             max={120}
             onChange={this.handleControlChange}
             value={volume} />
-          <ProgressBar variant="success" animated now={volume} />
           <Sound
             url={url && url}
             volume={volume}

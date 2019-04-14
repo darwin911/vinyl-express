@@ -7,7 +7,8 @@ class FileUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null
+      file: null,
+      title: '',
     };
     this.submitFile = this.submitFile.bind(this);
   }
@@ -43,8 +44,8 @@ class FileUpload extends Component {
         onSubmit={this.submitFile}>
         <FormControl
           type="text"
-          name="filename"
-          placeholder="Track Name"
+          name="title"
+          placeholder="Track Title"
           onChange={this.props.handleChange}
           value={this.state.filename} required />
         <FormControl
