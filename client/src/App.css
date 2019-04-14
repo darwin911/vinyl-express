@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Lobster+Two:400,700');
 @import url('https://fonts.googleapis.com/css?family=Lato');
 @import url('https://fonts.googleapis.com/css?family=Allerta+Stencil');
+@import url('https://fonts.googleapis.com/css?family=Cute+Font');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -85,41 +85,44 @@ form {
   margin-bottom: 2rem;
 }
 
-/* .fileupload-input {
-
-} */
-
 .player {
   margin-bottom: 3rem;
 }
 
 .turntable {
   width: 100%;
-  height: 100%;
-  max-width: 350px;
+  max-width: 420px;
   margin: 0 auto 2rem;
   position: relative;
   background: rgb(170, 170, 170);
-  background: url("https://media.freestocktextures.com/cache/a4/2f/a42f1d91f2657c6aea52471e293e2858.jpg");
+  /* background: url("https://media.freestocktextures.com/cache/a4/2f/a42f1d91f2657c6aea52471e293e2858.jpg"); */
+  background: url("http://allroundnews.com/wp-content/uploads/2012/03/free-metal-texture-6.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 100%;
-  border-radius: 8px;
+  border-radius: 5px;
   color: #333;
+  border: 3px solid rgba(255, 255, 255, 0.125);
+}
+
+.vinyl {
+  cursor: pointer;
+  max-width: 75%;
+  margin: 0 2rem;
 }
 
 .tt-arm {
   display: inline-block;
-  width: 33%;
+  width: 24%;
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url("http://www.schillmania.com/projects/soundmanager2/demo/turntable/image/tt_arm.png");
   position: absolute;
   z-index: 1;
-  top: 0%;
-  right: -6%;
-  transition: 350ms ease;
+  top: 2%;
+  right: 5%;
+  transition: 450ms ease;
 }
 
 .tt-play {
@@ -132,23 +135,16 @@ form {
   animation-fill-mode: forwards;
 }
 
-.tt-arm::before {
+.turntable::after {
   content: '';
-  background: blue;
+  background: rgba(0, 0, 0, 0.5);
   position: absolute;
-  width: 4rem;
-  height: 4rem;
-  z-index: 5;
-  top: 2%;
-  right: 17%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.0);
+  width: 4.25rem;
+  height: 4.25rem;
+  top: 5%;
+  right: 7%;
+  border: 3px solid rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-
-}
-
-.vinyl {
-  cursor: pointer;
-  max-width: 100%;
 }
 
 .spin {
@@ -178,13 +174,25 @@ form {
   color: red;
 }
 
+.controls {
+  font-family: 'Cute Font';
+  font-size: 2rem;
+  font-weight: 900;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.controls label {
+  margin: 0 1rem 0 0;
+}
+
 .volume-bar {
   background: black;
   position: absolute;
-  width: 50%;
+  width: 40%;
   height: 10px;
   top: 30%;
-  left: -20%;
+  left: -14%;
   right: 0;
   bottom: 0;
   transform: rotate(-90deg);
@@ -192,13 +200,15 @@ form {
 }
 
 .playback-input, .volume-input {
-  background: rgba(255, 255, 255, 0.035);
+  background: transparent;
   margin: 0;
-  padding: 0 0 0 0.5rem;
+  padding: 0;
+  line-height: 1;
   border: none;
   color: #eee;
-  width: 3rem;
+  width: 4rem;
   cursor: pointer;
+  border-radius: 3px;
 }
 
 .section-tracks {

@@ -17,7 +17,7 @@ class Player extends Component {
     const { name, value } = e.target
     this.setState(prevState => ({
       ...prevState,
-      [name]: parseInt(value)
+      [name]: parseFloat(value)
     }))
   }
 
@@ -31,7 +31,6 @@ class Player extends Component {
     return (
       <section className="player">
         <div className="turntable">
-          {/* <div className={"my-class " + (isRed ? "red" : null)} /> */}
           <img className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
             onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
@@ -42,20 +41,19 @@ class Player extends Component {
             variant="danger"
             now={volume} />
         </div>
-        {/* <audio src={url} controls /> */}Î
 
-        <div>
-          <label htmlFor="playbackRate">Playback Rate</label>
+        <div className="controls">
+          <label htmlFor="playbackRate">Playback</label>
           <input
             className="playback-input"
             name="playbackRate"
             type="number"
-            step={0.02}
-            min={0}
-            max={2}
+            step={0.05}
+            min={0.5}
+            max={3}
             onChange={this.handleControlChange}
             value={playbackRate} />
-          <label htmlFor="volume">Volume</label>
+          <label htmlFor="volume">Vol.</label>
           <input
             className="volume-input"
             name="volume"

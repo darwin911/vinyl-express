@@ -18,7 +18,7 @@ import {
   Nav,
   Button,
   ButtonGroup,
-  FormControl
+  Modal
 } from 'react-bootstrap';
 import decode from 'jwt-decode'
 
@@ -35,6 +35,7 @@ class App extends Component {
       currentTrack: {
         title: '',
         id: '',
+        url: '',
       },
       name: 'HAL 9000',
       email: 'test@test.com',
@@ -294,6 +295,7 @@ class App extends Component {
                           ?
                           <>
                             <input
+                              className="update-input"
                               type="text"
                               name="title"
                               value={this.state.updateForm.title}
