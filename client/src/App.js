@@ -200,7 +200,7 @@ class App extends Component {
       (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
       ? this.setState({ playStatus: 'PLAYING' })
       : this.setState({ playStatus: 'PAUSED' })
-    }, 500)
+    }, 300)
     
   }
 

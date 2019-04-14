@@ -15,7 +15,7 @@ html {
 .App {
   text-align: center;
   min-height: 100vh;
-  font-family: 'Lato';
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: radial-gradient(ellipse at bottom right, hsl(0, 0%, 0%), hsl(0, 0%, 13%));
   font-weight: normal;
   color: white;
@@ -125,11 +125,11 @@ form {
   z-index: 1;
   top: 2%;
   right: 5%;
-  transition: 450ms ease;
+  /* transition: 450ms ease; */
 }
 
 .tt-play {
-  animation: tt-play 800ms linear;
+  animation: tt-play 500ms linear;
   animation-fill-mode: forwards;
 
 }
@@ -271,8 +271,7 @@ footer p {
     transform-origin: 54% 27%;
   }
   50% {
-    transform: rotate(2deg);
-    /* transform: rotateY(10deg); */
+    transform: rotate(4deg);
     transform-origin: 54% 27%;
   }
   100% {
@@ -287,7 +286,7 @@ footer p {
     transform-origin: 54% 27%;
   }
   50% {
-    transform: rotate(2deg);
+    transform: rotate(4deg);
     transform-origin: 54% 27%;
   }
   100% {
