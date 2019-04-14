@@ -11,6 +11,7 @@ class FileUpload extends Component {
       title: '',
     };
     this.submitFile = this.submitFile.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   async submitFile(e) {
@@ -23,17 +24,25 @@ class FileUpload extends Component {
       }
     }).then(resp => {
       console.log(resp.data);
-      this.props.setTrackUrl(resp.data.Location)
+      this.props.setTrackUrl(resp.data.Location, this.state.title)
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  handleChange(e) {
+    const { name, value } = e.target
+    this.setState(prevState => ({
+      ...prevState,
+      [name]: value,
+    }))
   }
 
   handleFileUpload = (e) => {
     console.log(e.target.files[0])
     this.setState({
       file: e.target.files[0],
-      filename: e.target.files[0].name
+      title: e.target.files[0].name
     });
   }
 
@@ -46,8 +55,8 @@ class FileUpload extends Component {
           type="text"
           name="title"
           placeholder="Track Title"
-          onChange={this.props.handleChange}
-          value={this.state.filename} required />
+          onChange={this.handleChange}
+          value={this.state.title} required />
         <FormControl
           className="fileupload-input"
           label="upload file"

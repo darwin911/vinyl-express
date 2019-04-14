@@ -18,7 +18,6 @@ import {
   Nav,
   Button,
   ButtonGroup,
-  Modal
 } from 'react-bootstrap';
 import decode from 'jwt-decode'
 
@@ -46,6 +45,7 @@ class App extends Component {
       name: 'HAL 9000',
       email: 'test@test.com',
       password: 'test',
+      errorMessage: '',
       track: '',
       tracks: [],
       isLoggedIn: false,
@@ -114,7 +114,7 @@ class App extends Component {
     } catch (error) {
       console.error("INVALID_CREDENTIALS", error)
       this.setState({
-        errorMessage: error
+        errorMessage: "Invalid Credentials"
       })
     }
   }
@@ -135,33 +135,30 @@ class App extends Component {
 
   async handleRegister(e) {
     e.preventDefault();
-    console.log('handleRegister Called')
     const { name, email, password } = this.state;
     const data = { name, email, password }
+    try {
+      const user = await registerUser(data);
+      localStorage.setItem('token', user.token)
+      this.setState({
+        name: '',
+        email: '',
+        password: '',
+        isLoggedIn: true,
+        currentUser: user.userData,
+        tracks: [],
+      })
 
-    const user = await registerUser(data);
-    localStorage.setItem('token', user.token)
-    this.setState({
-      name: '',
-      email: '',
-      password: '',
-      isLoggedIn: true,
-      currentUser: user.userData,
-      tracks: [],
-    })
+      this.props.history.push('/player')
+    } catch (error) {
+      console.log(error)
+      this.setState({
+        errorMessage: "This email is already in use."
+      })
+    }
 
-    this.props.history.push('/player')
   }
 
-  async handleSubmitTrack() {
-    const { filename, url, currentUser } = this.state;
-    console.log(filename, url, currentUser)
-    const data = { filename, url, userId: currentUser.id }
-    const track = await addTrack(data);
-    this.setState(prevState => ({
-      tracks: [...prevState.tracks, track.track]
-    }))
-  }
 
   handleEditTrack(track) {
     if (this.state.isEdit === false) {
@@ -207,17 +204,32 @@ class App extends Component {
       : this.setState({ playStatus: 'PAUSED' })
   }
 
-  async setTrackUrl(url) {
+  async setTrackUrl(url, title) {
     console.log(url)
     this.setState({
       currentTrack: {
-        url
+        url,
+        title, 
       }
     })
     const temp = await this.handleSubmitTrack()
     console.log(temp)
     this.props.history.push('/player')
     this.togglePlay();
+  }
+
+  async handleSubmitTrack() {
+    const { currentTrack, currentUser } = this.state;
+    console.log(currentTrack, currentUser)
+    const data = {
+      title: currentTrack.title,
+      url: currentTrack.url,
+      userId: currentUser.id
+    }
+    const track = await addTrack(data);
+    this.setState(prevState => ({
+      tracks: [...prevState.tracks, track.track]
+    }))
   }
 
   render() {
@@ -230,7 +242,8 @@ class App extends Component {
       playStatus,
       tracks,
       currentTrack,
-      filename } = this.state
+      filename,
+      errorMessage } = this.state
     return (
       <div className="App">
         <header>
@@ -266,6 +279,7 @@ class App extends Component {
               name={name}
               email={email}
               password={password}
+              errorMessage={errorMessage}
               handleChange={this.handleChange}
               handleRegister={this.handleRegister} />)} />
 
@@ -274,6 +288,7 @@ class App extends Component {
               name={name}
               email={email}
               password={password}
+              errorMessage={errorMessage}
               handleChange={this.handleChange}
               handleLogin={this.handleLogin} />)} />
 
