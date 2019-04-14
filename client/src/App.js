@@ -143,6 +143,7 @@ class App extends Component {
       password: '',
       isLoggedIn: true,
       currentUser: user.userData,
+      tracks: [],
     })
 
     this.props.history.push('/player')
