@@ -1,11 +1,15 @@
 import React from 'react'
-import { FormControl, Form, Button } from 'react-bootstrap';
+import { FormControl, Form, Button, Alert } from 'react-bootstrap';
 
 const Register = (props) => {
   return (
-    <Form 
+    <Form
       className="register-form"
       onSubmit={props.handleRegister}>
+      {
+        props.errorMessage &&
+        <Alert variant="danger">{props.errorMessage}</Alert>
+      }
       <FormControl
         onChange={props.handleChange}
         type="text"
