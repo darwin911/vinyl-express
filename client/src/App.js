@@ -69,7 +69,7 @@ class App extends Component {
     if (token) {
       const data = decode(token);
       const tracks = await getUserTracks(data.id);
-      console.log(data);
+      // console.log(data);
       this.setState({
         isLoggedIn: true,
         currentUser: {
@@ -148,7 +148,6 @@ class App extends Component {
         currentUser: user.userData,
         tracks: [],
       })
-
       this.props.history.push('/player')
     } catch (error) {
       console.log(error)
@@ -156,9 +155,7 @@ class App extends Component {
         errorMessage: "This email is already in use."
       })
     }
-
   }
-
 
   handleEditTrack(track) {
     if (this.state.isEdit === false) {
@@ -180,16 +177,16 @@ class App extends Component {
       }
     }))
   }
-  /////////////////////////////////////
+
   async handleUpdateTrack(trackData) {
+        // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
-    console.log(track.title)
     this.setState(prevState => ({
       isEdit: false,
-      tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData],
+      tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData].sort((a, b) => a.id - b.id),
     }))
   }
-  ////////////////////////////////////////
+
   async handleDeleteTrack(trackId) {
     // eslint-disable-next-line
     const resp = await removeTrack(trackId);
@@ -199,9 +196,12 @@ class App extends Component {
   }
 
   togglePlay() {
-    (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
+    setTimeout(() => {
+      (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
       ? this.setState({ playStatus: 'PLAYING' })
       : this.setState({ playStatus: 'PAUSED' })
+    }, 1000)
+    
   }
 
   async setTrackUrl(url, title) {

@@ -131,11 +131,13 @@ form {
 .tt-play {
   animation: tt-play 800ms linear;
   animation-fill-mode: forwards;
+
 }
 
 .tt-stop {
-  animation: tt-stop 800ms linear;
+  animation: tt-stop 800ms ease-in;
   animation-fill-mode: forwards;
+
 }
 
 .turntable::after {
@@ -154,7 +156,7 @@ form {
   animation-name: spin;
   animation-duration: 3000ms;
   animation-iteration-count: infinite;
-  animation-timing-function: linear; 
+  animation-timing-function: ease-in; 
   animation-delay: 700ms;
 }
 
