@@ -21,7 +21,7 @@ html {
   color: white;
   position: relative;
   padding-bottom: 5rem;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 }
 
 a {
@@ -110,44 +110,85 @@ form {
 
 .tt-arm {
   display: inline-block;
-  width: 28%;
-  height: 85%;
+  width: 33%;
+  height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url("http://www.schillmania.com/projects/soundmanager2/demo/turntable/image/tt_arm.png");
   position: absolute;
-  top: 5%;
-  right: 0%;
+  z-index: 1;
+  top: 0%;
+  right: -6%;
   transition: 350ms ease;
-  animation: tt-play 550ms linear;
+}
+
+.tt-play {
+  animation: tt-play 800ms linear;
   animation-fill-mode: forwards;
 }
 
-.tt-arm:hover {
-  transform: rotate(13deg);
-  transform-origin: 54% 27%;
+.tt-stop {
+  animation: tt-stop 800ms linear;
+  animation-fill-mode: forwards;
+}
+
+.tt-arm::before {
+  content: '';
+  background: blue;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  z-index: 5;
+  top: 2%;
+  right: 17%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.0);
+  border-radius: 50%;
+
 }
 
 .vinyl {
   cursor: pointer;
   max-width: 100%;
+}
+
+.spin {
   animation-name: spin;
   animation-duration: 3000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear; 
   animation-delay: 700ms;
-  /* animation-play-state: paused; */
 }
 
 .start-stop-btn {
-  background: #ccc;
-  color: #000;
-  border-radius: 1px;
+  background: #000;
+  padding: 0 0.45rem 0.095rem;
+  color: #eee;
   position: absolute;
-  border: 5px solid rgba(0, 0, 0, 0.75);
-  font-size: 0.6rem;
+  border: none;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
   left: 1rem;
   bottom: 1rem;
+  transition: 120ms ease;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.start-stop-btn:active {
+  color: red;
+}
+
+.volume-bar {
+  background: black;
+  position: absolute;
+  width: 50%;
+  height: 10px;
+  top: 30%;
+  left: -20%;
+  right: 0;
+  bottom: 0;
+  transform: rotate(-90deg);
+  border: 2px solid black;
 }
 
 .playback-input, .volume-input {
@@ -180,10 +221,10 @@ form {
   color: #999;
 }
 
-.track-name {
+.track-name, .update-input {
   display: block;
+  width: 100%;
 }
-
 
 footer {
   width: 100%;
@@ -216,10 +257,26 @@ footer p {
   }
   50% {
     transform: rotate(2deg);
+    /* transform: rotateY(10deg); */
     transform-origin: 54% 27%;
   }
   100% {
     transform: rotate(12deg);
+    transform-origin: 54% 27%;
+  }
+}
+
+@keyframes tt-stop {
+  0% {
+    transform: rotate(12deg);
+    transform-origin: 54% 27%;
+  }
+  50% {
+    transform: rotate(2deg);
+    transform-origin: 54% 27%;
+  }
+  100% {
+    transform: rotate(0deg);
     transform-origin: 54% 27%;
   }
 }
