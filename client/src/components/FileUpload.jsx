@@ -15,7 +15,7 @@ class FileUpload extends Component {
   async submitFile(e) {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('file', this.state.file[0]);
+    formData.append('file', this.state.file);
     axios.post(`http://localhost:3001/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -29,8 +29,9 @@ class FileUpload extends Component {
   }
 
   handleFileUpload = (e) => {
+    console.log(e.target.files[0])
     this.setState({
-      file: e.target.files,
+      file: e.target.files[0],
       filename: e.target.files[0].name
     });
   }
@@ -50,6 +51,8 @@ class FileUpload extends Component {
           className="fileupload-input"
           label="upload file"
           type="file"
+          autoFocus={true}
+          accept="audio/*"
           onChange={this.handleFileUpload} required />
         <Button variant="outline-info" type="submit">Select Track</Button>
       </Form>
