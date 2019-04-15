@@ -18,7 +18,7 @@ class FileUpload extends Component {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', this.state.file);
-    axios.post(`http://localhost:3001/upload`, formData, {
+    axios.post(`https://vinyl-express.herokuapp.com/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
