@@ -27,7 +27,7 @@ userRouter.get('/:id', async (req, res) => {
 });
 
 // Register route
-userRouter.post('/', async (req, res) => {
+userRouter.post('/register', async (req, res) => {
   try {
     const { email, name, password } = req.body;
     const emailExists = await User.findOne({
@@ -107,6 +107,7 @@ userRouter.get('/:id/tracks', async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
     const tracks = await user.getTracks();
+    // console.log(tracks)
     res.json({ tracks });
   } catch (e) {
     console.log(e);

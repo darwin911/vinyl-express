@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 let sequelize;
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgresql',
+    dialect: 'postgres',
     login: true,
     operatorAliases: false,
     define: {
@@ -12,7 +12,7 @@ if (process.env.DATABASE_URL) {
   });
 } else {
   sequelize = new Sequelize({
-    database: 'vinyl_express',
+    database: 'vinyl-express',
     dialect: 'postgres',
     operatorAliases: false,
     define: {
