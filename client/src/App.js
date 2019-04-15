@@ -95,9 +95,11 @@ class App extends Component {
     e.preventDefault();
     const { email, password } = this.state
     const loginData = { email, password, }
+    console.log(loginData)
 
     try {
       const user = await loginUser(loginData)
+      console.log(user)
       if (user) {
         localStorage.setItem('token', user.token)
         const tracks = await getUserTracks(user.userData.id);
@@ -181,11 +183,19 @@ class App extends Component {
   async handleUpdateTrack(trackData) {
         // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
+    console.log(track)
     this.setState(prevState => ({
+      // tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData].sort((a, b) => a.id - b.id),
       isEdit: false,
-      tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData].sort((a, b) => a.id - b.id),
-    }))
-  }
+      tracks: prevState.tracks.map(t => {
+        if (t.id !== trackData.id) {
+          return t
+        } else {
+          return track
+        }
+      })
+  }))
+}
 
   async handleDeleteTrack(trackId) {
     // eslint-disable-next-line
