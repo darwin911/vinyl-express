@@ -35,15 +35,11 @@ class Player extends Component {
             onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
           <div className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
-          <button className="start-stop-btn">&#8227;</button>
+          <button className={"start-stop-btn " + (playStatus === "PLAYING" ? "green" : "")} >&#8227;</button>
           <ProgressBar
             className="volume-bar"
             variant="danger"
             now={volume} />
-        </div>
-
-        <div className="controls">
-          <label htmlFor="playbackRate">Playback</label>
           <input
             className="playback-input"
             name="playbackRate"
@@ -53,7 +49,6 @@ class Player extends Component {
             max={3}
             onChange={this.handleControlChange}
             value={playbackRate} />
-          <label htmlFor="volume">Vol.</label>
           <input
             className="volume-input"
             name="volume"
@@ -63,6 +58,8 @@ class Player extends Component {
             max={120}
             onChange={this.handleControlChange}
             value={volume} />
+        </div>
+
           <Sound
             url={currentTrack.url && currentTrack.url}
             volume={volume}
@@ -70,7 +67,6 @@ class Player extends Component {
             // onLoad={console.log('onLoad called')}
             // whilePlaying={console.log('while Playing Called')}
             playStatus={playStatus} />
-        </div>
       </section>
     )
   }
