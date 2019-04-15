@@ -256,8 +256,8 @@ class App extends Component {
       errorMessage } = this.state
     return (
       <div className="App">
-        <header>
-          <Navbar bg="dark" variant="dark">
+        <header className="bg-dark">
+          <Navbar className="container">
             <Link to="/"><h2 className="nav-brand">V<span>i</span>nyl</h2></Link>
             <Nav className="ml-auto">
               {
@@ -338,7 +338,7 @@ class App extends Component {
                           </>
                           :
                           <>
-                            <p>Track Id: {track.id}</p>
+                            {/* <p>Track Id: {track.id}</p> */}
                             <Button
                               draggable={true}
                               className="track-name"
@@ -357,11 +357,11 @@ class App extends Component {
                         <Button
                           size="sm"
                           variant="outline-info"
-                          onClick={() => this.handleEditTrack(track)}>Rename Track</Button>
+                          onClick={() => this.handleEditTrack(track)}>&#9998;</Button>
                         <Button
                           size="sm"
                           variant="outline-danger"
-                          onClick={() => this.handleDeleteTrack(track.id)}>Delete</Button>
+                          onClick={() => this.handleDeleteTrack(track.id)}>&#10006;</Button>
                       </ButtonGroup>
                     </div>)
                   }
