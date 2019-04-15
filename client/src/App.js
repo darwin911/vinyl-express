@@ -34,7 +34,7 @@ class App extends Component {
       currentTrack: {
         title: '',
         id: '',
-        url: 'https://s3.amazonaws.com/vinyl-express-p4/trackFolder/1554950969153-lg.mp3',
+        url: '',
       },
       updateForm: {
         title: '',
@@ -42,9 +42,9 @@ class App extends Component {
         url: '',
         userId: '',
       },
-      name: 'HAL 9000',
-      email: 'test@test.com',
-      password: 'test',
+      name: '',
+      email: '',
+      password: '',
       errorMessage: '',
       track: '',
       tracks: [],
