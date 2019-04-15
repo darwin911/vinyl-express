@@ -12,11 +12,12 @@ html {
   height: 100%;
   max-height: 100%;
 }
+
 .App {
   text-align: center;
   min-height: 100vh;
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: radial-gradient(ellipse at bottom right, hsl(0, 0%, 0%), hsl(0, 0%, 13%));
+  background: radial-gradient(circle at top left, hsl(0, 0%, 5%), hsl(0, 0%, 12%));
   font-weight: normal;
   color: white;
   position: relative;
@@ -137,37 +138,33 @@ form {
 .tt-stop {
   animation: tt-stop 800ms ease-in;
   animation-fill-mode: forwards;
-
 }
 
 .turntable::after {
   content: '';
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   position: absolute;
-  width: 4.25rem;
-  height: 4.25rem;
-  top: 5%;
+  width: 17%;
+  height: 22%;
+  top: 9%;
   right: 7%;
-  border: 3px solid rgba(255, 255, 255, 0.8);
+  border: 3px solid rgba(255, 255, 255, 0.9);
   border-radius: 50%;
 }
 
 .spin {
-  animation-name: spin;
-  animation-duration: 3000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in; 
-  animation-delay: 700ms;
+  animation: spin 1700ms infinite linear 2400ms,
+   start 2400ms 1 ease-in;
 }
 
 .start-stop-btn {
   background: #000;
   padding: 0 0.45rem 0.095rem;
-  color: #eee;
+  color: red;
   position: absolute;
   border: none;
-  font-size: 1.2rem;
-  line-height: 1.2rem;
+  font-size: 3.5rem;
+  line-height: 2rem;
   left: 1rem;
   bottom: 1rem;
   transition: 120ms ease;
@@ -177,6 +174,11 @@ form {
 
 .start-stop-btn:active {
   color: red;
+}
+
+.green {
+  color: greenyellow;
+  text-shadow: 0 0 7px rgb(25, 216, 50); 
 }
 
 .controls {
@@ -205,15 +207,27 @@ form {
 }
 
 .playback-input, .volume-input {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
   margin: 0;
   padding: 0;
-  line-height: 1;
   border: none;
   color: #eee;
-  width: 4rem;
+  min-width: 2rem;
+  max-width: 5rem;
+  width: 12%;
   cursor: pointer;
-  border-radius: 3px;
+  position: absolute;
+}
+
+.playback-input {
+  right: 5%;
+  bottom: 5%;
+}
+
+.volume-input {
+  left: 10%;
+  top: 5%;
 }
 
 .section-tracks {
@@ -256,14 +270,23 @@ footer p {
   margin: 0;
 }
 
-@keyframes spin {
+@keyframes start {
+  from {
+   transform: rotate(0deg);
+  }
+  to {
+   transform: rotate(360deg);
+  }
+ }
+ 
+ @keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+ }
 
 @keyframes tt-play {
   0% {
