@@ -1,13 +1,25 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize({
-  database: 'vinyl_express',
-  dialect: 'postgres',
-  operatorAliases: false,
-  define: {
-    underscored: true,
-  }
-});
+let sequelize;
+if (process.env.DATABASE_URL) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgresql',
+    login: true,
+    operatorAliases: false,
+    define: {
+      underscored: true,
+    },
+  });
+} else {
+  sequelize = new Sequelize({
+    database: 'vinyl_express',
+    dialect: 'postgres',
+    operatorAliases: false,
+    define: {
+      underscored: true,
+    }
+  });
+}
 
 const User = sequelize.define('users', {
   email: {
