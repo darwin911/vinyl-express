@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = `http://localhost:3001/`
+const BASE_URL = `https://vinyl-express.herokuapp.com/`
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -20,7 +20,7 @@ const registerUser = async (userData) => {
 }
 
 const loginUser = async (data) => {
-  const resp = await axios.post(`http://localhost:3001/users/login`, data);
+  const resp = await api.post(`users/`, data);
   return resp.data;
 };
 

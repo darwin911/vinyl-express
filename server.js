@@ -73,5 +73,5 @@ app.get('/', async (req, res) => {
   res.json({ msg: 'Express is running!' })
 })
 
-app.listen(PORT, () => { console.log(`Server listening on PORT: ${PORT}`) });
+app.listen(process.env.PORT || PORT, () => { console.log(`Server listening on PORT: ${PORT}`) });
 
