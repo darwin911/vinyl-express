@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
-/* @import url('https://fonts.googleapis.com/css?family=Allerta+Stencil'); */
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
 @import url('https://fonts.googleapis.com/css?family=Cute+Font');
 
 *, *::before, *::after {
@@ -11,6 +11,7 @@
 html {
   height: 100%;
   max-height: 100%;
+  background: black;
 }
 
 .App {
@@ -18,10 +19,9 @@ html {
   min-height: 100vh;
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: radial-gradient(circle at top left, hsl(0, 0%, 5%), hsl(0, 0%, 12%));
-  font-weight: normal;
+  font-weight: 300;
   color: white;
   position: relative;
-  padding-bottom: 5rem;
   overflow-x: hidden;
 }
 
@@ -37,6 +37,7 @@ a:hover {
 header {
   background: #444;
   color: white;
+  font-size: 1.3rem;
   margin-bottom: 2rem;
   box-shadow: 0 8px 6px -6px rgba(0,0,0,.325);
 }
@@ -57,7 +58,7 @@ header {
 
 .container h2 {
   font-family: 'Cute Font';
-  font-size: 3rem;
+  font-size: 3.8rem;
 }
 
 .nav-brand span {
@@ -160,7 +161,7 @@ form {
 .start-stop-btn {
   background: #000;
   padding: 0 0.45rem 0.095rem;
-  color: red;
+  color: #333;
   position: absolute;
   border: none;
   font-size: 3.5rem;
@@ -178,7 +179,7 @@ form {
 
 .green {
   color: greenyellow;
-  text-shadow: 0 0 7px rgb(25, 216, 50); 
+  text-shadow: 0 0 12px rgb(25, 216, 50); 
 }
 
 .controls {
@@ -216,8 +217,11 @@ form {
   min-width: 2rem;
   max-width: 5rem;
   width: 12%;
-  cursor: pointer;
   position: absolute;
+}
+
+.volume-input {
+  cursor: ns-resize;
 }
 
 .playback-input {
@@ -237,6 +241,15 @@ form {
   font-weight: 100;
 }
 
+.section-tracks h3 {
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+.section-tracks h3 span {
+  font-weight: 900;
+}
+
 .section-tracks button {
   margin-bottom: 0.75rem;
 }
@@ -253,21 +266,62 @@ form {
 .track-name, .update-input {
   display: block;
   width: 100%;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.track-name {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.0));
+  transition: all 250ms ease;
+}
+
+.track-name:hover {
+  color: white;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.0));
+  border-color: rgba(255, 255, 255, 0.20);
+}
+
+.section-tracks .btn-group {
+  display: block;
+  text-align: right;
+}
+
+.edit-btn, .delete-btn {
+  font-size: 1.5rem;
+  line-height: 1.3rem;
+  border: none;
+  text-align: right;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  opacity: 1;
 }
 
 footer {
   width: 100%;
-  background: #bbb;
-  background: linear-gradient(to bottom right, #ddd, #555);
-  color: #000;
-  position: absolute;
-  bottom: 0;
+  background: rgba(187, 187, 187, 0.5);
+  color: #ccc;
+  padding: 2rem 0;
 }
 
 footer p {
   padding: 0.5rem 0;
-  font-weight: 100;
+  font-weight: 400;
   margin: 0;
+}
+
+footer a {
+  color: #222;
+}
+
+.github, .linkedin {
+  width: 3rem;
+}
+
+.linkedin {
+  padding: 0.25rem;
 }
 
 @keyframes start {
@@ -315,5 +369,25 @@ footer p {
   100% {
     transform: rotate(0deg);
     transform-origin: 54% 27%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .player {
+    /* border: 2px solid red; */
+  }
+
+  .section-tracks {
+    /* border: 2px solid blue; */
+    margin: 0;
+  }
+
+  .track {
+    margin-bottom: .5rem;
   }
 }

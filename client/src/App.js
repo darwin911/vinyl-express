@@ -13,11 +13,13 @@ import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import Player from './components/Player';
+import Footer from './components/Footer';
 import {
   Navbar,
   Nav,
   Button,
   ButtonGroup,
+  Form,
 } from 'react-bootstrap';
 import decode from 'jwt-decode'
 
@@ -76,10 +78,8 @@ class App extends Component {
           name: data.name,
           email: data.email,
           id: data.id,
-        },
-        tracks,
+        }, tracks,
       })
-
     }
   }
 
@@ -181,7 +181,7 @@ class App extends Component {
   }
 
   async handleUpdateTrack(trackData) {
-        // eslint-disable-next-line
+    // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
     console.log(track)
     this.setState(prevState => ({
@@ -194,8 +194,8 @@ class App extends Component {
           return track
         }
       })
-  }))
-}
+    }))
+  }
 
   async handleDeleteTrack(trackId) {
     // eslint-disable-next-line
@@ -208,10 +208,10 @@ class App extends Component {
   togglePlay() {
     setTimeout(() => {
       (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
-      ? this.setState({ playStatus: 'PLAYING' })
-      : this.setState({ playStatus: 'PAUSED' })
+        ? this.setState({ playStatus: 'PLAYING' })
+        : this.setState({ playStatus: 'PAUSED' })
     }, 300)
-    
+
   }
 
   async setTrackUrl(url, title) {
@@ -219,7 +219,7 @@ class App extends Component {
     this.setState({
       currentTrack: {
         url,
-        title, 
+        title,
       }
     })
     const temp = await this.handleSubmitTrack()
@@ -278,6 +278,8 @@ class App extends Component {
           </Navbar>
         </header>
 
+        
+
         <main className="container">
 
           <Route exact path="/" render={() => (
@@ -320,14 +322,14 @@ class App extends Component {
               {
                 currentUser.name &&
                 <section className="section-tracks">
-                  <h3>{currentUser.name} has {tracks.length} tracks</h3>
+                  <h3><span>{currentUser.name.split(' ')[0]}</span> has {tracks.length} tracks</h3>
                   {tracks.map(track =>
                     <div key={track.id} className="track">
                       {
                         this.state.isEdit === track.id
                           ?
                           <>
-                            <input
+                            <Form.Control
                               className="update-input"
                               type="text"
                               name="title"
@@ -355,10 +357,12 @@ class App extends Component {
                       }
                       <ButtonGroup>
                         <Button
+                          className="edit-btn"
                           size="sm"
                           variant="outline-info"
                           onClick={() => this.handleEditTrack(track)}>&#9998;</Button>
                         <Button
+                          className="delete-btn"
                           size="sm"
                           variant="outline-danger"
                           onClick={() => this.handleDeleteTrack(track.id)}>&#10006;</Button>
@@ -370,10 +374,7 @@ class App extends Component {
             </>
           }
         </main>
-
-        <footer>
-          <p>&copy; Darwin Smith 2019 – General Assembly</p>
-        </footer>
+        <Footer />
       </div>
     );
   }
