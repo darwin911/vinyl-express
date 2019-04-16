@@ -35,7 +35,8 @@ class Player extends Component {
             onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
           <div className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
-          <button className={"start-stop-btn " + (playStatus === "PLAYING" ? "green" : "")} >&#8227;</button>
+          <button onClick={() => this.props.togglePlay()}
+            className={"start-stop-btn " + (playStatus === "PLAYING" ? "green" : "")} >&#8227;</button>
           <ProgressBar
             className="volume-bar"
             variant="danger"
@@ -60,13 +61,17 @@ class Player extends Component {
             value={volume} />
         </div>
 
-          <Sound
-            url={currentTrack.url && currentTrack.url}
-            volume={volume}
-            playbackRate={playbackRate}
-            // onLoad={console.log('onLoad called')}
-            // whilePlaying={console.log('while Playing Called')}
-            playStatus={playStatus} />
+        {(currentTrack.title) ?  <p>Now Playing: {currentTrack.title}</p> : <p>Load a track first!</p>}
+        
+        <Sound
+          url={currentTrack.url && currentTrack.url}
+          volume={volume}
+          playbackRate={playbackRate}
+          onFinish={this.props.togglePlay}
+          // onPlaying={this.props.togglePlay}
+          // onLoad={console.log('onLoad called')}
+          // whilePlaying={console.log('while Playing Called')}
+          playStatus={playStatus} />
       </section>
     )
   }
