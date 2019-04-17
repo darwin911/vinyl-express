@@ -22,6 +22,7 @@ html {
   color: white;
   position: relative;
   overflow-x: hidden;
+  padding-bottom: 12rem;
 }
 
 a {
@@ -302,7 +303,7 @@ footer {
   color: #ccc;
   padding: 2rem 0;
   position: absolute;
-  bottom: -17.5%;
+  bottom: 0;
 }
 
 footer p {
