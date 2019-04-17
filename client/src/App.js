@@ -71,7 +71,6 @@ class App extends Component {
     if (token) {
       const data = decode(token);
       const tracks = await getUserTracks(data.id);
-      // console.log(data);
       this.setState({
         isLoggedIn: true,
         currentUser: {
@@ -94,12 +93,9 @@ class App extends Component {
   async handleLogin(e) {
     e.preventDefault();
     const { email, password } = this.state
-    const loginData = { email, password, }
-    console.log(loginData)
-
+    const loginData = { email, password }
     try {
       const user = await loginUser(loginData)
-      console.log(user)
       if (user) {
         localStorage.setItem('token', user.token)
         const tracks = await getUserTracks(user.userData.id);
@@ -153,9 +149,7 @@ class App extends Component {
       this.props.history.push('/player')
     } catch (error) {
       console.log(error)
-      this.setState({
-        errorMessage: "This email is already in use."
-      })
+      this.setState({ errorMessage: "This email is already in use." })
     }
   }
 
@@ -163,9 +157,7 @@ class App extends Component {
     if (this.state.isEdit === false) {
       this.setState({
         isEdit: track.id,
-        updateForm: {
-          ...track
-        },
+        updateForm: { ...track }
       })
     }
   }
@@ -206,24 +198,25 @@ class App extends Component {
   }
 
   togglePlay() {
-    setTimeout(() => {
-      (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
-        ? this.setState({ playStatus: 'PLAYING' })
-        : this.setState({ playStatus: 'PAUSED' })
-    }, 300)
-
+    const url = this.state.currentTrack.url
+    if (url !== "") {
+      setTimeout(() => {
+        (this.state.playStatus === 'STOPPED' | this.state.playStatus === 'PAUSED')
+          ? this.setState({ playStatus: 'PLAYING' })
+          : this.setState({ playStatus: 'PAUSED' })
+      }, 300)
+    } else {
+      this.setState({ errorMessage: "No track loadad" })
+      setTimeout(() => {
+        this.setState({ errorMessage: "" })
+      }, 2200)
+    }
   }
 
   async setTrackUrl(url, title) {
-    console.log(url)
-    this.setState({
-      currentTrack: {
-        url,
-        title,
-      }
-    })
+    this.setState({ currentTrack: { url, title }})
+    // eslint-disable-next-line
     const temp = await this.handleSubmitTrack()
-    console.log(temp)
     this.props.history.push('/player')
     this.togglePlay();
   }
@@ -273,12 +266,9 @@ class App extends Component {
                     <Link to="/register" >Register</Link>
                   </>
               }
-
             </Nav>
           </Navbar>
         </header>
-
-        
 
         <main className="container">
 
@@ -313,6 +303,7 @@ class App extends Component {
 
               <Route exact path="/player" render={(props) => (
                 <Player
+                  errorMessage={errorMessage}
                   currentTrack={currentTrack}
                   playStatus={playStatus}
                   togglePlay={this.togglePlay}
@@ -332,6 +323,7 @@ class App extends Component {
                             <Form.Control
                               className="update-input"
                               type="text"
+                              autoComplete="off"
                               name="title"
                               value={this.state.updateForm.title}
                               onChange={this.handleUpdateChange} />
@@ -340,7 +332,6 @@ class App extends Component {
                           </>
                           :
                           <>
-                            {/* <p>Track Id: {track.id}</p> */}
                             <Button
                               draggable={true}
                               className="track-name"

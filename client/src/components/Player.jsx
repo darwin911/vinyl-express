@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Sound from 'react-sound';
-import { ProgressBar } from 'react-bootstrap';
+import { ProgressBar, Alert } from 'react-bootstrap';
 
 class Player extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class Player extends Component {
 
   render() {
 
-    const { currentTrack, playStatus } = this.props;
+    const { currentTrack, playStatus, errorMessage } = this.props;
 
     const { playbackRate, volume } = this.state;
 
@@ -60,7 +60,7 @@ class Player extends Component {
             onChange={this.handleControlChange}
             value={volume} />
         </div>
-
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
         {(currentTrack.title) ?  <p>Now Playing: {currentTrack.title}</p> : <p>Load a track first!</p>}
         
         <Sound
