@@ -285,7 +285,7 @@ class App extends Component {
         <main className="container">
 
           <Route exact path="/" render={() => (
-            <h2>Music, but on a record player – but not really</h2>
+            <h2>Music, on a record player – but not really.</h2>
           )} />
 
           <Route exact path="/register" render={(props) => (
