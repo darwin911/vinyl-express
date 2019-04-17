@@ -378,8 +378,8 @@ footer a {
     grid-template-columns: 1fr 1fr;
   }
 
-  .player {
-    /* border: 2px solid red; */
+  .login-form, .register-form {
+    grid-column: span 2;
   }
 
   .section-tracks {
