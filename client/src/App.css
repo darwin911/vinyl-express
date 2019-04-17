@@ -382,8 +382,10 @@ footer a {
   }
 
   .section-tracks {
-    /* border: 2px solid blue; */
-    margin: 0;
+    text-align: center;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 700px;
   }
 
   .track {

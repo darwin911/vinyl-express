@@ -60,8 +60,8 @@ class Player extends Component {
             onChange={this.handleControlChange}
             value={volume} />
         </div>
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-        {(currentTrack.title) ?  <p>Now Playing: {currentTrack.title}</p> : <p>Load a track first!</p>}
+        {errorMessage && <Alert dismissible variant="light">{errorMessage}</Alert>}
+        {(currentTrack.title) ?  <p style={{fontFamily: "Cute Font", fontSize: "3rem", lineHeight: "1"}}>{currentTrack.title}</p> : <p>Load a track first!</p>}
         
         <Sound
           url={currentTrack.url && currentTrack.url}

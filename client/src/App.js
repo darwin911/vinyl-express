@@ -209,7 +209,7 @@ class App extends Component {
       this.setState({ errorMessage: "No track loadad" })
       setTimeout(() => {
         this.setState({ errorMessage: "" })
-      }, 2200)
+      }, 4000)
     }
   }
 
