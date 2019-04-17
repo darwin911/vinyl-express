@@ -7,6 +7,7 @@ const TrackList = (props) => {
     tracks,
     isEdit,
     updateForm,
+    loadTrack,
     handleUpdateChange,
     handleUpdateTrack,
     handleEditTrack,
@@ -38,14 +39,8 @@ const TrackList = (props) => {
                       draggable={true}
                       className="track-name"
                       variant="outline-light"
-                      onClick={() => this.setState(prevState => ({
-                        currentTrack: {
-                          url: track.url,
-                          title: track.title,
-                          id: track.id,
-                        },
-                        filename: track.filename
-                      }))} >{track.title}</Button>
+                      onClick={() => loadTrack(track)}
+                    >{track.title}</Button>
                   </>
               }
               <ButtonGroup>
