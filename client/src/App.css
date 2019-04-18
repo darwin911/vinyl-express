@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
+/* @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'); */
 @import url('https://fonts.googleapis.com/css?family=Cute+Font');
 
 *, *::before, *::after {
@@ -16,12 +16,13 @@ html {
 .App {
   text-align: center;
   min-height: 100vh;
-  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: radial-gradient(circle at top left, hsl(0, 0%, 5%), hsl(0, 0%, 12%));
   font-weight: 300;
   color: white;
   position: relative;
   overflow-x: hidden;
+  padding-bottom: 12rem;
 }
 
 a {
@@ -91,6 +92,8 @@ form {
 
 .player {
   margin-bottom: 3rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .turntable {
@@ -106,7 +109,6 @@ form {
   background-position: 50% 100%;
   border-radius: 5px;
   color: #333;
-  border: 3px solid rgba(255, 255, 255, 0.125);
 }
 
 .vinyl {
@@ -132,7 +134,10 @@ form {
 .tt-play {
   animation: tt-play 500ms linear;
   animation-fill-mode: forwards;
+}
 
+.needle-play {
+  animation: needle-play 9 0s infinite linear 500ms alternate;
 }
 
 .tt-stop {
@@ -182,9 +187,9 @@ form {
 }
 
 .controls {
-  font-family: 'Cute Font';
+  font-family: 'Helvetica Neue', Helvetica;
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 700;
   width: 80%;
   margin: 0 auto;
 }
@@ -231,6 +236,76 @@ form {
   top: 5%;
 }
 
+@keyframes start {
+  from {
+   transform: rotate(0deg);
+  }
+  to {
+   transform: rotate(360deg);
+  }
+ }
+ 
+ @keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+ }
+
+@keyframes tt-play {
+  0% {
+    transform: rotate(0deg);
+    transform-origin: 54% 27%;
+  }
+  50% {
+    transform: rotate(4deg);
+    transform-origin: 54% 27%;
+  }
+  100% {
+    transform: rotate(11deg);
+    transform-origin: 54% 27%;
+  }
+}
+
+@keyframes tt-stop {
+  0% {
+    transform: rotate(11deg);
+    transform-origin: 54% 27%;
+  }
+  50% {
+    transform: rotate(5deg);
+    transform-origin: 54% 27%;
+  }
+  100% {
+    transform: rotate(0deg);
+    transform-origin: 54% 27%;
+  }
+}
+
+@keyframes needle-play {
+  0% {
+    transform: rotate(11deg);
+    transform-origin: 54% 27%;
+  }
+  100% {
+    transform: rotate(29deg);
+    transform-origin: 54% 27%;
+  }
+}
+
+
+.track-time {
+  font-size: 1.8rem;
+  font-family: monospace;
+  color: white;
+}
+
+.player p {
+  margin-bottom: 0.75rem;
+}
+
 .section-tracks {
   max-width: 90%;
   margin: 0 auto;
@@ -270,6 +345,7 @@ form {
 }
 
 .track-name {
+  font-weight: 300;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.0));
   transition: all 250ms ease;
 }
@@ -290,6 +366,7 @@ form {
   line-height: 1.3rem;
   border: none;
   text-align: right;
+  position: absolute;
 }
 
 .edit-btn:hover, .delete-btn:hover {
@@ -302,7 +379,7 @@ footer {
   color: #ccc;
   padding: 2rem 0;
   position: absolute;
-  bottom: -17.5%;
+  bottom: 0;
 }
 
 footer p {
@@ -323,53 +400,7 @@ footer a {
   padding: 0.25rem;
 }
 
-@keyframes start {
-  from {
-   transform: rotate(0deg);
-  }
-  to {
-   transform: rotate(360deg);
-  }
- }
- 
- @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
- }
 
-@keyframes tt-play {
-  0% {
-    transform: rotate(0deg);
-    transform-origin: 54% 27%;
-  }
-  50% {
-    transform: rotate(4deg);
-    transform-origin: 54% 27%;
-  }
-  100% {
-    transform: rotate(12deg);
-    transform-origin: 54% 27%;
-  }
-}
-
-@keyframes tt-stop {
-  0% {
-    transform: rotate(12deg);
-    transform-origin: 54% 27%;
-  }
-  50% {
-    transform: rotate(4deg);
-    transform-origin: 54% 27%;
-  }
-  100% {
-    transform: rotate(0deg);
-    transform-origin: 54% 27%;
-  }
-}
 
 @media screen and (min-width: 800px) {
   main {
@@ -377,13 +408,19 @@ footer a {
     grid-template-columns: 1fr 1fr;
   }
 
+  .container h2, .login-form, .register-form {
+    grid-column: span 2;
+  }
+
   .player {
-    /* border: 2px solid red; */
+    border-bottom: none;
   }
 
   .section-tracks {
-    /* border: 2px solid blue; */
-    margin: 0;
+    text-align: center;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 700px;
   }
 
   .track {

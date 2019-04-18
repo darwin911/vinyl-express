@@ -8,19 +8,17 @@ import {
   getUserTracks,
   updateTrack
 } from './services/helper';
+import {
+  Navbar,
+  Nav
+} from 'react-bootstrap';
 import { Link, Route, withRouter } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import FileUpload from './components/FileUpload';
 import Player from './components/Player';
 import Footer from './components/Footer';
-import {
-  Navbar,
-  Nav,
-  Button,
-  ButtonGroup,
-  Form,
-} from 'react-bootstrap';
+import TrackList from './components/TrackList';
 import decode from 'jwt-decode'
 
 class App extends Component {
@@ -64,6 +62,7 @@ class App extends Component {
     this.handleUpdateChange = this.handleUpdateChange.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.setTrackUrl = this.setTrackUrl.bind(this);
+    this.loadTrack = this.loadTrack.bind(this);
   }
 
   async componentDidMount() {
@@ -209,16 +208,27 @@ class App extends Component {
       this.setState({ errorMessage: "No track loadad" })
       setTimeout(() => {
         this.setState({ errorMessage: "" })
-      }, 2200)
+      }, 4000)
     }
   }
 
   async setTrackUrl(url, title) {
-    this.setState({ currentTrack: { url, title }})
+    this.setState({ currentTrack: { url, title } })
     // eslint-disable-next-line
     const temp = await this.handleSubmitTrack()
     this.props.history.push('/player')
     this.togglePlay();
+  }
+
+  loadTrack(track) {
+    this.setState({
+      currentTrack: {
+        url: track.url,
+        title: track.title,
+        id: track.id,
+      },
+      filename: track.filename
+    })
   }
 
   async handleSubmitTrack() {
@@ -237,6 +247,8 @@ class App extends Component {
 
   render() {
     const {
+      isEdit,
+      updateForm,
       isLoggedIn,
       currentUser,
       name,
@@ -273,7 +285,7 @@ class App extends Component {
         <main className="container">
 
           <Route exact path="/" render={() => (
-            <h2>Music, but on a record player – but not really</h2>
+            <h2>Music, on a record player – but not really.</h2>
           )} />
 
           <Route exact path="/register" render={(props) => (
@@ -302,66 +314,24 @@ class App extends Component {
                   setTrackUrl={this.setTrackUrl} />)} />
 
               <Route exact path="/player" render={(props) => (
-                <Player
-                  errorMessage={errorMessage}
-                  currentTrack={currentTrack}
-                  playStatus={playStatus}
-                  togglePlay={this.togglePlay}
-                  filename={filename} />
-              )} />
-
-              {
-                currentUser.name &&
-                <section className="section-tracks">
-                  <h3><span>{currentUser.name.split(' ')[0]}</span> has {tracks.length} tracks</h3>
-                  {tracks.map(track =>
-                    <div key={track.id} className="track">
-                      {
-                        this.state.isEdit === track.id
-                          ?
-                          <>
-                            <Form.Control
-                              className="update-input"
-                              type="text"
-                              autoComplete="off"
-                              name="title"
-                              value={this.state.updateForm.title}
-                              onChange={this.handleUpdateChange} />
-                            <Button variant="warning"
-                              onClick={() => this.handleUpdateTrack(this.state.updateForm)}>Update!</Button>
-                          </>
-                          :
-                          <>
-                            <Button
-                              draggable={true}
-                              className="track-name"
-                              variant="outline-light"
-                              onClick={() => this.setState(prevState => ({
-                                currentTrack: {
-                                  url: track.url,
-                                  title: track.title,
-                                  id: track.id,
-                                },
-                                filename: track.filename
-                              }))} >{track.title}</Button>
-                          </>
-                      }
-                      <ButtonGroup>
-                        <Button
-                          className="edit-btn"
-                          size="sm"
-                          variant="outline-info"
-                          onClick={() => this.handleEditTrack(track)}>&#9998;</Button>
-                        <Button
-                          className="delete-btn"
-                          size="sm"
-                          variant="outline-danger"
-                          onClick={() => this.handleDeleteTrack(track.id)}>&#10006;</Button>
-                      </ButtonGroup>
-                    </div>)
-                  }
-                </section>
-              }
+                <>
+                  <Player
+                    errorMessage={errorMessage}
+                    currentTrack={currentTrack}
+                    playStatus={playStatus}
+                    togglePlay={this.togglePlay}
+                    filename={filename} />
+                  <TrackList
+                    tracks={tracks}
+                    isEdit={isEdit}
+                    updateForm={updateForm}
+                    loadTrack={this.loadTrack}
+                    handleUpdateChange={this.handleUpdateChange}
+                    handleUpdateTrack={this.handleUpdateTrack}
+                    handleEditTrack={this.handleEditTrack}
+                    handleDeleteTrack={this.handleDeleteTrack}
+                    currentUser={currentUser} />
+                </>)} />
             </>
           }
         </main>

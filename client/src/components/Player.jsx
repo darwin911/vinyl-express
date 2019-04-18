@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Sound from 'react-sound';
 import { ProgressBar, Alert } from 'react-bootstrap';
+import TimeFormat from 'hh-mm-ss';
 
 class Player extends Component {
   constructor(props) {
@@ -8,6 +9,8 @@ class Player extends Component {
     this.state = {
       playbackRate: 1,
       volume: 100,
+      duration: 0,
+      position: 0,
     }
     this.handleControlChange = this.handleControlChange.bind(this);
   }
@@ -26,21 +29,30 @@ class Player extends Component {
 
     const { currentTrack, playStatus, errorMessage } = this.props;
 
-    const { playbackRate, volume } = this.state;
+    const { playbackRate, volume, position, duration } = this.state;
 
     return (
       <section className="player">
+
         <div className="turntable">
-          <img className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
+
+          <img 
+            className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
             onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
-          <div className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
-          <button onClick={() => this.props.togglePlay()}
+
+          <div 
+            className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
+
+          <button
+            onClick={() => this.props.togglePlay()}
             className={"start-stop-btn " + (playStatus === "PLAYING" ? "green" : "")} >&#8227;</button>
+
           <ProgressBar
             className="volume-bar"
             variant="danger"
             now={volume} />
+
           <input
             className="playback-input"
             name="playbackRate"
@@ -50,6 +62,7 @@ class Player extends Component {
             max={3}
             onChange={this.handleControlChange}
             value={playbackRate} />
+
           <input
             className="volume-input"
             name="volume"
@@ -60,16 +73,34 @@ class Player extends Component {
             onChange={this.handleControlChange}
             value={volume} />
         </div>
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-        {(currentTrack.title) ?  <p>Now Playing: {currentTrack.title}</p> : <p>Load a track first!</p>}
-        
+
+        {
+          errorMessage &&
+          <Alert variant="dark">{errorMessage}</Alert>
+        }
+
+        <p className="track-time">
+          {TimeFormat.fromMs(parseInt(position), 'mm:ss').slice(0, 8)} / {TimeFormat.fromMs(parseInt(duration), 'mm:ss').slice(0, 8)}
+        </p>
+
+        {
+          (currentTrack.title)
+            ?
+            <p
+              style={{
+                fontFamily: "Helvetica Neue",
+                fontSize: "2rem",
+                lineHeight: "1"
+              }}>{currentTrack.title}</p>
+            : <p>Load a track first!</p>
+        }
         <Sound
           url={currentTrack.url && currentTrack.url}
           volume={volume}
           playbackRate={playbackRate}
           onFinish={this.props.togglePlay}
-          // onPlaying={this.props.togglePlay}
-          // onLoad={console.log('onLoad called')}
+          onLoad={(e) => { this.setState({ duration: e.duration }) }}
+          onPlaying={(e) => { this.setState({ position: e.position }) }}
           // whilePlaying={console.log('while Playing Called')}
           playStatus={playStatus} />
       </section>
