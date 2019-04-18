@@ -33,17 +33,26 @@ class Player extends Component {
 
     return (
       <section className="player">
+
         <div className="turntable">
-          <img className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
+
+          <img 
+            className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
             onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
-          <div className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
-          <button onClick={() => this.props.togglePlay()}
+
+          <div 
+            className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
+
+          <button
+            onClick={() => this.props.togglePlay()}
             className={"start-stop-btn " + (playStatus === "PLAYING" ? "green" : "")} >&#8227;</button>
+
           <ProgressBar
             className="volume-bar"
             variant="danger"
             now={volume} />
+
           <input
             className="playback-input"
             name="playbackRate"
@@ -53,6 +62,7 @@ class Player extends Component {
             max={3}
             onChange={this.handleControlChange}
             value={playbackRate} />
+
           <input
             className="volume-input"
             name="volume"
@@ -66,11 +76,11 @@ class Player extends Component {
 
         {
           errorMessage &&
-          <Alert variant="light">{errorMessage}</Alert>
+          <Alert variant="dark">{errorMessage}</Alert>
         }
 
         <p className="track-time">
-          {TimeFormat.fromMs(parseInt(position), 'mm:ss').slice(0, 5)} / {TimeFormat.fromMs(parseInt(duration), 'mm:ss').slice(0, 5)}
+          {TimeFormat.fromMs(parseInt(position), 'mm:ss').slice(0, 8)} / {TimeFormat.fromMs(parseInt(duration), 'mm:ss').slice(0, 8)}
         </p>
 
         {
@@ -78,13 +88,12 @@ class Player extends Component {
             ?
             <p
               style={{
-                fontFamily: "Cute Font",
-                fontSize: "3rem",
+                fontFamily: "Helvetica Neue",
+                fontSize: "2rem",
                 lineHeight: "1"
               }}>{currentTrack.title}</p>
             : <p>Load a track first!</p>
         }
-
         <Sound
           url={currentTrack.url && currentTrack.url}
           volume={volume}
