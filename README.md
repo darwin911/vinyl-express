@@ -1,6 +1,6 @@
 # **Vinyl**
 
-`www.vinyl.music/player`
+http://vinyl.surge.sh/
 
 ## Introduction to your app (description)
 
@@ -17,12 +17,12 @@ Users user music players that provide them with all the options and capabilities
 
 ## Technologies to be used
 
-- Rails
+- Express
+- Sequelize
 - React
 - PostgreSQL
 - Axios
 - Bcrypt
-- Knock
 - JsonWebToken (JWT)
 - React Bootstrap
 - Amazon Web Services
@@ -60,8 +60,8 @@ Users user music players that provide them with all the options and capabilities
 
 ## Installation instructions (at the top of the README)
 
-- `git clone http://github.com/darwin911/vinyl`
-- `bundle install`
+- `git clone http://github.com/darwin911/vinyl-express`
+- `npm i`
 - `cd client`
 - `npm i`
 
