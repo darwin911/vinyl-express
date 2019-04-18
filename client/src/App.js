@@ -110,9 +110,10 @@ class App extends Component {
       this.props.history.push('/player')
     } catch (error) {
       console.error("INVALID_CREDENTIALS", error)
-      this.setState({
-        errorMessage: "Invalid Credentials"
-      })
+      this.setState({ errorMessage: "Invalid Credentials" })
+      setTimeout(() => {
+        this.setState({ errorMessage: "" })
+      }, 4000)
     }
   }
 
@@ -149,6 +150,9 @@ class App extends Component {
     } catch (error) {
       console.log(error)
       this.setState({ errorMessage: "This email is already in use." })
+      setTimeout(() => {
+        this.setState({ errorMessage: "" })
+      }, 4000)
     }
   }
 
