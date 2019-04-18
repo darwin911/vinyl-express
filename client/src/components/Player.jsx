@@ -26,22 +26,26 @@ class Player extends Component {
 
 
   render() {
-
-    const { currentTrack, playStatus, errorMessage } = this.props;
-
-    const { playbackRate, volume, position, duration } = this.state;
-
+    const {
+      currentTrack,
+      playStatus,
+      errorMessage } = this.props;
+    const {
+      playbackRate,
+      volume,
+      position,
+      duration } = this.state;
     return (
       <section className="player">
 
         <div className="turntable">
 
-          <img 
+          <img
             className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
             onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
 
-          <div 
+          <div
             className={"tt-arm " + (playStatus === "PLAYING" ? "tt-play" : "tt-stop")}></div>
 
           <button
@@ -57,7 +61,7 @@ class Player extends Component {
             className="playback-input"
             name="playbackRate"
             type="number"
-            step={0.05}
+            step={0.025}
             min={0.5}
             max={3}
             onChange={this.handleControlChange}

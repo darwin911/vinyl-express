@@ -103,7 +103,7 @@ form {
   position: relative;
   background: rgb(170, 170, 170);
   /* background: url("https://media.freestocktextures.com/cache/a4/2f/a42f1d91f2657c6aea52471e293e2858.jpg"); */
-  background: url("http://allroundnews.com/wp-content/uploads/2012/03/free-metal-texture-6.jpg");
+  background: url("./assets/metal-texture.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 100%;
@@ -123,7 +123,7 @@ form {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url("http://www.schillmania.com/projects/soundmanager2/demo/turntable/image/tt_arm.png");
+  background-image: url("./assets/tt_arm.png");
   position: absolute;
   z-index: 1;
   top: 2%;
@@ -408,7 +408,7 @@ footer a {
     grid-template-columns: 1fr 1fr;
   }
 
-  .container h2, .login-form, .register-form {
+  .container h2, .login-form, .register-form, .fileupload-form {
     grid-column: span 2;
   }
 
