@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Sound from 'react-sound';
 import { ProgressBar, Alert } from 'react-bootstrap';
+import TimeFormat from 'hh-mm-ss';
 
 class Player extends Component {
   constructor(props) {
@@ -8,6 +9,8 @@ class Player extends Component {
     this.state = {
       playbackRate: 1,
       volume: 100,
+      duration: 0,
+      position: 0,
     }
     this.handleControlChange = this.handleControlChange.bind(this);
   }
@@ -26,7 +29,7 @@ class Player extends Component {
 
     const { currentTrack, playStatus, errorMessage } = this.props;
 
-    const { playbackRate, volume } = this.state;
+    const { playbackRate, volume, position, duration } = this.state;
 
     return (
       <section className="player">
@@ -60,16 +63,35 @@ class Player extends Component {
             onChange={this.handleControlChange}
             value={volume} />
         </div>
-        {errorMessage && <Alert dismissible variant="light">{errorMessage}</Alert>}
-        {(currentTrack.title) ?  <p style={{fontFamily: "Cute Font", fontSize: "3rem", lineHeight: "1"}}>{currentTrack.title}</p> : <p>Load a track first!</p>}
-        
+
+        {
+          errorMessage &&
+          <Alert variant="light">{errorMessage}</Alert>
+        }
+
+        <p className="track-time">
+          {TimeFormat.fromMs(parseInt(position), 'mm:ss').slice(0, 5)} / {TimeFormat.fromMs(parseInt(duration), 'mm:ss').slice(0, 5)}
+        </p>
+
+        {
+          (currentTrack.title)
+            ?
+            <p
+              style={{
+                fontFamily: "Cute Font",
+                fontSize: "3rem",
+                lineHeight: "1"
+              }}>{currentTrack.title}</p>
+            : <p>Load a track first!</p>
+        }
+
         <Sound
           url={currentTrack.url && currentTrack.url}
           volume={volume}
           playbackRate={playbackRate}
           onFinish={this.props.togglePlay}
-          // onPlaying={this.props.togglePlay}
-          // onLoad={console.log('onLoad called')}
+          onLoad={(e) => { this.setState({ duration: e.duration }) }}
+          onPlaying={(e) => { this.setState({ position: e.position }) }}
           // whilePlaying={console.log('while Playing Called')}
           playStatus={playStatus} />
       </section>

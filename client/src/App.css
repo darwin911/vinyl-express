@@ -232,6 +232,11 @@ form {
   top: 5%;
 }
 
+.track-time {
+  font-size: 2rem;
+  /* font-family: monospace; */
+}
+
 .section-tracks {
   max-width: 90%;
   margin: 0 auto;
