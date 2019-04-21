@@ -2,7 +2,6 @@ import React from 'react'
 import { FormControl, Form, Button, Alert } from 'react-bootstrap';
 
 const Login = (props) => {
-  console.log(props.errorMessage)
   return (
     <Form
       className="login-form"
