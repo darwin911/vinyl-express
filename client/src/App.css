@@ -132,12 +132,12 @@ form {
 }
 
 .tt-play {
-  animation: tt-play 500ms linear;
-  animation-fill-mode: forwards;
+  animation: tt-play 500ms linear forwards,
+  needle-play 90s infinite linear 500ms alternate;
 }
 
 .needle-play {
-  animation: needle-play 9 0s infinite linear 500ms alternate;
+  animation: needle-play 10s infinite linear 500ms alternate;
 }
 
 .tt-stop {
@@ -162,80 +162,6 @@ form {
    start 2400ms 1 ease-in;
 }
 
-.start-stop-btn {
-  background: #000;
-  padding: 0 0.45rem 0.095rem;
-  color: #333;
-  position: absolute;
-  border: none;
-  font-size: 3.5rem;
-  line-height: 2rem;
-  left: 1rem;
-  bottom: 1rem;
-  transition: 120ms ease;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
-
-.start-stop-btn:active {
-  color: red;
-}
-
-.green {
-  color: greenyellow;
-  text-shadow: 0 0 12px rgb(25, 216, 50); 
-}
-
-.controls {
-  font-family: 'Helvetica Neue', Helvetica;
-  font-size: 2rem;
-  font-weight: 700;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.controls label {
-  margin: 0 1rem 0 0;
-}
-
-.volume-bar {
-  background: black;
-  position: absolute;
-  width: 40%;
-  height: 10px;
-  top: 30%;
-  left: -14%;
-  right: 0;
-  bottom: 0;
-  transform: rotate(-90deg);
-  border: 2px solid black;
-}
-
-.playback-input, .volume-input {
-  background: rgba(0, 0, 0, 0.8);
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  border: none;
-  color: #eee;
-  min-width: 2rem;
-  max-width: 5rem;
-  width: 12%;
-  position: absolute;
-  z-index: 10;
-  cursor: pointer;
-}
-
-.playback-input {
-  right: 5%;
-  bottom: 5%;
-}
-
-.volume-input {
-  left: 10%;
-  top: 5%;
-}
-
 @keyframes start {
   from {
    transform: rotate(0deg);
@@ -253,6 +179,7 @@ form {
     transform: rotate(360deg);
   }
  }
+
 
 @keyframes tt-play {
   0% {
@@ -295,6 +222,79 @@ form {
   }
 }
 
+.start-stop-btn {
+  background: #000;
+  padding: 0 0.45rem 0.095rem;
+  color: #333;
+  position: absolute;
+  border: none;
+  font-size: 3.5rem;
+  line-height: 2rem;
+  left: 1rem;
+  bottom: 1rem;
+  transition: 120ms ease;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.start-stop-btn:active {
+  color: red;
+}
+
+.green {
+  color: greenyellow;
+  text-shadow: 0 0 12px rgb(25, 216, 50); 
+}
+
+.controls {
+  font-family: 'Helvetica Neue', Helvetica;
+  font-size: 2rem;
+  font-weight: 700;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.controls label {
+  margin: 0 1rem 0 0;
+}
+
+
+.playback-input, .volume-input {
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #eee;
+  min-width: 2rem;
+  max-width: 5rem;
+  width: 12%;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.volume-input {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+  position: absolute;
+  height: 60px;
+  top: 30%;
+  left: 0%;
+  right: 0;
+  bottom: 0;
+  transform: rotate(-90deg);
+}
+
+.volume-input:focus {
+  outline: none;
+}
+
+.playback-input {
+  right: 5%;
+  bottom: 5%;
+}
 
 .track-time {
   font-size: 1.8rem;
@@ -399,8 +399,6 @@ footer a {
 .linkedin {
   padding: 0.25rem;
 }
-
-
 
 @media screen and (min-width: 800px) {
   main {
