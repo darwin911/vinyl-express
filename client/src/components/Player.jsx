@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Sound from 'react-sound';
 import { Alert } from 'react-bootstrap';
 import TimeFormat from 'hh-mm-ss';
-import 'react-input-range/lib/css/index.css';
 
 class Player extends Component {
   constructor(props) {
