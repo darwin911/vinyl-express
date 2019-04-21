@@ -79,7 +79,7 @@ class Player extends Component {
         }
 
         <p className="track-time">
-          {TimeFormat.fromMs(parseInt(position), 'mm:ss').slice(0, 8)} / {TimeFormat.fromMs(parseInt(duration), 'mm:ss').slice(0, 8)}
+          {TimeFormat.fromMs(parseInt(position), 'mm:ss').slice(0, 5)} / {TimeFormat.fromMs(parseInt(duration), 'mm:ss').slice(0, 5)}
         </p>
 
         {
