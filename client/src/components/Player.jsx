@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Sound from 'react-sound';
 import { Alert } from 'react-bootstrap';
 import TimeFormat from 'hh-mm-ss';
+import 'react-input-range/lib/css/index.css';
 
 class Player extends Component {
   constructor(props) {
@@ -49,33 +50,27 @@ class Player extends Component {
           <button
             onClick={() => this.props.togglePlay()}
             className={"start-stop-btn " + (playStatus === "PLAYING" ? "green" : "")} >&#8227;</button>
-          {/* 
-          <ProgressBar
-            className="volume-bar"
-            variant="danger"
-            now={volume} /> */}
 
           <input
             className="playback-input"
             name="playbackRate"
-            type="number"
+            type="range"
             step={0.01}
             min={0.5}
-            max={3}
+            max={3.5}
             onChange={this.handleControlChange}
             value={playbackRate} />
 
+     
           <input
             className="volume-input"
             name="volume"
             type="range"
             step={1}
-            defaultValue={50}
             min={1}
             max={120}
             onChange={this.handleControlChange}
-            value={volume}
-            list="tickmarks" />
+            value={volume} />
         </div>
 
         {

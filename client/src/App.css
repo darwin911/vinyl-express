@@ -52,8 +52,9 @@ header {
   letter-spacing: -1px;
 }
 
-.navbar a {
-  margin: 0 0.15rem;
+.navbar-nav a {
+  font-size: 1rem;
+  margin-left: 0.5rem;
 }
 
 .container h2 {
@@ -115,6 +116,7 @@ form {
   cursor: pointer;
   max-width: 75%;
   margin: 0 2rem;
+  position: relative;
 }
 
 .tt-arm {
@@ -237,6 +239,10 @@ form {
   border-radius: 5px;
 }
 
+.start-stop-btn:focus {
+  outline: none;
+}
+
 .start-stop-btn:active {
   color: red;
 }
@@ -259,7 +265,7 @@ form {
 }
 
 
-.playback-input, .volume-input {
+.playback-input {
   background: rgba(0, 0, 0, 0.8);
   text-align: center;
   margin: 0;
@@ -274,21 +280,108 @@ form {
   cursor: pointer;
 }
 
+/* http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html  */
+
 .volume-input {
+  /*removes default webkit styles*/
   -webkit-appearance: none;
-  width: 100%;
-  background: transparent;
+  /*fix for FF unable to apply focus style bug */
+  /*required for proper track sizing in FF*/
+  width: 150px;
+  cursor: pointer;
+  border-radius: 3px;
+  /* box-shadow: 0 0 0px 2px #999;  */
   position: absolute;
-  height: 60px;
-  top: 30%;
-  left: 0%;
-  right: 0;
-  bottom: 0;
+  top: 35%;
+  left: -14%;
   transform: rotate(-90deg);
+  z-index: 3;
+}
+
+.volume-input::-webkit-slider-runnable-track {
+  width: 150px;
+  height: 3px;
+  background: #f03232;
+  border: none;
+  border-radius: 3px;
+}
+
+.volume-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 1rem;
+  width: 0.5rem;
+  border-radius: 2px;
+  background: white;
+  margin-top: -7px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
 .volume-input:focus {
   outline: none;
+}
+
+.volume-input:focus::-webkit-slider-runnable-track {
+  background: hsl(0, 86%, 37%);
+}
+
+.volume-input::-moz-range-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+.volume-input::-moz-range-thumb {
+  border: none;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  background: goldenrod;
+}
+
+/*hide the outline behind the border*/
+.volume-input:-moz-focusring{
+  outline: 1px solid white;
+  outline-offset: -1px;
+}
+
+.volume-input::-ms-track {
+  width: 300px;
+  height: 5px;
+  /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+  background: transparent;
+  /*leave room for the larger thumb to overflow with a transparent border */
+  border-color: transparent;
+  border-width: 6px 0;
+  /*remove default tick marks*/
+  color: transparent;
+}
+
+.volume-input::-ms-fill-lower {
+  background: #777;
+  border-radius: 10px;
+}
+
+.volume-input::-ms-fill-upper {
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.volume-input::-ms-thumb {
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: goldenrod;
+}
+
+.volume-input:focus::-ms-fill-lower {
+  background: #888;
+}
+
+.volume-input:focus::-ms-fill-upper {
+  background: #ccc;
 }
 
 .playback-input {
@@ -401,6 +494,12 @@ footer a {
 }
 
 @media screen and (min-width: 800px) {
+
+  .navbar-nav a {
+    font-size: 1.4rem;
+    margin-left: 2rem;
+  }
+
   main {
     display: grid;
     grid-template-columns: 1fr 1fr;
