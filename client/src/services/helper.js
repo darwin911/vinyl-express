@@ -21,7 +21,6 @@ const registerUser = async (data) => {
 }
 
 const loginUser = async (data) => {
-  console.log('login')
   const resp = await api.post(`users/login`, data);
   return resp.data;
 };
