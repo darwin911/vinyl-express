@@ -78,6 +78,8 @@ class App extends Component {
           id: data.id,
         }, tracks,
       })
+    } else {
+      this.props.history.push('/');
     }
   }
 
