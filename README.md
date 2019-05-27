@@ -2,20 +2,23 @@
 
 http://vinyl.surge.sh/
 
-## Introduction to your app (description)
+## Upload your local songs to your account, edit their names, delete from your account, and play them on the record player
 
-Users user music players that provide them with all the options and capabilities that the modern web has to provide. Vinyl does not. It's purpose is to recreate the UX of listening to music on a record player or turntable.
+Users can choose a file (audio) to upload to their account
+- Edit the name of the song/track
+- Delete the track
+- Play all tracks that have been uploaded
 
-## Feature List (user stories)
+## Feature List (POST MVP)
 
-- User can create a Playlist/Album/Set
-- User can add tracks to Playlist/Album/Set
-- User can remove tracks to Playlist/Album/Set
-- User can order tracks in Playlist/Album/Set
-- User can play Full Playlist/Album/Set but not individual tracks
-- User can _scroll_ through Playlist/Album/Set
+- User can create a Playlist
+- User can add tracks to Playlist
+- User can remove tracks to Playlist
+- User can order tracks in Playlist
+- User can play Full Playlist but not individual tracks
+- User can _scroll_ through Playlist
 
-## Technologies to be used
+## Technologies
 
 - Express
 - Sequelize
@@ -25,7 +28,7 @@ Users user music players that provide them with all the options and capabilities
 - Bcrypt
 - JsonWebToken (JWT)
 - React Bootstrap
-- Amazon Web Services
+- Amazon Web Services (S3 Bucket)
 - React-Sound
 
 ## ERD (images included in the proposal)
@@ -53,10 +56,6 @@ Users user music players that provide them with all the options and capabilities
 - [] 
 - []
 - []
-
-## Code example with description
-
-`console.log('hello world!)`
 
 ## Installation instructions (at the top of the README)
 
