@@ -1,34 +1,39 @@
-import React from 'react'
-import { FormControl, Form, Button, Alert } from 'react-bootstrap';
+import React from "react";
+import { FormControl, Form, Button, Alert } from "react-bootstrap";
 
-const Login = (props) => {
+const Login = ({
+  handleLogin,
+  errorMessage,
+  handleChange,
+  email,
+  password
+}) => {
   return (
-    <Form
-      className="login-form"
-      onSubmit={props.handleLogin}>
-      {
-        props.errorMessage &&
-        <Alert variant="danger">{props.errorMessage}</Alert>
-      }
+    <Form className="login-form" onSubmit={handleLogin}>
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <FormControl
-        onChange={props.handleChange}
+        onChange={handleChange}
         type="email"
         name="email"
         placeholder="Email"
-        value={props.email}
+        value={email}
         autoComplete="off"
-        required />
+        required
+      />
       <FormControl
-        onChange={props.handleChange}
+        onChange={handleChange}
         type="password"
         name="password"
         placeholder="Password"
-        value={props.password}
+        value={password}
         autoComplete="off"
-        required />
-      <Button onClick={props.handleLogin} variant="dark">Login</Button>
+        required
+      />
+      <Button onClick={handleLogin} variant="dark">
+        Login
+      </Button>
     </Form>
-  )
-}
+  );
+};
 
 export default Login;

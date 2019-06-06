@@ -40,7 +40,7 @@ class Player extends Component {
 
           <img
             className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
-            onClick={() => this.props.togglePlay()}
+            // onClick={() => this.props.togglePlay()}
             src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png" alt="vinyl" />
 
           <div

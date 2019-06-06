@@ -92,18 +92,19 @@ form {
 }
 
 .player {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   padding-bottom: 1.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .turntable {
   width: 100%;
+  /* min-width: 290px;
+  min-height: 220px; */
   max-width: 420px;
   margin: 0 auto 2rem;
   position: relative;
   background: rgb(170, 170, 170);
-  /* background: url("https://media.freestocktextures.com/cache/a4/2f/a42f1d91f2657c6aea52471e293e2858.jpg"); */
   background: url("./assets/metal-texture.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -115,8 +116,12 @@ form {
 .vinyl {
   cursor: pointer;
   max-width: 75%;
-  margin: 0 2rem;
-  position: relative;
+  /* position: absolute; */
+  top: 0;
+  left: 12%;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
 }
 
 .tt-arm {
@@ -251,19 +256,6 @@ form {
   color: greenyellow;
   text-shadow: 0 0 12px rgb(25, 216, 50); 
 }
-
-.controls {
-  font-family: 'Helvetica Neue', Helvetica;
-  font-size: 2rem;
-  font-weight: 700;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.controls label {
-  margin: 0 1rem 0 0;
-}
-
 
 .playback-input {
   background: rgba(0, 0, 0, 0.8);
