@@ -1,43 +1,49 @@
-import React from 'react'
-import { FormControl, Form, Button, Alert } from 'react-bootstrap';
+import React from "react";
+import { FormControl, Form, Button, Alert } from "react-bootstrap";
 
-const Register = (props) => {
+const Register = ({
+  handleRegister,
+  handleChange,
+  email,
+  name,
+  password,
+  errorMessage
+}) => {
   return (
-    <Form
-      className="register-form"
-      onSubmit={props.handleRegister}>
-      {
-        props.errorMessage &&
-        <Alert variant="danger">{props.errorMessage}</Alert>
-      }
+    <Form className="register-form" onSubmit={handleRegister}>
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       <FormControl
-        onChange={props.handleChange}
+        onChange={handleChange}
         type="text"
         name="name"
         placeholder="Name"
         required
         autoComplete="off"
-        value={props.name}
+        value={name}
       />
       <FormControl
-        onChange={props.handleChange}
+        onChange={handleChange}
         type="email"
         name="email"
         placeholder="Email"
         autoComplete="off"
-        value={props.email}
-        required />
+        value={email}
+        required
+      />
       <FormControl
-        onChange={props.handleChange}
+        onChange={handleChange}
         type="password"
         name="password"
         placeholder="Password"
         autoComplete="off"
-        value={props.password}
-        required />
-      <Button onClick={props.handleRegister} variant="dark">Create User</Button>
+        value={password}
+        required
+      />
+      <Button onClick={handleRegister} variant="dark">
+        Create User
+      </Button>
     </Form>
-  )
-}
+  );
+};
 
 export default Register;

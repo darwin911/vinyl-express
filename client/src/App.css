@@ -1,7 +1,9 @@
 /* @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'); */
-@import url('https://fonts.googleapis.com/css?family=Cute+Font');
+@import url("https://fonts.googleapis.com/css?family=Cute+Font");
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   list-style-type: none;
   text-decoration: none !important;
@@ -16,8 +18,12 @@ html {
 .App {
   text-align: center;
   min-height: 100vh;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: radial-gradient(circle at top left, hsl(0, 0%, 5%), hsl(0, 0%, 12%));
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: radial-gradient(
+    circle at top left,
+    hsl(0, 0%, 5%),
+    hsl(0, 0%, 12%)
+  );
   font-weight: 300;
   color: white;
   position: relative;
@@ -39,11 +45,11 @@ header {
   color: white;
   font-size: 1.3rem;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,.325);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.325);
 }
 
 .nav-brand {
-  font-family: 'Cute Font';
+  font-family: "Cute Font";
   line-height: 1;
   font-size: 3.5rem;
   margin-bottom: 0;
@@ -58,7 +64,7 @@ header {
 }
 
 .container h2 {
-  font-family: 'Cute Font';
+  font-family: "Cute Font";
   font-size: 3.8rem;
 }
 
@@ -72,12 +78,15 @@ form {
   margin: 0 auto;
 }
 
-.login-form input, .register-form input, .section-tracks input, .fileupload-form input {
+.login-form input,
+.register-form input,
+.section-tracks input,
+.fileupload-form input {
   color: #fff !important;
   background-color: rgba(255, 255, 255, 0.05) !important;
   border: none !important;
   margin-bottom: 1rem;
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,.225);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.225);
 }
 
 .fileupload-form input::placeholder {
@@ -140,7 +149,7 @@ form {
 
 .tt-play {
   animation: tt-play 500ms linear forwards,
-  needle-play 90s infinite linear 500ms alternate;
+    needle-play 90s infinite linear 500ms alternate;
 }
 
 .needle-play {
@@ -153,7 +162,7 @@ form {
 }
 
 .turntable::after {
-  content: '';
+  content: "";
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
   width: 17%;
@@ -165,28 +174,26 @@ form {
 }
 
 .spin {
-  animation: spin 1700ms infinite linear 2400ms,
-   start 2400ms 1 ease-in;
+  animation: spin 1700ms infinite linear 2400ms, start 2400ms 1 ease-in;
 }
 
 @keyframes start {
-  from {
-   transform: rotate(0deg);
-  }
-  to {
-   transform: rotate(360deg);
-  }
- }
- 
- @keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
- }
+}
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 @keyframes tt-play {
   0% {
@@ -254,7 +261,7 @@ form {
 
 .green {
   color: greenyellow;
-  text-shadow: 0 0 12px rgb(25, 216, 50); 
+  text-shadow: 0 0 12px rgb(25, 216, 50);
 }
 
 .playback-input {
@@ -333,7 +340,7 @@ form {
 }
 
 /*hide the outline behind the border*/
-.volume-input:-moz-focusring{
+.volume-input:-moz-focusring {
   outline: 1px solid white;
   outline-offset: -1px;
 }
@@ -420,7 +427,8 @@ form {
   color: #999;
 }
 
-.track-name, .update-input {
+.track-name,
+.update-input {
   display: block;
   width: 100%;
   text-align: center;
@@ -431,14 +439,22 @@ form {
 
 .track-name {
   font-weight: 300;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.0));
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0)
+  );
   transition: all 250ms ease;
 }
 
 .track-name:hover {
   color: white;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.0));
-  border-color: rgba(255, 255, 255, 0.20);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0)
+  );
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .section-tracks .btn-group {
@@ -446,7 +462,8 @@ form {
   text-align: right;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
   font-size: 1.5rem;
   line-height: 1.3rem;
   border: none;
@@ -454,7 +471,8 @@ form {
   position: absolute;
 }
 
-.edit-btn:hover, .delete-btn:hover {
+.edit-btn:hover,
+.delete-btn:hover {
   opacity: 1;
 }
 
@@ -477,7 +495,8 @@ footer a {
   color: #222;
 }
 
-.github, .linkedin {
+.github,
+.linkedin {
   width: 3rem;
 }
 
@@ -486,7 +505,6 @@ footer a {
 }
 
 @media screen and (min-width: 800px) {
-
   .navbar-nav a {
     font-size: 1.4rem;
     margin-left: 2rem;
@@ -497,7 +515,10 @@ footer a {
     grid-template-columns: 1fr 1fr;
   }
 
-  .container h2, .login-form, .register-form, .fileupload-form {
+  .container h2,
+  .login-form,
+  .register-form,
+  .fileupload-form {
     grid-column: span 2;
   }
 
@@ -513,6 +534,6 @@ footer a {
   }
 
   .track {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 }
