@@ -1,7 +1,9 @@
 /* @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'); */
-@import url('https://fonts.googleapis.com/css?family=Cute+Font');
+@import url("https://fonts.googleapis.com/css?family=Cute+Font");
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   list-style-type: none;
   text-decoration: none !important;
@@ -16,8 +18,12 @@ html {
 .App {
   text-align: center;
   min-height: 100vh;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: radial-gradient(circle at top left, hsl(0, 0%, 5%), hsl(0, 0%, 12%));
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: radial-gradient(
+    circle at top left,
+    hsl(0, 0%, 5%),
+    hsl(0, 0%, 12%)
+  );
   font-weight: 300;
   color: white;
   position: relative;
@@ -39,11 +45,11 @@ header {
   color: white;
   font-size: 1.3rem;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,.325);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.325);
 }
 
 .nav-brand {
-  font-family: 'Cute Font';
+  font-family: "Cute Font";
   line-height: 1;
   font-size: 3.5rem;
   margin-bottom: 0;
@@ -52,12 +58,13 @@ header {
   letter-spacing: -1px;
 }
 
-.navbar a {
-  margin: 0 0.15rem;
+.navbar-nav a {
+  font-size: 1rem;
+  margin-left: 0.5rem;
 }
 
 .container h2 {
-  font-family: 'Cute Font';
+  font-family: "Cute Font";
   font-size: 3.8rem;
 }
 
@@ -71,12 +78,15 @@ form {
   margin: 0 auto;
 }
 
-.login-form input, .register-form input, .section-tracks input, .fileupload-form input {
+.login-form input,
+.register-form input,
+.section-tracks input,
+.fileupload-form input {
   color: #fff !important;
   background-color: rgba(255, 255, 255, 0.05) !important;
   border: none !important;
   margin-bottom: 1rem;
-  box-shadow: 0 8px 6px -6px rgba(0,0,0,.225);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.225);
 }
 
 .fileupload-form input::placeholder {
@@ -91,19 +101,20 @@ form {
 }
 
 .player {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   padding-bottom: 1.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .turntable {
   width: 100%;
+  /* min-width: 290px;
+  min-height: 220px; */
   max-width: 420px;
   margin: 0 auto 2rem;
   position: relative;
   background: rgb(170, 170, 170);
-  /* background: url("https://media.freestocktextures.com/cache/a4/2f/a42f1d91f2657c6aea52471e293e2858.jpg"); */
-  background: url("http://allroundnews.com/wp-content/uploads/2012/03/free-metal-texture-6.jpg");
+  background: url("./assets/metal-texture.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 100%;
@@ -114,7 +125,12 @@ form {
 .vinyl {
   cursor: pointer;
   max-width: 75%;
-  margin: 0 2rem;
+  /* position: absolute; */
+  top: 0;
+  left: 12%;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
 }
 
 .tt-arm {
@@ -123,7 +139,7 @@ form {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url("http://www.schillmania.com/projects/soundmanager2/demo/turntable/image/tt_arm.png");
+  background-image: url("./assets/tt_arm.png");
   position: absolute;
   z-index: 1;
   top: 2%;
@@ -132,12 +148,12 @@ form {
 }
 
 .tt-play {
-  animation: tt-play 500ms linear;
-  animation-fill-mode: forwards;
+  animation: tt-play 500ms linear forwards,
+    needle-play 90s infinite linear 500ms alternate;
 }
 
 .needle-play {
-  animation: needle-play 9 0s infinite linear 500ms alternate;
+  animation: needle-play 10s infinite linear 500ms alternate;
 }
 
 .tt-stop {
@@ -146,7 +162,7 @@ form {
 }
 
 .turntable::after {
-  content: '';
+  content: "";
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
   width: 17%;
@@ -158,101 +174,26 @@ form {
 }
 
 .spin {
-  animation: spin 1700ms infinite linear 2400ms,
-   start 2400ms 1 ease-in;
-}
-
-.start-stop-btn {
-  background: #000;
-  padding: 0 0.45rem 0.095rem;
-  color: #333;
-  position: absolute;
-  border: none;
-  font-size: 3.5rem;
-  line-height: 2rem;
-  left: 1rem;
-  bottom: 1rem;
-  transition: 120ms ease;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
-
-.start-stop-btn:active {
-  color: red;
-}
-
-.green {
-  color: greenyellow;
-  text-shadow: 0 0 12px rgb(25, 216, 50); 
-}
-
-.controls {
-  font-family: 'Helvetica Neue', Helvetica;
-  font-size: 2rem;
-  font-weight: 700;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.controls label {
-  margin: 0 1rem 0 0;
-}
-
-.volume-bar {
-  background: black;
-  position: absolute;
-  width: 40%;
-  height: 10px;
-  top: 30%;
-  left: -14%;
-  right: 0;
-  bottom: 0;
-  transform: rotate(-90deg);
-  border: 2px solid black;
-}
-
-.playback-input, .volume-input {
-  background: rgba(0, 0, 0, 0.8);
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  border: none;
-  color: #eee;
-  min-width: 2rem;
-  max-width: 5rem;
-  width: 12%;
-  position: absolute;
-  z-index: 10;
-  cursor: pointer;
-}
-
-.playback-input {
-  right: 5%;
-  bottom: 5%;
-}
-
-.volume-input {
-  left: 10%;
-  top: 5%;
+  animation: spin 1700ms infinite linear 2400ms, start 2400ms 1 ease-in;
 }
 
 @keyframes start {
-  from {
-   transform: rotate(0deg);
-  }
-  to {
-   transform: rotate(360deg);
-  }
- }
- 
- @keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
- }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 @keyframes tt-play {
   0% {
@@ -295,6 +236,157 @@ form {
   }
 }
 
+.start-stop-btn {
+  background: #000;
+  padding: 0 0.45rem 0.095rem;
+  color: #333;
+  position: absolute;
+  border: none;
+  font-size: 3.5rem;
+  line-height: 2rem;
+  left: 1rem;
+  bottom: 1rem;
+  transition: 120ms ease;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.start-stop-btn:focus {
+  outline: none;
+}
+
+.start-stop-btn:active {
+  color: red;
+}
+
+.green {
+  color: greenyellow;
+  text-shadow: 0 0 12px rgb(25, 216, 50);
+}
+
+.playback-input {
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #eee;
+  min-width: 2rem;
+  max-width: 5rem;
+  width: 12%;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html  */
+
+.volume-input {
+  /*removes default webkit styles*/
+  -webkit-appearance: none;
+  /*fix for FF unable to apply focus style bug */
+  /*required for proper track sizing in FF*/
+  width: 150px;
+  cursor: pointer;
+  border-radius: 3px;
+  /* box-shadow: 0 0 0px 2px #999;  */
+  position: absolute;
+  top: 35%;
+  left: -14%;
+  transform: rotate(-90deg);
+  z-index: 3;
+}
+
+.volume-input::-webkit-slider-runnable-track {
+  width: 150px;
+  height: 3px;
+  background: #f03232;
+  border: none;
+  border-radius: 3px;
+}
+
+.volume-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 1rem;
+  width: 0.5rem;
+  border-radius: 2px;
+  background: white;
+  margin-top: -7px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.volume-input:focus {
+  outline: none;
+}
+
+.volume-input:focus::-webkit-slider-runnable-track {
+  background: hsl(0, 86%, 37%);
+}
+
+.volume-input::-moz-range-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+.volume-input::-moz-range-thumb {
+  border: none;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  background: goldenrod;
+}
+
+/*hide the outline behind the border*/
+.volume-input:-moz-focusring {
+  outline: 1px solid white;
+  outline-offset: -1px;
+}
+
+.volume-input::-ms-track {
+  width: 300px;
+  height: 5px;
+  /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+  background: transparent;
+  /*leave room for the larger thumb to overflow with a transparent border */
+  border-color: transparent;
+  border-width: 6px 0;
+  /*remove default tick marks*/
+  color: transparent;
+}
+
+.volume-input::-ms-fill-lower {
+  background: #777;
+  border-radius: 10px;
+}
+
+.volume-input::-ms-fill-upper {
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.volume-input::-ms-thumb {
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: goldenrod;
+}
+
+.volume-input:focus::-ms-fill-lower {
+  background: #888;
+}
+
+.volume-input:focus::-ms-fill-upper {
+  background: #ccc;
+}
+
+.playback-input {
+  right: 5%;
+  bottom: 5%;
+}
 
 .track-time {
   font-size: 1.8rem;
@@ -335,7 +427,8 @@ form {
   color: #999;
 }
 
-.track-name, .update-input {
+.track-name,
+.update-input {
   display: block;
   width: 100%;
   text-align: center;
@@ -346,14 +439,22 @@ form {
 
 .track-name {
   font-weight: 300;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.0));
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0)
+  );
   transition: all 250ms ease;
 }
 
 .track-name:hover {
   color: white;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.0));
-  border-color: rgba(255, 255, 255, 0.20);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0)
+  );
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .section-tracks .btn-group {
@@ -361,7 +462,8 @@ form {
   text-align: right;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
   font-size: 1.5rem;
   line-height: 1.3rem;
   border: none;
@@ -369,7 +471,8 @@ form {
   position: absolute;
 }
 
-.edit-btn:hover, .delete-btn:hover {
+.edit-btn:hover,
+.delete-btn:hover {
   opacity: 1;
 }
 
@@ -392,7 +495,8 @@ footer a {
   color: #222;
 }
 
-.github, .linkedin {
+.github,
+.linkedin {
   width: 3rem;
 }
 
@@ -400,15 +504,21 @@ footer a {
   padding: 0.25rem;
 }
 
-
-
 @media screen and (min-width: 800px) {
+  .navbar-nav a {
+    font-size: 1.4rem;
+    margin-left: 2rem;
+  }
+
   main {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
-  .container h2, .login-form, .register-form {
+  .container h2,
+  .login-form,
+  .register-form,
+  .fileupload-form {
     grid-column: span 2;
   }
 
@@ -424,6 +534,6 @@ footer a {
   }
 
   .track {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 }
