@@ -18,7 +18,6 @@ const registerUser = async data => {
 
 const loginUser = async data => {
   const resp = await api.post(`users/login`, data);
-  console.log(resp);
   return resp.data;
 };
 

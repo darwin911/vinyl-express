@@ -178,10 +178,12 @@ class App extends Component {
   async handleUpdateTrack(trackData) {
     // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
-    console.log(track);
     this.setState(prevState => ({
-      // tracks: [...prevState.tracks.filter(t => t.id !== trackData.id), trackData].sort((a, b) => a.id - b.id),
       isEdit: false,
+      currentTrack: {
+        ...prevState.currentTrack,
+        title: trackData.title
+      },
       tracks: prevState.tracks.map(t => {
         if (t.id !== trackData.id) {
           return t;
