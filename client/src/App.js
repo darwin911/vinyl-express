@@ -240,7 +240,6 @@ class App extends Component {
 
   async handleSubmitTrack() {
     const { currentTrack, currentUser } = this.state;
-    console.log(currentTrack, currentUser);
     const data = {
       title: currentTrack.title,
       url: currentTrack.url,
@@ -248,7 +247,7 @@ class App extends Component {
     };
     const track = await addTrack(data);
     this.setState(prevState => ({
-      tracks: [...prevState.tracks, track.track]
+      tracks: [...prevState.tracks, track]
     }));
   }
 

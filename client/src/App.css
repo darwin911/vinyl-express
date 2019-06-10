@@ -114,7 +114,7 @@ form {
   margin: 0 auto 2rem;
   position: relative;
   background: rgb(170, 170, 170);
-  background: url("./assets/metal-texture.jpg");
+  background: url("./assets/metal-texture-lowres.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 100%;

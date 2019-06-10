@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sound from "react-sound";
 import { Alert } from "react-bootstrap";
 import TimeFormat from "hh-mm-ss";
+import vinyl from "../assets/vinyl-red.png";
 
 class Player extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Player extends Component {
         <div className="turntable">
           <img
             className={"vinyl " + (playStatus === "PLAYING" ? "spin" : "")}
-            src="https://thosepoorbastards.com/store/image/cache/data/vinyl/vinyl_sab_vinyl-600x600.png"
+            src={vinyl}
             alt="vinyl"
           />
 
