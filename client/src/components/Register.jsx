@@ -40,7 +40,7 @@ const Register = ({
         required
       />
       <Button onClick={handleRegister} variant="dark">
-        Create User
+        Register
       </Button>
     </Form>
   );
