@@ -18,6 +18,7 @@ const registerUser = async data => {
 
 const loginUser = async data => {
   const resp = await api.post(`users/login`, data);
+  console.log(resp);
   return resp.data;
 };
 
@@ -28,7 +29,6 @@ const getUserTracks = async userId => {
 
 const allTracks = async () => {
   const resp = await api.get(`tracks/`);
-  console.log(resp.data);
   return resp.data;
 };
 
@@ -38,7 +38,6 @@ const getTrack = async trackId => {
 };
 
 const addTrack = async trackData => {
-  console.log(trackData);
   const resp = await api.post(`tracks/`, trackData);
   return resp.data;
 };
