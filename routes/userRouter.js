@@ -9,9 +9,9 @@ userRouter.get("/", async (req, res) => {
   try {
     const users = await User.findAll();
     res.json({ users });
-  } catch (e) {
-    console.log(e);
-    res.stats(500).send(e.message);
+  } catch (error) {
+    console.error(error);
+    res.stats(500).send(error.message);
   }
 });
 
@@ -20,9 +20,9 @@ userRouter.get("/:id", async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
     res.json({ user });
-  } catch (e) {
-    console.log(e);
-    res.stats(500).send(e.message);
+  } catch (error) {
+    console.error(error);
+    res.stats(500).send(error.message);
   }
 });
 
@@ -66,8 +66,8 @@ userRouter.post("/register", async (req, res) => {
 
       res.json({ token, userData });
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
   }
 });
 
@@ -78,26 +78,20 @@ userRouter.post("/login", async (req, res) => {
     const user = await User.findOne({ where: { email } });
     if (user !== null) {
       const isAuthenticated = await compare(password, user.password_digest);
-      console.log("Authenticated: ", isAuthenticated);
-
       if (isAuthenticated === true) {
         const userData = {
           id: user.id,
           name: user.name,
           email: user.email
         };
-
-        console.log(userData);
-
         const token = encode(userData);
-
         return res.json({ token, userData });
       }
       return res.status(401).send("Invalid Credentials");
     }
     return res.status(401).send("Invalid Credentials");
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
   }
 });
 
@@ -106,11 +100,10 @@ userRouter.get("/:id/tracks", async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
     const tracks = await user.getTracks();
-    // console.log(tracks)
     res.json({ tracks });
-  } catch (e) {
-    console.log(e);
-    res.stats(500).send(e.message);
+  } catch (error) {
+    console.error(error);
+    res.stats(500).send(error.message);
   }
 });
 
