@@ -48,63 +48,48 @@ class App extends Component {
       isLoggedIn: false,
       isEdit: false
     };
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.handleSubmitTrack = this.handleSubmitTrack.bind(this);
-    this.handleDeleteTrack = this.handleDeleteTrack.bind(this);
-    this.handleEditTrack = this.handleEditTrack.bind(this);
-    this.handleUpdateTrack = this.handleUpdateTrack.bind(this);
-    this.handleUpdateChange = this.handleUpdateChange.bind(this);
-    this.togglePlay = this.togglePlay.bind(this);
-    this.setTrackUrl = this.setTrackUrl.bind(this);
-    this.loadTrack = this.loadTrack.bind(this);
   }
 
   async componentDidMount() {
     const token = localStorage.getItem("token");
     if (token) {
-      const data = decode(token);
-      const tracks = await getUserTracks(data.id);
+      const { name, email, id } = decode(token);
+      const tracks = await getUserTracks(id);
       this.setState({
         isLoggedIn: true,
-        currentUser: {
-          name: data.name,
-          email: data.email,
-          id: data.id
-        },
-        tracks
+        tracks,
+        currentUser: { name, email, id }
       });
+      this.props.history.push("/player");
     } else {
       this.props.history.push("/");
     }
   }
 
-  handleChange(e) {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState(prevState => ({
       ...prevState,
       [name]: value
     }));
-  }
+  };
 
-  async handleLogin(e) {
+  handleLogin = async e => {
     e.preventDefault();
     const { email, password } = this.state;
     const loginData = { email, password };
     try {
-      const user = await loginUser(loginData);
-      if (user) {
-        localStorage.setItem("token", user.token);
-        const tracks = await getUserTracks(user.userData.id);
+      const { token, userData } = await loginUser(loginData);
+      if (userData) {
+        localStorage.setItem("token", token);
+        const tracks = await getUserTracks(userData.id);
         this.setState({
-          currentUser: user.userData,
+          isLoggedIn: true,
+          currentUser: userData,
+          tracks,
           name: "",
           email: "",
-          password: "",
-          isLoggedIn: true,
-          tracks
+          password: ""
         });
       }
       this.props.history.push("/player");
@@ -115,9 +100,9 @@ class App extends Component {
         this.setState({ errorMessage: "" });
       }, 4000);
     }
-  }
+  };
 
-  handleLogout(e) {
+  handleLogout = e => {
     e.preventDefault();
     localStorage.removeItem("token");
     this.props.history.push("/");
@@ -129,9 +114,9 @@ class App extends Component {
         email: ""
       }
     });
-  }
+  };
 
-  async handleRegister(e) {
+  handleRegister = async e => {
     e.preventDefault();
     const { name, email, password } = this.state;
     const data = { name, email, password };
@@ -154,18 +139,18 @@ class App extends Component {
         this.setState({ errorMessage: "" });
       }, 4000);
     }
-  }
+  };
 
-  handleEditTrack(track) {
+  handleEditTrack = track => {
     if (this.state.isEdit === false) {
       this.setState({
         isEdit: track.id,
         updateForm: { ...track }
       });
     }
-  }
+  };
 
-  handleUpdateChange(e) {
+  handleUpdateChange = e => {
     const { name, value } = e.target;
     this.setState(prevState => ({
       updateForm: {
@@ -173,9 +158,9 @@ class App extends Component {
         [name]: value
       }
     }));
-  }
+  };
 
-  async handleUpdateTrack(trackData) {
+  handleUpdateTrack = async trackData => {
     // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
     this.setState(prevState => ({
@@ -192,17 +177,17 @@ class App extends Component {
         }
       })
     }));
-  }
+  };
 
-  async handleDeleteTrack(trackId) {
+  handleDeleteTrack = async trackId => {
     // eslint-disable-next-line
     const resp = await removeTrack(trackId);
     this.setState(prevState => ({
       tracks: [...prevState.tracks.filter(track => track.id !== trackId)]
     }));
-  }
+  };
 
-  togglePlay() {
+  togglePlay = () => {
     const url = this.state.currentTrack.url;
     if (url !== "") {
       setTimeout(() => {
@@ -217,17 +202,17 @@ class App extends Component {
         this.setState({ errorMessage: "" });
       }, 4000);
     }
-  }
+  };
 
-  async setTrackUrl(url, title) {
+  setTrackUrl = async (url, title) => {
     this.setState({ currentTrack: { url, title } });
     // eslint-disable-next-line
     const temp = await this.handleSubmitTrack();
     this.props.history.push("/player");
     this.togglePlay();
-  }
+  };
 
-  loadTrack(track) {
+  loadTrack = track => {
     this.setState({
       currentTrack: {
         url: track.url,
@@ -236,9 +221,9 @@ class App extends Component {
       },
       filename: track.filename
     });
-  }
+  };
 
-  async handleSubmitTrack() {
+  handleSubmitTrack = async () => {
     const { currentTrack, currentUser } = this.state;
     const data = {
       title: currentTrack.title,
@@ -249,7 +234,7 @@ class App extends Component {
     this.setState(prevState => ({
       tracks: [...prevState.tracks, track]
     }));
-  }
+  };
 
   render() {
     const {
