@@ -24,7 +24,6 @@ class FileUpload extends Component {
         }
       })
       .then(resp => {
-        console.log(resp.data);
         this.props.setTrackUrl(resp.data.Location, this.state.title);
       })
       .catch(error => {
@@ -41,7 +40,6 @@ class FileUpload extends Component {
   }
 
   handleFileUpload = e => {
-    console.log(e.target.files[0]);
     this.setState({
       file: e.target.files[0],
       title: e.target.files[0].name
