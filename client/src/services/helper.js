@@ -51,6 +51,15 @@ const updateTrack = async (trackId, trackData) => {
   return resp.data.track;
 };
 
+const upload = async track => {
+  const resp = await axios.post(`${BASE_URL}upload/`, track, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+  return resp.data;
+};
+
 export {
   allUsers,
   registerUser,
@@ -60,5 +69,6 @@ export {
   addTrack,
   removeTrack,
   updateTrack,
-  getUserTracks
+  getUserTracks,
+  upload
 };

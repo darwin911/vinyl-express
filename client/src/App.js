@@ -161,7 +161,6 @@ class App extends Component {
   };
 
   handleUpdateTrack = async trackData => {
-    // eslint-disable-next-line
     const track = await updateTrack(trackData.id, trackData);
     this.setState(prevState => ({
       isEdit: false,
@@ -180,8 +179,7 @@ class App extends Component {
   };
 
   handleDeleteTrack = async trackId => {
-    // eslint-disable-next-line
-    const resp = await removeTrack(trackId);
+    await removeTrack(trackId);
     this.setState(prevState => ({
       tracks: [...prevState.tracks.filter(track => track.id !== trackId)]
     }));

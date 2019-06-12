@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { Form, FormControl, Button } from "react-bootstrap";
+import { upload } from "../services/helper";
 
 class FileUpload extends Component {
   constructor(props) {
@@ -9,35 +10,23 @@ class FileUpload extends Component {
       file: null,
       title: ""
     };
-    this.submitFile = this.submitFile.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  async submitFile(e) {
+  submitFile = async e => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", this.state.file);
-    axios
-      .post(`https://vinyl-express.herokuapp.com/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
-      .then(resp => {
-        this.props.setTrackUrl(resp.data.Location, this.state.title);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+    const resp = await upload(formData);
+    this.props.setTrackUrl(resp.Location, this.state.title);
+  };
 
-  handleChange(e) {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState(prevState => ({
       ...prevState,
       [name]: value
     }));
-  }
+  };
 
   handleFileUpload = e => {
     this.setState({
@@ -47,6 +36,7 @@ class FileUpload extends Component {
   };
 
   render() {
+    const { title } = this.state;
     return (
       <Form className="fileupload-form" onSubmit={this.submitFile}>
         <FormControl
@@ -54,7 +44,7 @@ class FileUpload extends Component {
           name="title"
           placeholder="Track Title"
           onChange={this.handleChange}
-          value={this.state.title}
+          value={title}
           required
         />
         <FormControl
