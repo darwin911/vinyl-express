@@ -1,10 +1,10 @@
 /* @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'); */
 @import url("https://fonts.googleapis.com/css?family=Cute+Font");
+
 *,
 *::before,
 *::after {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   list-style-type: none;
   text-decoration: none !important;
 }
@@ -19,7 +19,11 @@ html {
   text-align: center;
   min-height: 100vh;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: radial-gradient(circle at top left, #0d0d0d, #1f1f1f);
+  background: radial-gradient(
+    circle at top left,
+    hsl(0, 0%, 5%),
+    hsl(0, 0%, 12%)
+  );
   font-weight: 300;
   color: white;
   position: relative;
@@ -29,7 +33,6 @@ html {
 
 a {
   color: #bbb;
-  -webkit-transition: 150ms ease;
   transition: 150ms ease;
 }
 
@@ -42,8 +45,7 @@ header {
   color: white;
   font-size: 1.3rem;
   margin-bottom: 2rem;
-  -webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.325);
-          box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.325);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.325);
 }
 
 .nav-brand {
@@ -84,20 +86,7 @@ form {
   background-color: rgba(255, 255, 255, 0.05) !important;
   border: none !important;
   margin-bottom: 1rem;
-  -webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.225);
-          box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.225);
-}
-
-.fileupload-form input::-webkit-input-placeholder {
-  color: #bbb;
-}
-
-.fileupload-form input:-ms-input-placeholder {
-  color: #bbb;
-}
-
-.fileupload-form input::-ms-input-placeholder {
-  color: #bbb;
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.225);
 }
 
 .fileupload-form input::placeholder {
@@ -122,7 +111,7 @@ form {
   max-width: 420px;
   margin: 0 auto 2rem;
   position: relative;
-  background: #aaaaaa;
+  background: rgb(170, 170, 170);
   background: url("./assets/metal-texture-lowres.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -155,20 +144,17 @@ form {
 }
 
 .tt-play {
-  -webkit-animation: tt-play 500ms linear forwards, needle-play 90s infinite linear 500ms alternate;
-          animation: tt-play 500ms linear forwards, needle-play 90s infinite linear 500ms alternate;
+  animation: tt-play 500ms linear forwards,
+    needle-play 90s infinite linear 500ms alternate;
 }
 
 .needle-play {
-  -webkit-animation: needle-play 10s infinite linear 500ms alternate;
-          animation: needle-play 10s infinite linear 500ms alternate;
+  animation: needle-play 10s infinite linear 500ms alternate;
 }
 
 .tt-stop {
-  -webkit-animation: tt-stop 800ms ease-in;
-          animation: tt-stop 800ms ease-in;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  animation: tt-stop 800ms ease-in;
+  animation-fill-mode: forwards;
 }
 
 .turntable::after {
@@ -184,165 +170,65 @@ form {
 }
 
 .spin {
-  -webkit-animation: spin 1700ms infinite linear 2400ms, start 2400ms 1 ease-in;
-          animation: spin 1700ms infinite linear 2400ms, start 2400ms 1 ease-in;
-}
-
-@-webkit-keyframes start {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
+  animation: spin 1700ms infinite linear 2400ms, start 2400ms 1 ease-in;
 }
 
 @keyframes start {
   from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes spin {
   from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes tt-play {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-  50% {
-    -webkit-transform: rotate(4deg);
-            transform: rotate(4deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-  100% {
-    -webkit-transform: rotate(11deg);
-            transform: rotate(11deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(360deg);
   }
 }
 
 @keyframes tt-play {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(0deg);
+    transform-origin: 54% 27%;
   }
   50% {
-    -webkit-transform: rotate(4deg);
-            transform: rotate(4deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(4deg);
+    transform-origin: 54% 27%;
   }
   100% {
-    -webkit-transform: rotate(11deg);
-            transform: rotate(11deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-}
-
-@-webkit-keyframes tt-stop {
-  0% {
-    -webkit-transform: rotate(11deg);
-            transform: rotate(11deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-  50% {
-    -webkit-transform: rotate(5deg);
-            transform: rotate(5deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-  100% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(11deg);
+    transform-origin: 54% 27%;
   }
 }
 
 @keyframes tt-stop {
   0% {
-    -webkit-transform: rotate(11deg);
-            transform: rotate(11deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(11deg);
+    transform-origin: 54% 27%;
   }
   50% {
-    -webkit-transform: rotate(5deg);
-            transform: rotate(5deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(5deg);
+    transform-origin: 54% 27%;
   }
   100% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-}
-
-@-webkit-keyframes needle-play {
-  0% {
-    -webkit-transform: rotate(11deg);
-            transform: rotate(11deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
-  }
-  100% {
-    -webkit-transform: rotate(29deg);
-            transform: rotate(29deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(0deg);
+    transform-origin: 54% 27%;
   }
 }
 
 @keyframes needle-play {
   0% {
-    -webkit-transform: rotate(11deg);
-            transform: rotate(11deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(11deg);
+    transform-origin: 54% 27%;
   }
   100% {
-    -webkit-transform: rotate(29deg);
-            transform: rotate(29deg);
-    -webkit-transform-origin: 54% 27%;
-            transform-origin: 54% 27%;
+    transform: rotate(29deg);
+    transform-origin: 54% 27%;
   }
 }
 
@@ -356,10 +242,8 @@ form {
   line-height: 2rem;
   left: 1rem;
   bottom: 1rem;
-  -webkit-transition: 120ms ease;
   transition: 120ms ease;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border-radius: 5px;
 }
 
@@ -373,7 +257,7 @@ form {
 
 .green {
   color: greenyellow;
-  text-shadow: 0 0 12px #19d832;
+  text-shadow: 0 0 12px rgb(25, 216, 50);
 }
 
 .playback-input {
@@ -392,6 +276,7 @@ form {
 }
 
 /* http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html  */
+
 .volume-input {
   /*removes default webkit styles*/
   -webkit-appearance: none;
@@ -403,8 +288,7 @@ form {
   position: absolute;
   top: 35%;
   left: -14%;
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
+  transform: rotate(-90deg);
   z-index: 3;
 }
 
@@ -424,8 +308,7 @@ form {
   border-radius: 2px;
   background: white;
   margin-top: -7px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
-          box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
 .volume-input:focus {
@@ -433,7 +316,7 @@ form {
 }
 
 .volume-input:focus::-webkit-slider-runnable-track {
-  background: #af0d0d;
+  background: hsl(0, 86%, 37%);
 }
 
 .volume-input::-moz-range-track {
@@ -443,7 +326,6 @@ form {
   border: none;
   border-radius: 3px;
 }
-
 .volume-input::-moz-range-thumb {
   border: none;
   height: 1rem;
@@ -556,14 +438,21 @@ form {
 
 .track-name {
   font-weight: 300;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-  -webkit-transition: all 250ms ease;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0)
+  );
   transition: all 250ms ease;
 }
 
 .track-name:hover {
   color: white;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0)
+  );
   border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -619,29 +508,31 @@ footer a {
     font-size: 1.4rem;
     margin-left: 2rem;
   }
+
   main {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 1fr 1fr;
-        grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
+
   .container h2,
   .login-form,
   .register-form,
   .fileupload-form {
     grid-column: span 2;
   }
+
   .player {
     border-bottom: none;
   }
+
   .section-tracks {
     text-align: center;
     margin: 0 auto;
     width: 90%;
     max-width: 700px;
   }
+
   .track {
     margin-bottom: 0.5rem;
   }
 }
-/*# sourceMappingURL=App.css.map */
