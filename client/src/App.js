@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react';
+import './App.css';
 import {
   registerUser,
   loginUser,
@@ -7,43 +7,43 @@ import {
   removeTrack,
   getUserTracks,
   updateTrack
-} from "./services/helper";
-import { Navbar, Nav } from "react-bootstrap";
-import { Link, Route, withRouter } from "react-router-dom";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import FileUpload from "./components/FileUpload";
-import Player from "./components/Player";
-import Footer from "./components/Footer";
-import TrackList from "./components/TrackList";
-import decode from "jwt-decode";
+} from './services/helper';
+import { Navbar, Nav } from 'react-bootstrap';
+import { Link, Route, withRouter } from 'react-router-dom';
+import Register from './components/Register';
+import Login from './components/Login';
+import FileUpload from './components/FileUpload';
+import Player from './components/Player';
+import Footer from './components/Footer';
+import TrackList from './components/TrackList';
+import decode from 'jwt-decode';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playStatus: "STOPPED",
+      playStatus: 'STOPPED',
       currentUser: {
-        id: "",
-        name: "",
-        email: ""
+        id: '',
+        name: '',
+        email: ''
       },
       currentTrack: {
-        title: "",
-        id: "",
-        url: ""
+        title: '',
+        id: '',
+        url: ''
       },
       updateForm: {
-        title: "",
-        id: "",
-        url: "",
-        userId: ""
+        title: '',
+        id: '',
+        url: '',
+        userId: ''
       },
-      name: "",
-      email: "test@test.com",
-      password: "test",
-      errorMessage: "",
-      track: "",
+      name: '',
+      email: 'test@test.com',
+      password: 'test',
+      errorMessage: '',
+      track: '',
       tracks: [],
       isLoggedIn: false,
       isEdit: false
@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       const { name, email, id } = decode(token);
       const tracks = await getUserTracks(id);
@@ -60,9 +60,9 @@ class App extends Component {
         tracks,
         currentUser: { name, email, id }
       });
-      this.props.history.push("/player");
+      this.props.history.push('/player');
     } else {
-      this.props.history.push("/");
+      this.props.history.push('/');
     }
   }
 
@@ -81,37 +81,37 @@ class App extends Component {
     try {
       const { token, userData } = await loginUser(loginData);
       if (userData) {
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         const tracks = await getUserTracks(userData.id);
         this.setState({
           isLoggedIn: true,
           currentUser: userData,
           tracks,
-          name: "",
-          email: "",
-          password: ""
+          name: '',
+          email: '',
+          password: ''
         });
       }
-      this.props.history.push("/player");
+      this.props.history.push('/player');
     } catch (error) {
-      console.error("INVALID_CREDENTIALS", error);
-      this.setState({ errorMessage: "Invalid Credentials" });
+      console.error('INVALID_CREDENTIALS', error);
+      this.setState({ errorMessage: 'Invalid Credentials' });
       setTimeout(() => {
-        this.setState({ errorMessage: "" });
+        this.setState({ errorMessage: '' });
       }, 4000);
     }
   };
 
   handleLogout = e => {
     e.preventDefault();
-    localStorage.removeItem("token");
-    this.props.history.push("/");
+    localStorage.removeItem('token');
+    this.props.history.push('/');
     this.setState({
       isLoggedIn: false,
       currentUser: {
-        id: "",
-        name: "",
-        email: ""
+        id: '',
+        name: '',
+        email: ''
       }
     });
   };
@@ -122,21 +122,21 @@ class App extends Component {
     const data = { name, email, password };
     try {
       const user = await registerUser(data);
-      localStorage.setItem("token", user.token);
+      localStorage.setItem('token', user.token);
       this.setState({
-        name: "",
-        email: "",
-        password: "",
+        name: '',
+        email: '',
+        password: '',
         isLoggedIn: true,
         currentUser: user.userData,
         tracks: []
       });
-      this.props.history.push("/player");
+      this.props.history.push('/player');
     } catch (error) {
       console.log(error);
-      this.setState({ errorMessage: "This email is already in use." });
+      this.setState({ errorMessage: 'Email already in use.' });
       setTimeout(() => {
-        this.setState({ errorMessage: "" });
+        this.setState({ errorMessage: '' });
       }, 4000);
     }
   };
@@ -161,18 +161,18 @@ class App extends Component {
   };
 
   handleUpdateTrack = async trackData => {
-    const track = await updateTrack(trackData.id, trackData);
+    const updatedTrack = await updateTrack(trackData);
     this.setState(prevState => ({
       isEdit: false,
       currentTrack: {
         ...prevState.currentTrack,
         title: trackData.title
       },
-      tracks: prevState.tracks.map(t => {
-        if (t.id !== trackData.id) {
-          return t;
-        } else {
+      tracks: prevState.tracks.map(track => {
+        if (track.id !== trackData.id) {
           return track;
+        } else {
+          return updatedTrack;
         }
       })
     }));
@@ -187,26 +187,25 @@ class App extends Component {
 
   togglePlay = () => {
     const url = this.state.currentTrack.url;
-    if (url !== "") {
+    if (url !== '') {
       setTimeout(() => {
-        (this.state.playStatus === "STOPPED") |
-        (this.state.playStatus === "PAUSED")
-          ? this.setState({ playStatus: "PLAYING" })
-          : this.setState({ playStatus: "PAUSED" });
+        (this.state.playStatus === 'STOPPED') |
+        (this.state.playStatus === 'PAUSED')
+          ? this.setState({ playStatus: 'PLAYING' })
+          : this.setState({ playStatus: 'PAUSED' });
       }, 300);
     } else {
-      this.setState({ errorMessage: "No track loadad" });
+      this.setState({ errorMessage: 'No track loadad' });
       setTimeout(() => {
-        this.setState({ errorMessage: "" });
+        this.setState({ errorMessage: '' });
       }, 4000);
     }
   };
 
   setTrackUrl = async (url, title) => {
     this.setState({ currentTrack: { url, title } });
-    // eslint-disable-next-line
-    const temp = await this.handleSubmitTrack();
-    this.props.history.push("/player");
+    await this.handleSubmitTrack();
+    this.props.history.push('/player');
     this.togglePlay();
   };
 
@@ -250,43 +249,43 @@ class App extends Component {
       errorMessage
     } = this.state;
     return (
-      <div className="App">
-        <header className="bg-dark">
-          <Navbar className="container">
-            <Link to="/">
-              <h2 className="nav-brand">
+      <div className='App'>
+        <header className='bg-dark'>
+          <Navbar className='container'>
+            <Link to='/'>
+              <h2 className='nav-brand'>
                 V<span>i</span>nyl
               </h2>
             </Link>
-            <Nav className="ml-auto">
+            <Nav className='ml-auto'>
               {isLoggedIn ? (
                 <>
-                  <Link to="/player">Player</Link>
-                  <Link to="/upload">Upload</Link>
-                  <Link to="/" onClick={this.handleLogout}>
+                  <Link to='/player'>Player</Link>
+                  <Link to='/upload'>Upload</Link>
+                  <Link to='/' onClick={this.handleLogout}>
                     Logout
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/register">Register</Link>
+                  <Link to='/login'>Login</Link>
+                  <Link to='/register'>Register</Link>
                 </>
               )}
             </Nav>
           </Navbar>
         </header>
 
-        <main className="container">
+        <main className='container'>
           <Route
             exact
-            path="/"
+            path='/'
             render={() => <h2>Music, on a record player – but not really.</h2>}
           />
 
           <Route
             exact
-            path="/register"
+            path='/register'
             render={props => (
               <Register
                 name={name}
@@ -301,7 +300,7 @@ class App extends Component {
 
           <Route
             exact
-            path="/login"
+            path='/login'
             render={props => (
               <Login
                 name={name}
@@ -318,13 +317,13 @@ class App extends Component {
             <>
               <Route
                 exact
-                path="/upload"
+                path='/upload'
                 render={props => <FileUpload setTrackUrl={this.setTrackUrl} />}
               />
 
               <Route
                 exact
-                path="/player"
+                path='/player'
                 render={props => (
                   <>
                     <Player

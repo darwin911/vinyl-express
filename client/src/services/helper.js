@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const BASE_URL = `https://vinyl-express.herokuapp.com/`;
 
@@ -46,15 +46,15 @@ const removeTrack = async trackId => {
   return resp.data;
 };
 
-const updateTrack = async (trackId, trackData) => {
-  const resp = await api.put(`tracks/${trackId}`, trackData);
-  return resp.data.track;
+const updateTrack = async trackData => {
+  const resp = await api.put(`tracks/${trackData.id}`, trackData);
+  return resp.data;
 };
 
 const upload = async track => {
   const resp = await axios.post(`${BASE_URL}upload/`, track, {
     headers: {
-      "Content-Type": "multipart/form-data"
+      'Content-Type': 'multipart/form-data'
     }
   });
   return resp.data;
