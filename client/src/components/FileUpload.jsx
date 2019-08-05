@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-// import axios from "axios";
-import { Form, FormControl, Button } from "react-bootstrap";
-import { upload } from "../services/helper";
+import React, { Component } from 'react';
+import { Form, FormControl, Button } from 'react-bootstrap';
+import { upload } from '../services/helper';
 
 class FileUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
       file: null,
-      title: ""
+      title: ''
     };
   }
 
   submitFile = async e => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("file", this.state.file);
+    formData.append('file', this.state.file);
     const resp = await upload(formData);
     this.props.setTrackUrl(resp.Location, this.state.title);
   };
@@ -38,25 +37,25 @@ class FileUpload extends Component {
   render() {
     const { title } = this.state;
     return (
-      <Form className="fileupload-form" onSubmit={this.submitFile}>
+      <Form className='fileupload-form' onSubmit={this.submitFile}>
         <FormControl
-          type="text"
-          name="title"
-          placeholder="Track Title"
+          type='text'
+          name='title'
+          placeholder='Track Title'
           onChange={this.handleChange}
           value={title}
           required
         />
         <FormControl
-          className="fileupload-input"
-          label="upload file"
-          type="file"
+          className='fileupload-input'
+          label='upload file'
+          type='file'
           autoFocus={true}
-          accept="audio/*"
+          accept='audio/*'
           onChange={this.handleFileUpload}
           required
         />
-        <Button variant="outline-info" type="submit">
+        <Button variant='outline-info' type='submit'>
           Select Track
         </Button>
       </Form>

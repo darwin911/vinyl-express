@@ -1,5 +1,5 @@
-import React from "react";
-import { FormControl, Form, Button, Alert } from "react-bootstrap";
+import React from 'react';
+import { FormControl, Form, Button, Alert } from 'react-bootstrap';
 
 const Login = ({
   handleLogin,
@@ -9,27 +9,27 @@ const Login = ({
   password
 }) => {
   return (
-    <Form className="login-form" onSubmit={handleLogin}>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+    <Form className='login-form' onSubmit={handleLogin}>
+      {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
       <FormControl
         onChange={handleChange}
-        type="email"
-        name="email"
-        placeholder="Email"
+        type='email'
+        name='email'
+        placeholder='Email'
         value={email}
-        autoComplete="off"
+        autoComplete='off'
         required
       />
       <FormControl
         onChange={handleChange}
-        type="password"
-        name="password"
-        placeholder="Password"
+        type='password'
+        name='password'
+        placeholder='Password'
         value={password}
-        autoComplete="off"
+        autoComplete='off'
         required
       />
-      <Button onClick={handleLogin} variant="dark">
+      <Button onClick={handleLogin} variant='dark'>
         Login
       </Button>
     </Form>

@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Button, ButtonGroup } from "react-bootstrap";
+import React from 'react';
+import { Form, Button, ButtonGroup } from 'react-bootstrap';
 
 const TrackList = ({
   currentUser,
@@ -13,26 +13,25 @@ const TrackList = ({
   handleDeleteTrack
 }) => {
   return (
-    <section className="section-tracks">
+    <section className='section-tracks'>
       <h3>
-        <span>{currentUser.name.split(" ")[0]}</span> has {tracks.length} tracks
+        <span>{currentUser.name.split(' ')[0]}</span> has {tracks.length} tracks
       </h3>
       {tracks.map(track => (
-        <div key={track.id} className="track">
+        <div key={track.id} className='track'>
           {isEdit === track.id ? (
             <>
               <Form.Control
-                className="update-input"
-                type="text"
-                autoComplete="off"
-                name="title"
+                className='update-input'
+                type='text'
+                autoComplete='off'
+                name='title'
                 value={updateForm.title}
                 onChange={handleUpdateChange}
               />
               <Button
-                variant="warning"
-                onClick={() => handleUpdateTrack(updateForm)}
-              >
+                variant='warning'
+                onClick={() => handleUpdateTrack(updateForm)}>
                 Update!
               </Button>
             </>
@@ -40,29 +39,26 @@ const TrackList = ({
             <>
               <Button
                 draggable={true}
-                className="track-name"
-                variant="outline-light"
-                onClick={() => loadTrack(track)}
-              >
+                className='track-name'
+                variant='outline-light'
+                onClick={() => loadTrack(track)}>
                 {track.title}
               </Button>
             </>
           )}
           <ButtonGroup>
             <Button
-              className="edit-btn"
-              size="sm"
-              variant="outline-info"
-              onClick={() => handleEditTrack(track)}
-            >
+              className='edit-btn'
+              size='sm'
+              variant='outline-info'
+              onClick={() => handleEditTrack(track)}>
               &#9998;
             </Button>
             <Button
-              className="delete-btn"
-              size="sm"
-              variant="outline-danger"
-              onClick={() => handleDeleteTrack(track.id)}
-            >
+              className='delete-btn'
+              size='sm'
+              variant='outline-danger'
+              onClick={() => handleDeleteTrack(track.id)}>
               &#10006;
             </Button>
           </ButtonGroup>

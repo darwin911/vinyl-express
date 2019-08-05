@@ -1,5 +1,5 @@
-/* @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'); */
-@import url("https://fonts.googleapis.com/css?family=Cute+Font");
+@import url('https://fonts.googleapis.com/css?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cute+Font');
 
 *,
 *::before,
@@ -18,7 +18,7 @@ html {
 .App {
   text-align: center;
   min-height: 100vh;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: radial-gradient(
     circle at top left,
     hsl(0, 0%, 5%),
@@ -49,10 +49,9 @@ header {
 }
 
 .nav-brand {
-  font-family: "Cute Font";
-  line-height: 1;
+  font-family: 'Cute Font', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 3.5rem;
-  margin-bottom: 0;
+  margin: 0;
   font-weight: 700;
   color: white;
   letter-spacing: -1px;
@@ -63,8 +62,8 @@ header {
   margin-left: 0.5rem;
 }
 
-.container h2 {
-  font-family: "Cute Font";
+.container > h2 {
+  font-family: 'Cute Font', inherit;
   font-size: 3.8rem;
 }
 
@@ -112,7 +111,7 @@ form {
   margin: 0 auto 2rem;
   position: relative;
   background: rgb(170, 170, 170);
-  background: url("./assets/metal-texture-lowres.jpg");
+  background: url('./assets/metal-texture-lowres.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 100%;
@@ -136,7 +135,7 @@ form {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url("./assets/tt_arm.png");
+  background-image: url('./assets/tt_arm.png');
   position: absolute;
   z-index: 1;
   top: 2%;
@@ -158,7 +157,7 @@ form {
 }
 
 .turntable::after {
-  content: "";
+  content: '';
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
   width: 17%;
