@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const SECRET = "BeGoodSon";
+const SECRET = 'BeGoodSon';
 
 const hash = async password => {
   return await bcrypt.hash(password, 10);

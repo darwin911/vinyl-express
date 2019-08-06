@@ -1,17 +1,17 @@
-require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const logger = require("morgan");
-const cors = require("cors");
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
+const cors = require('cors');
 
-const AWS = require("aws-sdk");
-const fs = require("fs");
-const fileType = require("file-type");
-const bluebird = require("bluebird");
-const multiparty = require("multiparty");
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const fileType = require('file-type');
+const bluebird = require('bluebird');
+const multiparty = require('multiparty');
 
-const userRouter = require("./routes/userRouter");
-const trackRouter = require("./routes/trackRouter");
+const userRouter = require('./routes/userRouter');
+const trackRouter = require('./routes/trackRouter');
 
 const PORT = process.env.PORT || 3001;
 
@@ -32,7 +32,7 @@ const s3 = new AWS.S3();
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
   const params = {
-    ACL: "public-read",
+    ACL: 'public-read',
     Body: buffer,
     Bucket: process.env.S3_BUCKET,
     ContentType: type.mime,
@@ -42,14 +42,14 @@ const uploadFile = (buffer, name, type) => {
 };
 
 app.use(cors());
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 
-app.use("/users", userRouter);
-app.use("/tracks", trackRouter);
+app.use('/users', userRouter);
+app.use('/tracks', trackRouter);
 
 // POST for uploads
-app.post("/upload", (req, res) => {
+app.post('/upload', (req, res) => {
   const form = new multiparty.Form();
 
   form.parse(req, async (error, fields, files) => {
@@ -68,8 +68,8 @@ app.post("/upload", (req, res) => {
   });
 });
 
-app.get("/", async (req, res) => {
-  res.json({ msg: "Express is running!" });
+app.get('/', async (req, res) => {
+  res.json({ msg: 'Express is running!' });
 });
 
 app.listen(process.env.PORT || PORT, () => {

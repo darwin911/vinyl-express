@@ -1,10 +1,10 @@
-const express = require("express");
-const { Track } = require("../models");
+const express = require('express');
+const { Track } = require('../models');
 
 const trackRouter = express.Router();
 
 //Get all tracks
-trackRouter.get("/", async (req, res) => {
+trackRouter.get('/', async (req, res) => {
   try {
     const tracks = await Track.findAll();
     res.json({ tracks });
@@ -15,7 +15,7 @@ trackRouter.get("/", async (req, res) => {
 });
 
 //Get a specific track
-trackRouter.get("/:id", async (req, res) => {
+trackRouter.get('/:id', async (req, res) => {
   try {
     const track = await Track.findOne({ where: { id: req.params.id } });
     res.json({ track });
@@ -25,7 +25,7 @@ trackRouter.get("/:id", async (req, res) => {
   }
 });
 
-trackRouter.post("/", async (req, res) => {
+trackRouter.post('/', async (req, res) => {
   try {
     const { title, url, userId } = req.body;
     const track = await Track.create({
@@ -40,7 +40,7 @@ trackRouter.post("/", async (req, res) => {
   }
 });
 
-trackRouter.delete("/:id", async (req, res) => {
+trackRouter.delete('/:id', async (req, res) => {
   try {
     const track = await Track.destroy({ where: { id: req.params.id } });
     res.json(track);
@@ -50,7 +50,7 @@ trackRouter.delete("/:id", async (req, res) => {
   }
 });
 
-trackRouter.put("/:id", async (req, res) => {
+trackRouter.put('/:id', async (req, res) => {
   try {
     const track = await Track.findOne({ where: { id: req.params.id } });
     track.update({ title: req.body.title });

@@ -1,9 +1,9 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize } = require('sequelize');
 
 let sequelize;
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
+    dialect: 'postgres',
     login: true,
     operatorAliases: false,
     define: {
@@ -12,8 +12,8 @@ if (process.env.DATABASE_URL) {
   });
 } else {
   sequelize = new Sequelize({
-    database: "vinyl-express",
-    dialect: "postgres",
+    database: 'vinyl-express',
+    dialect: 'postgres',
     operatorAliases: false,
     define: {
       underscored: true
@@ -21,7 +21,7 @@ if (process.env.DATABASE_URL) {
   });
 }
 
-const User = sequelize.define("users", {
+const User = sequelize.define('users', {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -38,11 +38,11 @@ const User = sequelize.define("users", {
   picture: {
     type: Sequelize.STRING,
     defaultValue:
-      "https://pngimage.net/wp-content/uploads/2018/05/default-profile-pic-png-8.png"
+      'https://pngimage.net/wp-content/uploads/2018/05/default-profile-pic-png-8.png'
   }
 });
 
-const Track = sequelize.define("tracks", {
+const Track = sequelize.define('tracks', {
   title: {
     type: Sequelize.STRING,
     allowNull: false
@@ -54,7 +54,7 @@ const Track = sequelize.define("tracks", {
 });
 
 User.hasMany(Track, {
-  onDelete: "cascade"
+  onDelete: 'cascade'
 });
 
 Track.belongsTo(User, {
