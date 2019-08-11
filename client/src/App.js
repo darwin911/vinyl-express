@@ -222,12 +222,11 @@ class App extends Component {
 
   handleSubmitTrack = async () => {
     const { currentTrack, currentUser } = this.state;
-    const data = {
+    const track = await addTrack({
       title: currentTrack.title,
       url: currentTrack.url,
       userId: currentUser.id
-    };
-    const track = await addTrack(data);
+    });
     this.setState(prevState => ({
       tracks: [...prevState.tracks, track]
     }));
@@ -280,7 +279,9 @@ class App extends Component {
           <Route
             exact
             path='/'
-            render={() => <h2>Music, on a record player – but not really.</h2>}
+            render={() => (
+              <h2 className='blurb'>A record player – but not really.</h2>
+            )}
           />
 
           <Route
