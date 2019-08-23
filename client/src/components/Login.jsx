@@ -1,12 +1,14 @@
 import React from 'react';
-import { FormControl, Form, Button, Alert } from 'react-bootstrap';
+import { FormControl, Form, Alert } from 'react-bootstrap';
+import { Button } from 'semantic-ui-react';
 
 const Login = ({
   handleLogin,
   errorMessage,
   handleChange,
   email,
-  password
+  password,
+  isLoading
 }) => {
   return (
     <Form className='login-form' onSubmit={handleLogin}>
@@ -29,7 +31,7 @@ const Login = ({
         autoComplete='off'
         required
       />
-      <Button onClick={handleLogin} variant='dark'>
+      <Button onClick={handleLogin} variant='dark' loading={isLoading}>
         Login
       </Button>
     </Form>

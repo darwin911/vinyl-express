@@ -76,6 +76,7 @@ class App extends Component {
 
   handleLogin = async e => {
     e.preventDefault();
+    this.setState({ isLoading: true });
     const { email, password } = this.state;
     const loginData = { email, password };
     try {
@@ -100,6 +101,7 @@ class App extends Component {
         this.setState({ errorMessage: '' });
       }, 4000);
     }
+    setTimeout(this.setState({ isLoading: false }), 3000);
   };
 
   handleLogout = e => {
@@ -245,7 +247,8 @@ class App extends Component {
       tracks,
       currentTrack,
       filename,
-      errorMessage
+      errorMessage,
+      isLoading
     } = this.state;
     return (
       <div className='App'>
@@ -310,6 +313,7 @@ class App extends Component {
                 errorMessage={errorMessage}
                 handleChange={this.handleChange}
                 handleLogin={this.handleLogin}
+                isLoading={isLoading}
               />
             )}
           />
