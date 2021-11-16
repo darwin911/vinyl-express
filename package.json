@@ -12,7 +12,7 @@
   "author": "Darwin Smith",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.437.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.18.1",
     "bcrypt": "^5.0.0",
     "bluebird": "^3.5.4",
